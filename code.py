@@ -1,17 +1,20 @@
-from os import system
+import os
 
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 # Afficher le menu principal
 # Traiter les entrées du menu principal
 class MenuPrincipal:
-    def __init__(self,monde,jeu):
+    def __init__(self,monde,jeu,temps):
         self.monde = monde
         self.jeu = jeu
+        self.temps = temps
         self.options = dict()
         self.charger_options()
     def charger_options(self):
         i = 1
-        self.options[i] = ("Jour suivant",self.monde.obtenir_temps().avancer)
+        self.options[i] = ("Jour suivant",self.temps.avancer)
         i += 1
         self.options[i] = ("Sélectionner une nouvelle destination",self.jeu.changer_menu_actif,[MenuDeplacement(self.monde,self.jeu)])
         i += 1
@@ -74,18 +77,19 @@ class MenuDeplacement:
     def lire(self):
         try :
             entree = int(input())
+            constructeur_menu = self.jeu.obtenir_constructeur_menu()
             if self.pas_en_chemin:
                 if entree in self.options.keys():
                     self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination(self.options[entree])
-                    self.jeu.changer_menu_actif(MenuPrincipal(self.monde,self.jeu))
+                    self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
                 elif entree == len(self.options.keys())+1:
-                    self.jeu.changer_menu_actif(MenuPrincipal(self.monde,self.jeu))
+                    self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
             else:
                 if entree == 1:
                     self.monde.obtenir_joueur().obtenir_coordinateur().faire_demi_tour()
-                    self.jeu.changer_menu_actif(MenuPrincipal(self.monde,self.jeu))
+                    self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
                 elif entree == 2:
-                    self.jeu.changer_menu_actif(MenuPrincipal(self.monde,self.jeu))
+                    self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
         except ValueError:
             print("Entrée non valide. Veuillez entrer un nombre.")
 
@@ -116,14 +120,15 @@ class MenuBateaux:
         print(f"Liste des bateaux à {self.monde.obtenir_joueur().obtenir_lieu().obtenir_nom()} :")
         for i in range(1,len(self.options)+1):
             print(f"{i}) {self.options[i].obtenir_nom()}")
-        print(f"{len(self.options)+1} Quitter")
+        print(f"{len(self.options)+1}) Quitter")
     def lire(self):
         try :
             entree = int(input())
+            constructeur_menu = self.jeu.obtenir_constructeur_menu()
             if entree in self.options.keys():
                 pass
             elif entree == len(self.options.keys())+1:
-                self.jeu.changer_menu_actif(MenuPrincipal(self.monde,self.jeu))
+                self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
         except ValueError:
             print("Entrée non valide. Veuillez entrer un nombre.")
 
@@ -139,8 +144,9 @@ class MenuBateauxGlobal:
         print("1) Revenir au menu principal")
     def lire(self):
         entree = input()
+        constructeur_menu = self.jeu.obtenir_constructeur_menu()
         if entree == "1":
-            self.jeu.changer_menu_actif(MenuPrincipal(self.monde,self.jeu))
+            self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
 
 
 # Connait les entités du monde    
@@ -166,6 +172,8 @@ class Monde:
     def connecter_lieu(self,lieu1,lieu2,distance):
         lieu1.obtenir_lieu().ajouter_voisin(lieu2,distance)
         lieu2.obtenir_lieu().ajouter_voisin(lieu1,distance)
+    def avancer_temps(self):
+        self.temps.avancer()
 
 
 # Sait le tour actuel
@@ -207,6 +215,7 @@ class Joueur:
     def rejoint_bateau(self,bateau):
         self.bateau_dirige = bateau
     def quitte_bateau(self):
+        self.bateau_dirige = None
         
 
 # Recoit les messages de mouvement
@@ -319,17 +328,26 @@ class Mer:
 class Jeu:
     def __init__(self):
         self.monde = Monde()
-        self.menu_actif = MenuPrincipal(self.monde,self)
+        self.constructeur_menu = ConstructeurMenu(self.monde,self)
+        self.menu_actif = self.constructeur_menu.construire_menu_principal()
         self.actif = True
+    def obtenir_constructeur_menu(self):
+        return self.constructeur_menu
     def changer_menu_actif(self,menu):
         self.menu_actif = menu
     def demarrer(self):
         while self.actif:
-            system("cls")
+            clear_screen()
             self.menu_actif.afficher()
             self.menu_actif.lire()
     def quitter(self):
         self.actif = False
-        
+
+class ConstructeurMenu:
+    def __init__(self,monde,jeu):
+        self.monde = monde
+        self.jeu = jeu
+    def construire_menu_principal(self):
+        return MenuPrincipal(self.monde,self.jeu,self.monde.obtenir_temps())
 jeu = Jeu()
 jeu.demarrer()
