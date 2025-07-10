@@ -3,6 +3,9 @@ import os
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def nothing():
+    pass
+
 class Menu:
     def __init__(self,monde,jeu):
         self.monde = monde
