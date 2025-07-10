@@ -29,11 +29,18 @@ class Menu:
         try:
             entree = int(input())
             if entree in self.options.keys():  
-                for fonction in self.options[entree][1]:
-                    i = 0
-                    while i < len(self.options[entree][2]):
-                        fonction(self.options[entree][2][i])
-                        i += 1
+                option = self.options[entree] # Forme option : [Texte,[Fonction,Arg1,Arg2,etc ....],[Fonction,Arg1,Arg2,etc ....]]
+                i = 1
+                while i < len(option):
+                    groupe = option[i] # Forme groupe : [Fonction,Arg1,Arg2,etc ....]
+                    x = 1
+                    args = list()
+                    while x < len(groupe):
+                       args.append(groupe[x])
+                       x += 1
+                    groupe[0](*args)
+                    i += 1
+                    
         except ValueError:
             print("Entrée non valide. Veuillez entrer un nombre.")
 
@@ -45,17 +52,20 @@ class MenuPrincipal(Menu):
         self.temps = temps
     def charger_options(self):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
+
+        # Forme option : [Texte,[Fonction,Arg1,Arg2,etc ....],[Texte,[Fonction,Arg1,Arg2,etc ....]]
+
         i = 1
-        self.options[i] = ("Jour suivant",(self.temps.avancer),())
+        self.options[i] = ["Jour suivant",[self.temps.avancer]]
         i += 1
-        self.options[i] = ("Sélectionner une nouvelle destination",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_deplacement()))
+        self.options[i] = ["Sélectionner une nouvelle destination",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_deplacement()]]
         i += 1
-        self.options[i] = ("Voir l'ensemble de vos bateaux",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_bateaux_global()))
+        self.options[i] = ["Voir l'ensemble de vos bateaux",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_bateaux_global()]]
         i += 1
         if type(self.monde.obtenir_joueur().obtenir_lieu()) is Port:
-            self.options[i] = ("Voir vos bateaux dans le port",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_bateaux()))
+            self.options[i] = ["Voir vos bateaux dans le port",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_bateaux()]]
             i += 1
-        self.options[i] = ("Quitter le jeu",(self.jeu.quitter),())
+        self.options[i] = ["Quitter le jeu",[self.jeu.quitter]]
     def afficher_corps(self):
         j = self.monde.obtenir_joueur()
         print(f"Jour : {self.monde.obtenir_temps().obtenir_valeur()}")
@@ -74,16 +84,18 @@ class MenuDeplacement(Menu):
     def __init__(self,monde,jeu):
         Menu.__init__(self,monde,jeu)
     def charger_options(self):
+        constructeur_menu = self.jeu.obtenir_constructeur_menu()
         self.pas_en_chemin = not self.monde.obtenir_joueur().obtenir_itineraire().a_destination()
         if self.pas_en_chemin :
             destinations = self.monde.obtenir_joueur().obtenir_lieu().obtenir_lieu().obtenir_voisins()
             i = 1
             for destination in destinations:
-                self.options[i] = (destination.obtenir_nom(),(self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination),(destination))
+                self.options[i] = [destination.obtenir_nom(),[self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination,destination],[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
                 i += 1
+            self.options[i] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
         else:
-            self.options[1] = ("Faire demi-tour",(self.monde.obtenir_joueur().obtenir_coordinateur().faire_demi_tour),())
-            self.options[2] = ("Quitter",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_principal()),())
+            self.options[1] = ["Faire demi-tour",[self.monde.obtenir_joueur().obtenir_coordinateur().faire_demi_tour],[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
+            self.options[2] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
     def afficher_corps(self):
         if self.pas_en_chemin :
             print(f"Liste des destinations accesibles depuis {self.monde.obtenir_joueur().obtenir_lieu().obtenir_nom()}.")
@@ -92,20 +104,23 @@ class MenuBateaux(Menu):
     def __init__(self,monde,jeu):
         Menu.__init__(self,monde,jeu)
     def charger_options(self):
+        constructeur_menu = self.jeu.obtenir_constructeur_menu()
         lieu_joueur = self.monde.obtenir_joueur().obtenir_lieu().obtenir_lieu()
         i = 1
         for bateau in lieu_joueur.obtenir_bateaux():
-            self.options[i] = (bateau.obtenir_nom(),(pass),())
+            self.options[i] = [bateau.obtenir_nom(),[nothing]]
             i += 1
-        self.options[i] = ("Quitter",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_principal()),())
+        self.options[i] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
     def afficher_corps(self):
         print(f"Liste des bateaux à {self.monde.obtenir_joueur().obtenir_lieu().obtenir_nom()} :")
 
 class MenuBateauxGlobal(Menu):
     def __init__(self,joueur,monde,jeu):
         Menu.__init__(self,monde,jeu)
+        self.joueur = joueur
     def charger_options(self):
-        self.options[1] = ("Quitter",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_principal()))
+        constructeur_menu = self.jeu.obtenir_constructeur_menu()
+        self.options[1] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
     def afficher_corps(self):
         print("Liste des bateaux")
         for bateau in self.joueur.obtenir_bateaux():
@@ -329,3 +344,4 @@ class ConstructeurMenu:
         return MenuDeplacement(self.monde,self.jeu)
 jeu = Jeu()
 jeu.demarrer()
+
