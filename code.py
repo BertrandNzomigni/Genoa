@@ -3,29 +3,57 @@ import os
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-# Afficher le menu principal
-# Traiter les entrées du menu principal
-class MenuPrincipal:
-    def __init__(self,monde,jeu,temps):
+class Menu:
+    def __init__(self,monde,jeu):
         self.monde = monde
         self.jeu = jeu
-        self.temps = temps
         self.options = dict()
+    def charger_options(self):
+        pass
+    def executer(self):
         self.charger_options()
+        self.afficher()
+        self.lire()
+    def afficher(self):
+        self.afficher_corps()
+        self.afficher_options()
+    def afficher_corps(self):
+        pass
+    def afficher_options(self):
+        for i in range(1,len(self.options)+1):
+            print(f"{i}) {self.options[i][0]}")
+    def lire(self):
+        try:
+            entree = int(input())
+            if entree in self.options.keys():  
+                for fonction in self.options[entree][1]:
+                    i = 0
+                    while i < len(self.options[entree][2]):
+                        fonction(self.options[entree][2][i])
+                        i += 1
+        except ValueError:
+            print("Entrée non valide. Veuillez entrer un nombre.")
+
+# Afficher le menu principal
+# Traiter les entrées du menu principal
+class MenuPrincipal(Menu):
+    def __init__(self,monde,jeu,temps):
+        Menu.__init__(self,monde,jeu)
+        self.temps = temps
     def charger_options(self):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
         i = 1
-        self.options[i] = ("Jour suivant",self.temps.avancer)
+        self.options[i] = ("Jour suivant",(self.temps.avancer),())
         i += 1
-        self.options[i] = ("Sélectionner une nouvelle destination",self.jeu.changer_menu_actif,[constructeur_menu.construire_menu_deplacement()])
+        self.options[i] = ("Sélectionner une nouvelle destination",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_deplacement()))
         i += 1
-        self.options[i] = ("Voir l'ensemble de vos bateaux",self.jeu.changer_menu_actif,[constructeur_menu.construire_menu_bateaux_global()])
+        self.options[i] = ("Voir l'ensemble de vos bateaux",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_bateaux_global()))
         i += 1
         if type(self.monde.obtenir_joueur().obtenir_lieu()) is Port:
-            self.options[i] = ("Voir vos bateaux dans le port",self.jeu.changer_menu_actif,[constructeur_menu.construire_menu_bateaux()])
+            self.options[i] = ("Voir vos bateaux dans le port",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_bateaux()))
             i += 1
-        self.options[i] = ("Quitter le jeu",self.jeu.quitter)
-    def afficher(self):
+        self.options[i] = ("Quitter le jeu",(self.jeu.quitter),())
+    def afficher_corps(self):
         j = self.monde.obtenir_joueur()
         print(f"Jour : {self.monde.obtenir_temps().obtenir_valeur()}")
         print(f"Vous avez actuellement {j.obtenir_florins()} florins.")
@@ -36,119 +64,49 @@ class MenuPrincipal:
         else:
             print(f"Vous êtes situé à {j.obtenir_lieu()}.")
             print("Vous n'êtes pas en cours de déplacement.")
-        for i in range(1,len(self.options)+1):
-            print(f"{i}) {self.options[i][0]}")
-    def lire(self):
-        try:
-            entree = int(input())
-            if entree in self.options.keys():
-                if len(self.options[entree]) > 2:
-                    self.options[entree][1](*self.options[entree][2])
-                else:
-                    self.options[entree][1]()
-        except ValueError:
-            print("Entrée non valide. Veuillez entrer un nombre.")
-
 
 # Affiche le menu de déplacement
 # Déclenche les déplacements en fonction des entrées
-class MenuDeplacement:
+class MenuDeplacement(Menu):
     def __init__(self,monde,jeu):
-        self.monde = monde
-        self.jeu = jeu
-        self.options = dict()
-        self.charger_options()
+        Menu.__init__(self,monde,jeu)
     def charger_options(self):
         self.pas_en_chemin = not self.monde.obtenir_joueur().obtenir_itineraire().a_destination()
         if self.pas_en_chemin :
             destinations = self.monde.obtenir_joueur().obtenir_lieu().obtenir_lieu().obtenir_voisins()
             i = 1
             for destination in destinations:
-                self.options[i] = destination
+                self.options[i] = (destination.obtenir_nom(),(self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination),(destination))
                 i += 1
-    def afficher(self):
+        else:
+            self.options[1] = ("Faire demi-tour",(self.monde.obtenir_joueur().obtenir_coordinateur().faire_demi_tour),())
+            self.options[2] = ("Quitter",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_principal()),())
+    def afficher_corps(self):
         if self.pas_en_chemin :
             print(f"Liste des destinations accesibles depuis {self.monde.obtenir_joueur().obtenir_lieu().obtenir_nom()}.")
-            for cle in self.options.keys():
-                print(f"{cle}) {self.options[cle].obtenir_nom()}")
-            print(f"{len(self.options.keys())+1}) Quitter")
-        else:
-            print("1) Faire demi-tour")
-            print("2) Quitter")
-    def lire(self):
-        try :
-            entree = int(input())
-            constructeur_menu = self.jeu.obtenir_constructeur_menu()
-            if self.pas_en_chemin:
-                if entree in self.options.keys():
-                    self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination(self.options[entree])
-                    self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
-                elif entree == len(self.options.keys())+1:
-                    self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
-            else:
-                if entree == 1:
-                    self.monde.obtenir_joueur().obtenir_coordinateur().faire_demi_tour()
-                    self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
-                elif entree == 2:
-                    self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
-        except ValueError:
-            print("Entrée non valide. Veuillez entrer un nombre.")
 
-class Bateau:
-    def __init__(self,nom,capacite,vitesse,lieu):
-        self.nom = nom
-        self.capacite = capacite
-        self.vitesse = vitesse
-        self.lieu = lieu
-    def obtenir_nom(self):
-        return self.nom
-    def obtenir_lieu(self):
-        return self.lieu
-
-class MenuBateaux:
+class MenuBateaux(Menu):
     def __init__(self,monde,jeu):
-        self.monde = monde
-        self.jeu = jeu
-        self.options = dict()
-        self.charger_options()
+        Menu.__init__(self,monde,jeu)
     def charger_options(self):
         lieu_joueur = self.monde.obtenir_joueur().obtenir_lieu().obtenir_lieu()
         i = 1
         for bateau in lieu_joueur.obtenir_bateaux():
-            self.options[i] = bateau
+            self.options[i] = (bateau.obtenir_nom(),(pass),())
             i += 1
-    def afficher(self):
+        self.options[i] = ("Quitter",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_principal()),())
+    def afficher_corps(self):
         print(f"Liste des bateaux à {self.monde.obtenir_joueur().obtenir_lieu().obtenir_nom()} :")
-        for i in range(1,len(self.options)+1):
-            print(f"{i}) {self.options[i].obtenir_nom()}")
-        print(f"{len(self.options)+1}) Quitter")
-    def lire(self):
-        try :
-            entree = int(input())
-            constructeur_menu = self.jeu.obtenir_constructeur_menu()
-            if entree in self.options.keys():
-                pass
-            elif entree == len(self.options.keys())+1:
-                self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
-        except ValueError:
-            print("Entrée non valide. Veuillez entrer un nombre.")
 
-class MenuBateauxGlobal:
+class MenuBateauxGlobal(Menu):
     def __init__(self,joueur,monde,jeu):
-        self.joueur = joueur
-        self.monde = monde
-        self.jeu = jeu
-    def afficher(self):
+        Menu.__init__(self,monde,jeu)
+    def charger_options(self):
+        self.options[1] = ("Quitter",(self.jeu.changer_menu_actif),(constructeur_menu.construire_menu_principal()))
+    def afficher_corps(self):
         print("Liste des bateaux")
         for bateau in self.joueur.obtenir_bateaux():
             print(f"{bateau.obtenir_nom()} : {bateau.obtenir_lieu().obtenir_nom()}")
-        print("1) Revenir au menu principal")
-    def lire(self):
-        entree = input()
-        constructeur_menu = self.jeu.obtenir_constructeur_menu()
-        if entree == "1":
-            self.jeu.changer_menu_actif(constructeur_menu.construire_menu_principal())
-
 
 # Connait les entités du monde    
 class Monde:
@@ -175,6 +133,17 @@ class Monde:
         lieu2.obtenir_lieu().ajouter_voisin(lieu1,distance)
     def avancer_temps(self):
         self.temps.avancer()
+
+class Bateau:
+    def __init__(self,nom,capacite,vitesse,lieu):
+        self.nom = nom
+        self.capacite = capacite
+        self.vitesse = vitesse
+        self.lieu = lieu
+    def obtenir_nom(self):
+        return self.nom
+    def obtenir_lieu(self):
+        return self.lieu
 
 
 # Sait le tour actuel
