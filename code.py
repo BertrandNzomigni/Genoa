@@ -13,15 +13,16 @@ class MenuPrincipal:
         self.options = dict()
         self.charger_options()
     def charger_options(self):
+        constructeur_menu = self.jeu.obtenir_constructeur_menu()
         i = 1
         self.options[i] = ("Jour suivant",self.temps.avancer)
         i += 1
-        self.options[i] = ("Sélectionner une nouvelle destination",self.jeu.changer_menu_actif,[MenuDeplacement(self.monde,self.jeu)])
+        self.options[i] = ("Sélectionner une nouvelle destination",self.jeu.changer_menu_actif,[constructeur_menu.construire_menu_deplacement()])
         i += 1
-        self.options[i] = ("Voir l'ensemble de vos bateaux",self.jeu.changer_menu_actif,[MenuBateauxGlobal(self.monde.obtenir_joueur(),self.monde,self.jeu)])
+        self.options[i] = ("Voir l'ensemble de vos bateaux",self.jeu.changer_menu_actif,[constructeur_menu.construire_menu_bateaux_global()])
         i += 1
         if type(self.monde.obtenir_joueur().obtenir_lieu()) is Port:
-            self.options[i] = ("Voir vos bateaux dans le port",self.jeu.changer_menu_actif,[MenuBateaux(self.monde,self.jeu)])
+            self.options[i] = ("Voir vos bateaux dans le port",self.jeu.changer_menu_actif,[constructeur_menu.construire_menu_bateaux()])
             i += 1
         self.options[i] = ("Quitter le jeu",self.jeu.quitter)
     def afficher(self):
@@ -349,5 +350,11 @@ class ConstructeurMenu:
         self.jeu = jeu
     def construire_menu_principal(self):
         return MenuPrincipal(self.monde,self.jeu,self.monde.obtenir_temps())
+    def construire_menu_bateaux(self):
+        return MenuBateaux(self.monde,self.jeu)
+    def construire_menu_bateaux_global(self):
+        return MenuBateauxGlobal(self.monde.obtenir_joueur(),self.monde,self.jeu)
+    def construire_menu_deplacement(self):
+        return MenuDeplacement(self.monde,self.jeu)
 jeu = Jeu()
 jeu.demarrer()
