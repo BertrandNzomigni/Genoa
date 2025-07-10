@@ -308,8 +308,7 @@ class Jeu:
     def demarrer(self):
         while self.actif:
             clear_screen()
-            self.menu_actif.afficher()
-            self.menu_actif.lire()
+            self.menu_actif.executer()
     def quitter(self):
         self.actif = False
 
