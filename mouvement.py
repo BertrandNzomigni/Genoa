@@ -85,6 +85,7 @@ class Deplaceur:
     def avancer(self):
         vitesse = 1
         bateau_commande = self.acteur.obtenir_bateau_dirige()
+        self.acteur.changer_lieu(None)
 
         if bateau_commande and isinstance(self.acteur.obtenir_lieu(), Mer):
             vitesse = bateau_commande.vitesse

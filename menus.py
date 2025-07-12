@@ -57,7 +57,7 @@ class MenuPrincipal(Menu):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
         joueur = self.monde.obtenir_joueur()
         i = 1
-        self.options[i] = ["Jour suivant", [self.temps.avancer]];
+        self.options[i] = ["Jour suivant", [self.temps.avancer,],[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
         i += 1
         self.options[i] = ["Sélectionner une nouvelle destination",
                            [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_deplacement()]];
@@ -66,6 +66,7 @@ class MenuPrincipal(Menu):
                            [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_bateaux_global()]];
         i += 1
         if isinstance(joueur.obtenir_lieu(), Port):
+            print(joueur.obtenir_lieu())
             self.options[i] = ["Gérer vos bateaux dans ce port",[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_bateaux_port()]];
             i += 1
             self.options[i] = ["Accéder au marché", [self.jeu.changer_menu_actif,constructeur_menu.construire_menu_marche()]];
