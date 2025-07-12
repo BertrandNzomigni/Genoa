@@ -15,6 +15,7 @@ MARCHANDISES = {
 BATEAUX = {
     "Nef" : {"Capacité" : 300, "Vitese" : 10}
     "Galère" : {"Capacité" : 50, "Vitesse" : 20}
+    "Caraque" : {"Capacité" : 250, "Vitesse" : 20}
     "Cocha" : {"Capcité" : 200, "Vitesse" : 10}
 }
 
