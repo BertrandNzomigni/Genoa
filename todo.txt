@@ -1,6 +1,8 @@
 - Implémenter l'achat d'un bateau (En cours)
   - Ajouter des types de bateaux (Fait)
   - Créer un menu pour l'achat de bateaux (En cours)
-    - Le constructeur de menu doit avoir accès au bateau du joueur dès la construction
-    - Le joeur doit pouvoir acheter des bateaux sans diriger un bateau.
-    - La capacité du bateau dirigé doit seulement être affiché dans les menus d'achat et de ventes de marchandises
+    - Le constructeur de menu doit avoir accès au bateau du joueur dès la construction (Fait)
+        - Modifier l'appel des méthodes de constructeurMenu (Fait)
+    - Le joueur doit pouvoir acheter des bateaux sans diriger un bateau.(Fait)
+    - Le joeur peut seulement accéder aux marché des marchandises si il est dans un port (Fait)
+    - La capacité du bateau dirigé doit seulement être affiché dans les menus d'achat et de ventes de marchandises (Fait)
