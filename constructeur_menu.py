@@ -12,7 +12,8 @@ class ConstructeurMenu:
     def __init__(self, monde, jeu):
         self.monde = monde
         self.jeu = jeu
-        self.bateau = monde.obtenir_joueur().obtenir_bateau_dirige()
+        self.joueur = monde.obtenir_joueur()
+        self.bateau = self.joueur.obtenir_bateau_dirige()
 
     def construire_menu_principal(self):
         return MenuPrincipal(self.monde, self.jeu, self.monde.obtenir_temps())
@@ -27,7 +28,7 @@ class ConstructeurMenu:
         return MenuDeplacement(self.monde, self.jeu)
 
     def construire_menu_marche(self):
-        return MenuMarche(self.monde, self.jeu, self.bateau)
+        return MenuMarche(self.monde, self.jeu, self.bateau,self.joueur)
 
     def construire_menu_achat(self):
         return MenuAchat(self.monde, self.jeu, self.bateau)
