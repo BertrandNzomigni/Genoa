@@ -13,7 +13,7 @@ class Lieu:
         self.voisins.append(voisin)
         self.dict_distance[voisin]=distance
 
-    def obtenir_voisin(self):
+    def obtenir_voisins(self):
         return self.voisins
 
     def obtenir_distance(self,voisin):
