@@ -16,9 +16,12 @@ class Monde:
         self.ports = [genes, venise]
         self.mers = [mer_med]
 
-        genes.prix_locaux = {"Soie": 50, "Épices": 20, "Vin": 10, "Bois": 5}
-        venise.prix_locaux = {"Soie": 60, "Épices": 25, "Vin": 8, "Bois": 7}
+        genes.prix_locaux_marchandises = {"Soie": 50, "Épices": 20, "Vin": 10, "Bois": 5}
+        venise.prix_locaux_marchandises = {"Soie": 60, "Épices": 25, "Vin": 8, "Bois": 7}
 
+        genes.prix_locaux_bateaux = {"Nef": 1000, "Galère": 2000, "Caraque": 3000, "Cocha": 2500}
+        genes.prix_locaux_bateaux = {"Nef": 1000, "Galère": 2000, "Caraque": 3000, "Cocha": 2500}
+        
         self.connecter_lieu(genes, mer_med, 5)
         self.connecter_lieu(venise, mer_med, 3)
 
