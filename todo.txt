@@ -1,8 +1,8 @@
 
-- Ajouter la transaction de bateaux.
+- Ajouter la transaction de bateaux. (Fait)
   - Créer une classe AchatBateau (Fait)
   - Compléter le menu d'achat de bateau (Fait)
-- Définir Lieu comme superclasse de Port et Merl
-  - Enlever tous les Obtenir_Lieu chainés
-- Etudier la fonction joueur.obtenir_bateaux_a_lieu
+- Définir Lieu comme superclasse de Port et Merl (Fait)
+  - Enlever tous les Obtenir_Lieu chainés (Fait)
+- Etudier la fonction joueur.obtenir_bateaux_a_lieu (Fait)
     
