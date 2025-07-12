@@ -40,4 +40,22 @@ class AchatMarchandises(Transaction):
         self.joueur.payer(self.montant)
         self.bateau.ajouter_cargaison(self.nom_marchandise, self.quantite)
 
-class AchatMarchandises(Transaction):
+class VenteMarchandises(Transaction):
+
+    def __init__(self, joueur,lieu,quantite,nom_marchandise,prix,bateau):
+        super().__init__(joueur,lieu)
+        self.quantite = quantite
+        self.prix = prix
+        self.bateau = bateau
+        self.nom_marchandise = nom_marchandise
+    def verifier(self):
+        quantite_max = self.bateau.cargaison[self.nom_marchandise]
+        if quantite_max > self.quantite:
+            self.erreur = "Pas assez de marchandises."
+            return False
+        else:
+            return True
+    def appliquer(self):
+        self.montant = self.quantite * self.prix
+        self.bateau.retirer_cargaison(self.nom_marchandise, self.quantite)
+        self.joueur.gagner(self.montant)

@@ -215,10 +215,12 @@ class MenuAchat(Menu):
 
 
 class MenuVente(Menu):
-    def __init__(self, monde, jeu, bateau):
+    def __init__(self, monde, jeu, bateau, joueur):
         super().__init__(monde, jeu)
         self.bateau = bateau
-        self.port = self.monde.obtenir_joueur().obtenir_lieu()
+        self.joueur = joueur
+        self.port = self.joueur.obtenir_lieu()
+        
 
     def charger_options(self):
         cm = self.jeu.obtenir_constructeur_menu()
@@ -240,11 +242,13 @@ class MenuVente(Menu):
             qte_max = self.bateau.cargaison[nom_marchandise]
             qte = int(input(f"Quelle quantité de {nom_marchandise} vendre (max {qte_max}) ? "))
             if qte <= 0: return
-            if qte > qte_max: qte = qte_max
-            gain = qte * self.port.prix_locaux_marchandises.get(nom_marchandise, 0)
-            self.bateau.retirer_cargaison(nom_marchandise, qte)
-            self.monde.obtenir_joueur().gagner(gain)
-            print(f"{qte} unité(s) de {nom_marchandise} vendue(s) pour {gain} florins.")
+
+            prix = self.port.prix_locaux_marchandises.get(nom_marchandise, 0)
+            vente = VenteMarchandises(self.joueur,self.port,qte,nom_marchandise,prix,self.bateau)
+            if not(vente.verifier_appliquer()):
+                print(vente.obtenir_erreur())
+            else:
+                print(f"{qte} unité(s) de {nom_marchandise} vendue(s) pour {vente.obtenir_montant()} florins.")
         except ValueError:
             print("Veuillez entrer un nombre.")
         input("Appuyez sur Entrée pour continuer...")
