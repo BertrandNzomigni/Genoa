@@ -28,3 +28,6 @@ class AchatMarchandises(Transaction):
             self.erreur = "Pas assez de place dans la soute."
             return False
         return True
+    def appliquer(self):
+        self.joueur.payer(self.cout_total)
+        self.bateau.ajouter_cargaison(self.nom_marchandise, self.quantite)
