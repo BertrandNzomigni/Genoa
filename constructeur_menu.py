@@ -1,9 +1,6 @@
 # mon_super_jeu/constructeur_menu.py
 
-from menus import (
-    MenuPrincipal, MenuBateauxPort, MenuBateauxGlobal, MenuDeplacement,
-    MenuMarche, MenuAchat, MenuVente
-)
+from menus import *
 
 
 class ConstructeurMenu:
