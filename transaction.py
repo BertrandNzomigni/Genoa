@@ -59,3 +59,23 @@ class VenteMarchandises(Transaction):
         self.montant = self.quantite * self.prix
         self.bateau.retirer_cargaison(self.nom_marchandise, self.quantite)
         self.joueur.gagner(self.montant)
+
+class AchatBateau(Transaction):
+    def __init__(self,joueur,lieu,type_bateau,prix,nom):
+        super().__init__(joueur,lieu)
+        self.type_bateau = type_bateau
+        self.prix = prix
+        self.nom =  nom
+    def verifier(self):
+        if self.joueur.obtenir_florins() < self.montant:
+            self.erreur = "Pas assez d'argent"
+            return False
+        else:
+            return True
+    def appliquer(self):
+        vitesse = BATEAUX[self.type_bateau]["Vitesse"]
+        capacite = BATEAUX[self.type_bateau]["Capacité"]
+        nouveau_bateau = Bateau(self.nom,capacite,vitesse,self.lieu.obtenir_lieu())
+        joueur.acquerir_bateau(nouveau_bateau)
+        self.lieu.obtenir_lieu().ajouter_bateau(nouveau_bateau)
+        self.joueur.payer(self.prix)
