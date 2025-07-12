@@ -4,7 +4,7 @@ from lieu import Port, Mer
 from joueur import Joueur
 from bateau import Bateau
 from temps import Temps
-
+from constantes import *
 
 class Monde:
     """Contient toutes les entités du jeu (lieux, joueur, etc.)."""
