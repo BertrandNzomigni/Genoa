@@ -2,6 +2,7 @@
 
 from constantes import *
 from lieu import Port
+from transaction import *
 
 
 class Menu:
@@ -174,10 +175,11 @@ class MenuMarche(Menu):
 
 
 class MenuAchat(Menu):
-    def __init__(self, monde, jeu, bateau):
+    def __init__(self, monde, jeu, bateau, joueur):
         super().__init__(monde, jeu)
         self.bateau = bateau
-        self.port = self.monde.obtenir_joueur().obtenir_lieu()
+        self.joueur = joueur
+        self.port = self.joueur.obtenir_lieu()
 
     def charger_options(self):
         cm = self.jeu.obtenir_constructeur_menu()
@@ -198,17 +200,14 @@ class MenuAchat(Menu):
         try:
             qte = int(input(f"Quelle quantité de {nom_marchandise} acheter ? "))
             if qte <= 0: return
-            cout_total = qte * self.port.prix_locaux_marchandises[nom_marchandise]
-            vol_total = qte * MARCHANDISES[nom_marchandise]["volume"]
-            joueur = self.monde.obtenir_joueur()
-            if joueur.obtenir_florins() < cout_total:
-                print("Vous n'avez pas assez de florins.")
-            elif self.bateau.capacite - self.bateau.obtenir_volume_utilise() < vol_total:
-                print("Pas assez de place dans la soute.")
+
+            prix = self.port.prix_locaux_marchandises[nom_marchandise]
+            achat = AchatMarchandises(self.joueur,self.port,qte,nom_marchandise,prix,self.bateau)
+            reussite = achat.verifier_appliquer()
+            if not reussite:
+                print(achat.obtenir_erreur())
             else:
-                joueur.payer(cout_total)
-                self.bateau.ajouter_cargaison(nom_marchandise, qte)
-                print(f"{qte} unité(s) de {nom_marchandise} achetée(s) pour {cout_total} florins.")
+                print(f"{qte} unité(s) de {nom_marchandise} achetée(s) pour {achat.obtenir_montant()} florins.")
         except ValueError:
             print("Veuillez entrer un nombre.")
         input("Appuyez sur Entrée pour continuer...")

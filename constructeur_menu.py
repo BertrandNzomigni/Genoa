@@ -27,7 +27,7 @@ class ConstructeurMenu:
         return MenuMarche(self.monde, self.jeu, self.joueur.obtenir_bateau_dirige(),self.joueur)
 
     def construire_menu_achat(self):
-        return MenuAchat(self.monde, self.jeu, self.joueur.obtenir_bateau_dirige())
+        return MenuAchat(self.monde, self.jeu, self.joueur.obtenir_bateau_dirige(),self.joueur)
 
     def construire_menu_vente(self):
         return MenuVente(self.monde, self.jeu, self.joueur.obtenir_bateau_dirige())
