@@ -8,6 +8,10 @@
     - La capacité du bateau dirigé doit seulement être affiché dans les menus d'achat et de ventes de marchandises (Fait)
     - Ajouter le menu d'achat de bateaux au menu marché (Fait)
     - Changer le nom des variables de prix (prix -> prix_marchandises) (Fait)
-    - Supprimer la méthode acheter et vente et déplacer le code autre part
-      - Créer une classe AchatMarchandises
+    - Supprimer la méthode acheter et vente et déplacer le code autre part (Fait)
+      - Créer une classe AchatMarchandises (Fait)
+      - Ajouter joueur dans les attributs de la classe MenuAchat (Fait)
+      - Ajouter joueur dans le constructeur de menu pour MenuAchat (Fait)
+      - Créer une classe VenteMarchandise (Fait)
     - Ajouter la transaction de bateaux.
+      - Créer une classe AchatBateau
