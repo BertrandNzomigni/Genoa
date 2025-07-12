@@ -69,7 +69,7 @@ class MenuPrincipal(Menu):
             self.options[i] = ["Gérer vos bateaux dans ce port",
                                [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_bateaux_port()]];
             i += 1
-            if joueur.obtenir_bateau_dirige() is not None:
+            if joueur.obtenir_bateau_dirige() is not None and isinstance(joueur.obtenir_lieu(), Port):
                 self.options[i] = ["Accéder au marché", [self.jeu.changer_menu_actif,
                                                          constructeur_menu.construire_menu_marche(
                                                              joueur.obtenir_bateau_dirige())]];
