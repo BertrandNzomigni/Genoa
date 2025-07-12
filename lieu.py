@@ -31,7 +31,8 @@ class Port:
     def __init__(self,nom):
         self.nom=nom
         self.lieu =Lieu()
-        self.prix_locaux =dict()
+        self.prix_locaux_marchandises =dict()
+        self.prix_locaux_bateaux = dict()
 
     def obtenir_nom(self):return self.nom
     def obtenir_lieu(self): return self.lieu
