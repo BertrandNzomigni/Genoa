@@ -155,7 +155,7 @@ class MenuMarche(Menu):
     def charger_options(self):
         cm = self.jeu.obtenir_constructeur_menu()
         i = 1
-        if self.joueur.obtenir_bateau_dirige() is None:
+        if self.joueur.obtenir_bateau_dirige() is not None:
             self.options[i] = ["Acheter des marchandises",
                                [self.jeu.changer_menu_actif, cm.construire_menu_achat()]]
             i += 1
@@ -254,10 +254,13 @@ class MenuAchatBateaux(Menu):
     def __init__(self, monde, jeu, joueur,port):
         super().__init__(monde, jeu)
         self.joueur = joueur
+        self.port = port
     def charger_options(self):
+        cm = self.jeu.obtenir_constructeur_menu()
         i = 1
         for bateau in BATEAUX.keys():
-            self.options[i] = [f"{i}) {bateau} : {port.prix_locaux_bateaux[bateau]}",nothing]
+            self.options[i] = [f"{bateau} : {self.port.prix_locaux_bateaux[bateau]} florins",nothing]
+            i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, cm.construire_menu_marche()]]
     def afficher_corps(self):
         print(f"--- Acheter un navire à {self.port.obtenir_nom()} ---")
