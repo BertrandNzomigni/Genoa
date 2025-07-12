@@ -1,6 +1,6 @@
 # mon_super_jeu/menus.py
 
-from constantes import nothing, MARCHANDISES
+from constantes import *
 from lieu import Port
 
 
@@ -249,3 +249,15 @@ class MenuVente(Menu):
             print("Veuillez entrer un nombre.")
         input("Appuyez sur Entrée pour continuer...")
         self.jeu.changer_menu_actif(self.jeu.obtenir_constructeur_menu().construire_menu_vente(self.bateau))
+
+class MenuAchatBateaux(Menu):
+    def __init__(self, monde, jeu, joueur,port):
+        super().__init__(monde, jeu)
+        self.joueur = joueur
+    def charger_options(self):
+        i = 1
+        for bateau in BATEAUX.keys():
+            self.options[i] = [f"{i}) {bateau} : {port.prix_locaux_bateaux[bateau]}",nothing]
+    def afficher_corps(self):
+        print(f"--- Acheter un navire à {self.port.obtenir_nom()} ---")
+
