@@ -248,7 +248,7 @@ class MenuVente(Menu):
         except ValueError:
             print("Veuillez entrer un nombre.")
         input("Appuyez sur Entrée pour continuer...")
-        self.jeu.changer_menu_actif(self.jeu.obtenir_constructeur_menu().construire_menu_vente()
+        self.jeu.changer_menu_actif(self.jeu.obtenir_constructeur_menu().construire_menu_vente())
 
 class MenuAchatBateaux(Menu):
     def __init__(self, monde, jeu, joueur,port):

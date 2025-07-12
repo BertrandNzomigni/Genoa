@@ -9,4 +9,5 @@
     - Ajouter le menu d'achat de bateaux au menu marché (Fait)
     - Changer le nom des variables de prix (prix -> prix_marchandises) (Fait)
     - Supprimer la méthode acheter et vente et déplacer le code autre part
+      - Créer une classe AchatMarchandises
     - Ajouter la transaction de bateaux.
