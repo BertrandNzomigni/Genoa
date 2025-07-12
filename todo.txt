@@ -6,3 +6,4 @@
     - Le joueur doit pouvoir acheter des bateaux sans diriger un bateau.(Fait)
     - Le joeur peut seulement accéder aux marché des marchandises si il est dans un port (Fait)
     - La capacité du bateau dirigé doit seulement être affiché dans les menus d'achat et de ventes de marchandises (Fait)
+    - Ajouter la transaction de bateaux. ( En cours)
