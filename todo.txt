@@ -1,1 +1,3 @@
 - Implémenter l'achat d'un bateau (En cours)
+  - Ajouter des types de bateaux (Fait)
+  - Créer un menu pour l'achat de bateaux (En cours)
