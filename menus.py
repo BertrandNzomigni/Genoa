@@ -259,7 +259,7 @@ class MenuAchatBateaux(Menu):
         cm = self.jeu.obtenir_constructeur_menu()
         i = 1
         for bateau in BATEAUX.keys():
-            self.options[i] = [f"{bateau} : {self.port.prix_locaux_bateaux[bateau]} florins",nothing]
+            self.options[i] = [f"{bateau} : {self.port.prix_locaux_bateaux[bateau]} florins",[nothing]]
             i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, cm.construire_menu_marche()]]
     def afficher_corps(self):
