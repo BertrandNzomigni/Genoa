@@ -12,6 +12,12 @@ MARCHANDISES = {
     "Bois": {"volume": 5}
 }
 
+BATEAUX = {
+    "Nef" : {"Capacité" : 300, "Vitese" : 10}
+    "Galère" : {"Capacité" : 50, "Vitesse" : 20}
+    "Cocha" : {"Capcité" : 200, "Vitesse" : 10}
+}
+
 def clear_screen():
     """efface 'ecran de la consoe."""
     os.system('cls' if os.name=='nt' else 'clear')
