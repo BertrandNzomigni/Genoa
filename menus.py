@@ -151,17 +151,19 @@ class MenuMarche(Menu):
     def __init__(self, monde, jeu, bateau,joueur):
         super().__init__(monde, jeu)
         self.bateau = bateau
-
+        self.joueur = joueur
     def charger_options(self):
         cm = self.jeu.obtenir_constructeur_menu()
         i = 1
-        if joueur.obtenir_bateau_dirige() is not None:
+        if self.joueur.obtenir_bateau_dirige() is None:
             self.options[i] = ["Acheter des marchandises",
                                [self.jeu.changer_menu_actif, cm.construire_menu_achat()]]
             i += 1
             self.options[i] = ["Vendre des marchandises",
                                [self.jeu.changer_menu_actif, cm.construire_menu_vente()]]
             i += 1
+        self.options[i] = ["Acheter un bateau",[self.jeu.changer_menu_actif, cm.construire_menu_achat_bateaux()]]
+        i += 1
         self.options[i] = ["Retour au menu principal", [self.jeu.changer_menu_actif, cm.construire_menu_principal()]]
 
     def afficher_corps(self):
@@ -179,7 +181,7 @@ class MenuAchat(Menu):
     def charger_options(self):
         cm = self.jeu.obtenir_constructeur_menu()
         i = 1
-        for nom, prix in self.port.prix_locaux.items():
+        for nom, prix in self.port.prix_locaux_marchandises.items():
             vol = MARCHANDISES[nom]["volume"]
             self.options[i] = [f"{nom} ({prix} florins, volume: {vol})", [self.acheter, nom]];
             i += 1
@@ -195,7 +197,7 @@ class MenuAchat(Menu):
         try:
             qte = int(input(f"Quelle quantité de {nom_marchandise} acheter ? "))
             if qte <= 0: return
-            cout_total = qte * self.port.prix_locaux[nom_marchandise]
+            cout_total = qte * self.port.prix_locaux_marchandises[nom_marchandise]
             vol_total = qte * MARCHANDISES[nom_marchandise]["volume"]
             joueur = self.monde.obtenir_joueur()
             if joueur.obtenir_florins() < cout_total:
@@ -224,7 +226,7 @@ class MenuVente(Menu):
         if not self.bateau.cargaison: self.options[i] = ["Retour", [self.jeu.changer_menu_actif,
                                                                     cm.construire_menu_marche()]]; return
         for nom, qte in self.bateau.cargaison.items():
-            prix = self.port.prix_locaux.get(nom, 0)
+            prix = self.port.prix_locaux_marchandises.get(nom, 0)
             self.options[i] = [f"{nom} (Quantité: {qte}, Prix de vente: {prix})", [self.vendre, nom]];
             i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, cm.construire_menu_marche()]]
@@ -239,7 +241,7 @@ class MenuVente(Menu):
             qte = int(input(f"Quelle quantité de {nom_marchandise} vendre (max {qte_max}) ? "))
             if qte <= 0: return
             if qte > qte_max: qte = qte_max
-            gain = qte * self.port.prix_locaux.get(nom_marchandise, 0)
+            gain = qte * self.port.prix_locaux_marchandises.get(nom_marchandise, 0)
             self.bateau.retirer_cargaison(nom_marchandise, qte)
             self.monde.obtenir_joueur().gagner(gain)
             print(f"{qte} unité(s) de {nom_marchandise} vendue(s) pour {gain} florins.")
