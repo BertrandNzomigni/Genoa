@@ -27,7 +27,7 @@ class Monde:
 
         self.joueur = Joueur(genes)
         premier_bateau = Bateau("Caraque", BATEAUX["Caraque"]["Capacité"], BATEAUX["Caraque"]["Vitesse"], genes)
-        genes.obtenir_lieu().ajouter_bateau(premier_bateau)
+        genes.ajouter_bateau(premier_bateau)
         self.joueur.acquerir_bateau(premier_bateau)
 
         self.temps = Temps(self)
@@ -37,5 +37,5 @@ class Monde:
     def obtenir_temps(self): return self.temps
 
     def connecter_lieu(self, lieu1, lieu2, distance):
-        lieu1.obtenir_lieu().ajouter_voisin(lieu2, distance)
-        lieu2.obtenir_lieu().ajouter_voisin(lieu1, distance)
+        lieu1.ajouter_voisin(lieu2, distance)
+        lieu2.ajouter_voisin(lieu1, distance)

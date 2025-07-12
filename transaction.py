@@ -1,4 +1,5 @@
 from constantes import *
+from bateau import Bateau
 
 class Transaction:
     def __init__(self,joueur,lieu):
@@ -73,9 +74,11 @@ class AchatBateau(Transaction):
         else:
             return True
     def appliquer(self):
+        print(self.type_bateau)
         vitesse = BATEAUX[self.type_bateau]["Vitesse"]
         capacite = BATEAUX[self.type_bateau]["Capacité"]
-        nouveau_bateau = Bateau(self.nom,capacite,vitesse,self.lieu.obtenir_lieu())
-        joueur.acquerir_bateau(nouveau_bateau)
-        self.lieu.obtenir_lieu().ajouter_bateau(nouveau_bateau)
+        nouveau_bateau = Bateau(self.nom,capacite,vitesse,self.lieu)
+        self.joueur.acquerir_bateau(nouveau_bateau)
+        self.lieu.ajouter_bateau(nouveau_bateau)
         self.joueur.payer(self.prix)
+        print("Fin test")

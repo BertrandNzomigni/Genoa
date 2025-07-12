@@ -44,7 +44,8 @@ class Menu:
                     args = list(groupe[1:])
                     groupe[0](*args)
                     i += 1
-        except (ValueError, KeyError):
+        except (ValueError, KeyError) as e:
+            print(f"Erreur : {e}")
             print("Entrée non valide. Veuillez entrer un nombre correspondant à une option.")
             input("Appuyez sur Entrée pour continuer...")
 
@@ -96,7 +97,7 @@ class MenuDeplacement(Menu):
         self.pas_en_chemin = not joueur.obtenir_itineraire().a_destination()
         if self.pas_en_chemin:
             i = 1
-            for destination in joueur.obtenir_lieu().obtenir_lieu().obtenir_voisins():
+            for destination in joueur.obtenir_lieu().obtenir_voisins():
                 self.options[i] = [destination.obtenir_nom(),
                                    [joueur.obtenir_coordinateur().aller_destination, destination],
                                    [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]];
@@ -263,9 +264,33 @@ class MenuAchatBateaux(Menu):
         cm = self.jeu.obtenir_constructeur_menu()
         i = 1
         for bateau in BATEAUX.keys():
-            self.options[i] = [f"{bateau} : {self.port.prix_locaux_bateaux[bateau]} florins",[nothing]]
+            self.options[i] = [f"{bateau} : {self.port.prix_locaux_bateaux[bateau]} florins",[self.achat,bateau]]
             i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, cm.construire_menu_marche()]]
     def afficher_corps(self):
         print(f"--- Acheter un navire à {self.port.obtenir_nom()} ---")
+    def achat(self,type_bateau):
+        prix = self.port.prix_locaux_bateaux[type_bateau]
+        entree_correct = False
+        entree_correct2 = False
+        while not entree_correct:
+            print(f"{type_bateau} Prix : {prix} Confirmez vous l'achat ? (Y/N) ")
+            entree = input()
+            if entree == "Y":
+                entree_correct = True
+                while not entree_correct2:
+                    nom = input("Saissisez un nom pour votre bateau :")
+                    print(f"Nom : {nom} Confirmez vous ? (Y/N)")
+                    entree = input()
+                    if entree == "Y":
+                        entree_correct2 = True
+                        achat = AchatBateau(self.joueur,self.port,type_bateau,prix,nom)
+                        if not achat.verifier_appliquer():
+                            print(achat.obtenir_erreur())
+                    elif entree == "N":
+                        return
+                    print("Saissisez Y ou N")
+            elif entree == "N":
+                return
+            print("Saissisez Y ou N")
 

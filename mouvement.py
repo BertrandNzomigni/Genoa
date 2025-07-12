@@ -54,7 +54,7 @@ class Itineraire:
     def aller_destination(self, dest):
         self.destination = dest
         self.depart = self.acteur.obtenir_lieu()
-        self.distance_destination = dest.obtenir_lieu().obtenir_distance(self.acteur.obtenir_lieu())
+        self.distance_destination = dest.obtenir_distance(self.acteur.obtenir_lieu())
         print(f"Mise en route vers {dest.obtenir_nom()}.")
 
     def a_atteint_destination(self):
@@ -67,7 +67,7 @@ class Itineraire:
         x = self.destination
         self.destination = self.depart
         self.depart = x
-        self.distance_destination = self.destination.obtenir_lieu().obtenir_distance(
+        self.distance_destination = self.destination.obtenir_distance(
             self.obtenir_depart()) - self.distance_destination
         print("Vous faites demi-tour.")
         if self.distance_destination <= 0:

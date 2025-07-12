@@ -4,7 +4,8 @@
 
 class Lieu:
     """Classe générique pour un endrooit sur la carte."""
-    def __init__(self):
+    def __init__(self,nom):
+        self.nom = nom
         self.voisins = list()
         self.dict_distance=dict()
         self.bateaux = list()
@@ -25,25 +26,18 @@ class Lieu:
     def obtenir_bateaux(self):
         return self.bateaux
 
+    def obtenir_nom(self):return self.nom
+    def __str__(self):return self.nom
 
-class Port:
+
+class Port(Lieu):
     """Untype d elieu ou le commerce est possible."""
     def __init__(self,nom):
-        self.nom=nom
-        self.lieu =Lieu()
+        super().__init__(nom)
         self.prix_locaux_marchandises =dict()
         self.prix_locaux_bateaux = dict()
 
-    def obtenir_nom(self):return self.nom
-    def obtenir_lieu(self): return self.lieu
-    def __str__(self):return self.nom
-
-class Mer:
+class Mer(Lieu):
     """Untype de lieu qui peut etre traversé qu'en bateau."""
     def __init__(self,nom):
-        self.nom =nom
-        self.lieu =Lieu()
-
-    def obtenir_nom(self): return self.nom
-    def obtenir_lieu(self): return self.lieu
-    def __str__(self): return self.nom
+        super().__init__(nom)
