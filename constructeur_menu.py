@@ -34,6 +34,9 @@ class ConstructeurMenu:
     def construire_menu_vente(self, bateau):
         return MenuVente(self.monde, self.jeu, bateau)
 
+    def construire_menu_achat_bateaux(self):
+        return menuAchatBateaux(self.monde,self.jeu,self.monde.obtenir_joueur(),self.monde.obtenir_joueur().obtenir_lieu())
+
 
 
 
