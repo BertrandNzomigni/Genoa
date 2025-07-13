@@ -27,6 +27,9 @@ class Bateau:
 
     def obtenir_position(self):
         return self.position
+    
+    def obtenir_nom_lieu(self):
+        return self.position.obtenir_nom_lieu()
 
     def obtenir_volume_utilise(self):
         """Calcule le volume total utilisé par les marchandises dans la soute."""
@@ -59,3 +62,12 @@ class Bateau:
         self.position.changer_destination(dest)
     def obtenir_capacite(self):
         return self.capacite
+
+    def obtenir_liste_cargaisons(self):
+        return self.cargaison.keys()
+    
+    def obtenir_quantite_cargaison(self,nom_cargaison):
+        if nom_cargaison in self.cargaison.keys():
+            return self.cargaison[nom_cargaison]
+        else:
+            return 0

@@ -91,41 +91,45 @@ class MenuPrincipal(Menu):
 
 
 class MenuDeplacement(Menu):
+    def __init__(self,monde,jeu,joueur):
+        super().__init__(monde, jeu)
+        self.joueur = joueur
     def charger_options(self):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
-        joueur = self.monde.obtenir_joueur()
-        self.pas_en_chemin = not joueur.a_destination()
+        self.pas_en_chemin = not self.joueur.a_destination()
         if self.pas_en_chemin:
             i = 1
-            for destination in joueur.obtenir_lieu().obtenir_voisins():
+            for destination in self.joueur.obtenir_voisins_lieu():
                 self.options[i] = [destination.obtenir_nom(),
-                                   [joueur.changer_destination, destination],
+                                   [self.joueur.changer_destination, destination],
                                    [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]];
                 i += 1
             self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
         else:
-            self.options[1] = ["Faire demi-tour", [joueur.faire_demi_tour],
+            self.options[1] = ["Faire demi-tour", [self.joueur.faire_demi_tour],
                                [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
             self.options[2] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
 
     def afficher_corps(self):
         if self.pas_en_chemin:
-            print(f"Où souhaitez-vous aller depuis {self.monde.obtenir_joueur().obtenir_lieu().obtenir_nom()} ?")
+            print(f"Où souhaitez-vous aller depuis {self.joueur.obtenir_nom_lieu()} ?")
         else:
             print("Vous êtes déjà en voyage.")
 
 
 class MenuBateauxPort(Menu):
+    def __init__(self,monde,jeu,joueur):
+        super().__init__(monde, jeu)
+        self.joueur = joueur
     def charger_options(self):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
-        joueur = self.monde.obtenir_joueur()
         i = 1
-        for bateau in joueur.obtenir_bateaux_a_lieu(joueur.obtenir_lieu()):
+        for bateau in self.joueur.obtenir_bateaux_a_lieu(self.joueur.obtenir_lieu()):
             self.options[i] = [f"{bateau} : Gérer",[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_gestion_bateaux(bateau)]]
             i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
 
-    def afficher_corps(self): print(f"Vos bateaux à {self.monde.obtenir_joueur().obtenir_lieu().obtenir_nom()} :")
+    def afficher_corps(self): print(f"Vos bateaux à {self.joueur.obtenir_nom_lieu()} :")
 
 
 class MenuBateauxGlobal(Menu):
@@ -147,7 +151,7 @@ class MenuBateauxGlobal(Menu):
         if not self.bateaux: print("Vous ne possédez aucun bateau.")
         for bateau in self.bateaux:
             print(
-                f"- {bateau.obtenir_nom()} à {bateau.obtenir_lieu().obtenir_nom()} (Capacité: {bateau.obtenir_volume_utilise()}/{bateau.capacite})")
+                f"- {bateau.obtenir_nom()} à {bateau.obtenir_nom_lieu()} (Capacité: {bateau.obtenir_volume_utilise()}/{bateau.capacite})")
 
 
 class MenuMarche(Menu):
@@ -170,9 +174,9 @@ class MenuMarche(Menu):
         self.options[i] = ["Retour au menu principal", [self.jeu.changer_menu_actif, cm.construire_menu_principal()]]
 
     def afficher_corps(self):
-        port = self.monde.obtenir_joueur().obtenir_lieu()
-        print(f"Bienvenue au marché de {port.obtenir_nom()}.")
-        print(f"Vos florins : {self.monde.obtenir_joueur().obtenir_florins()}")
+        nom_port = self.joueur.obtenir_nom_lieu()
+        print(f"Bienvenue au marché de {nom_port}.")
+        print(f"Vos florins : {self.joueur.obtenir_florins()}")
 
 
 class MenuAchat(Menu):
@@ -195,7 +199,7 @@ class MenuAchat(Menu):
         print(f"--- Acheter des marchandises à {self.port.obtenir_nom()} ---")
         print(
             f"Capacité restante du {self.bateau.obtenir_nom()}: {self.bateau.capacite - self.bateau.obtenir_volume_utilise()}")
-        print(f"Vos florins: {self.monde.obtenir_joueur().obtenir_florins()}")
+        print(f"Vos florins: {self.joueur.obtenir_florins()}")
 
     def acheter(self, nom_marchandise):
         try:
@@ -221,18 +225,19 @@ class MenuVente(Menu):
         self.bateau = bateau
         self.joueur = joueur
         self.port = self.joueur.obtenir_lieu()
+        self.cm = self.jeu.obtenir_constructeur_menu()
         
 
     def charger_options(self):
-        cm = self.jeu.obtenir_constructeur_menu()
         i = 1
         if not self.bateau.cargaison: self.options[i] = ["Retour", [self.jeu.changer_menu_actif,
-                                                                    cm.construire_menu_marche()]]; return
-        for nom, qte in self.bateau.cargaison.items():
+                                                                    self.cm.construire_menu_marche()]]; return
+        for nom in self.bateau.obtenir_liste_cargaisons():
             prix = self.port.prix_locaux_marchandises.get(nom, 0)
+            qte = self.bateau.obtenir_quantite_cargaison(nom)
             self.options[i] = [f"{nom} (Quantité: {qte}, Prix de vente: {prix})", [self.vendre, nom]];
             i += 1
-        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, cm.construire_menu_marche()]]
+        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.cm.construire_menu_marche()]]
 
     def afficher_corps(self):
         print(f"--- Vendre des marchandises depuis {self.bateau.obtenir_nom()} à {self.port.obtenir_nom()} ---")
@@ -244,7 +249,7 @@ class MenuVente(Menu):
             qte = int(input(f"Quelle quantité de {nom_marchandise} vendre (max {qte_max}) ? "))
             if qte <= 0: return
 
-            prix = self.port.prix_locaux_marchandises.get(nom_marchandise, 0)
+            prix = self.port.obtenir_prix_marchandises(nom_marchandise)
             vente = VenteMarchandises(self.joueur,self.port,qte,nom_marchandise,prix,self.bateau)
             if not(vente.verifier_appliquer()):
                 print(vente.obtenir_erreur())
@@ -253,7 +258,7 @@ class MenuVente(Menu):
         except ValueError:
             print("Veuillez entrer un nombre.")
         input("Appuyez sur Entrée pour continuer...")
-        self.jeu.changer_menu_actif(self.jeu.obtenir_constructeur_menu().construire_menu_vente())
+        self.jeu.changer_menu_actif(self.cm.construire_menu_vente())
 
 class MenuAchatBateaux(Menu):
     def __init__(self, monde, jeu, joueur,port):
@@ -264,12 +269,12 @@ class MenuAchatBateaux(Menu):
         self.cm = self.jeu.obtenir_constructeur_menu()
         i = 1
         for bateau in BATEAUX.keys():
-            self.options[i] = [f"{bateau} : {self.port.prix_locaux_bateaux[bateau]} florins",[self.achat,bateau]]
+            self.options[i] = [f"{bateau} : {self.port.obtenir_prix_bateau(bateau)} florins",[self.achat,bateau]]
             i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.cm.construire_menu_marche()]]
     def afficher_corps(self):
         print(f"--- Acheter un navire à {self.port.obtenir_nom()} ---")
     def achat(self,type_bateau):
         prix = self.port.prix_locaux_bateaux[type_bateau]
-        self.jeu.changer_menu_actif(self.cm.construire_menu_achat_bateau(type_bateau,self.port.prix_locaux_bateaux[type_bateau]))
+        self.jeu.changer_menu_actif(self.cm.construire_menu_achat_bateau(type_bateau,self.port.obtenir_prix_bateau(type_bateau)))
 

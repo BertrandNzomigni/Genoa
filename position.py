@@ -65,3 +65,7 @@ class Position:
         return self.lieuA.obtenir_prix_bateau(type_bateau)
     def ajouter_bateau(self,bateau):
         self.lieuA.ajouter_bateau(bateau)
+    def obtenir_voisins_lieu(self):
+        return self.lieuA.obtenir_voisins()
+    def obtenir_nom_lieu(self):
+        return self.lieuA.obtenir_nom()

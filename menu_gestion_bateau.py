@@ -14,7 +14,7 @@ class MenuGestionBateau(Menu):
         else:
             self.options[i]= ["Prendre le commandement",[self.joueur.rejoindre_bateau,self.bateau]]
         i += 1
-        self.options[i] = ["Envoyer en mission",[nothing]]
+        self.options[i] = ["Envoyer en mission",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_missions(self.bateau)]]
         i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_bateaux_port()]]
     def afficher_corps(self):

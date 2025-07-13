@@ -4,7 +4,7 @@ from menus import *
 from menu_gestion_bateau import *
 from menu_information_bateau import *
 from menu_achat_bateau import *
-
+from menu_missions import *
 
 class ConstructeurMenu:
     """Classe 'Factory' pour créer les différents menus du jeu."""
@@ -19,13 +19,13 @@ class ConstructeurMenu:
         return MenuPrincipal(self.monde, self.jeu, self.monde.obtenir_temps())
 
     def construire_menu_bateaux_port(self):
-        return MenuBateauxPort(self.monde, self.jeu)
+        return MenuBateauxPort(self.monde, self.jeu,self.joueur)
 
     def construire_menu_bateaux_global(self):
         return MenuBateauxGlobal(self.bateaux, self.monde, self.jeu)
 
     def construire_menu_deplacement(self):
-        return MenuDeplacement(self.monde, self.jeu)
+        return MenuDeplacement(self.monde, self.jeu,self.joueur)
 
     def construire_menu_marche(self):
         return MenuMarche(self.monde, self.jeu, self.joueur.obtenir_bateau_dirige(),self.joueur)
@@ -47,5 +47,7 @@ class ConstructeurMenu:
 
     def construire_menu_achat_bateau(self,type_bateau,prix):
         return MenuAchatBateau(self.monde,self.jeu,type_bateau,prix,self.joueur)
+    def construire_menu_missions(self,bateau):
+        return MenuMissions(self.monde,self.jeu,bateau)
 
 

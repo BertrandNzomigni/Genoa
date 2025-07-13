@@ -89,3 +89,7 @@ class Joueur:
         if self.obtenir_florins() < prix:
             return "Pas assez d'argent"
         return
+    def obtenir_voisins_lieu(self):
+        return self.position.obtenir_voisins_lieu()
+    def obtenir_nom_lieu(self):
+        return self.position.obtenir_nom_lieu()

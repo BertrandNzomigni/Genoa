@@ -9,7 +9,7 @@
   - Il exsite une classe MenuGestionBateau (Fait)
   - Elle offre la possibilité de monter ou de descendre d'un navire. (Fait)
   - Elle offre la possibilité d'envoyer le bateau en mission.
-      Il existe un menu pour les missions
+      Il existe un menu pour les missions (Fait)
     - Le joueur décide du port d'arrivée
     - Le joueur spécifie les marchandises à acheter au port de départ, les marchandises à vendre à l'arrivée puis finalement
     les marchandises à ramener au port de départ.
