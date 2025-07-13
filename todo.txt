@@ -12,9 +12,10 @@
       Il existe un menu pour les missions (Fait)
     - Le joueur décide du port d'arrivée '(Fait)
     - Le joueur peut supprimer un arrêt (Fait)
-    - Les invariants de la classe Mission sont toujours respectés.
+    - Les invariants de la classe Mission sont toujours respectés. (Fait)
     - Le joueur spécifie les marchandises à acheter au port de départ, les marchandises à vendre à l'arrivée puis finalement
     les marchandises à ramener au port de départ.
+    - La quantité de marchandise à un arrêt ne peut pas dépasser la capacité du bateau concerné.
 - Ajouter un type au bateaux (Fait)
 - Le joueur et son bateau bouge simultanément (Fait)
 - Le joueur peut voir les stats des bateaux. (Fait)

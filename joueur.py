@@ -22,13 +22,13 @@ class Joueur:
         return self.position.est_en_voyage()
 
     def obtenir_florins(self):
-        return self.florins
+        return self.florins_liquides
 
     def payer(self, montant):
-        self.florins -= montant
+        self.florins_liquides -= montant
 
     def gagner(self, montant):
-        self.florins += montant
+        self.florins_liquides += montant
 
     def obtenir_lieu(self):
         return self.position.obtenir_depart()

@@ -61,3 +61,6 @@ class ConstructeurMenu:
     def construire_menu_banque(self):
         return MenuBanque(self.monde, self.jeu, self.joueur)
 
+    def construire_menu_modification_arrets(self,mission,bateau):
+        return MenuModificationArrets(self.monde,self.jeu,mission,bateau)
+

@@ -23,6 +23,8 @@ class Mission:
         if len(self.arrets) > 1:
             if not self.arrets[0].obtenir_lieu() != self.arrets[-1].obtenir_lieu():
                 return False
+        else:
+            return False
         return True
 
     def verifier_invariants(self):
@@ -30,7 +32,7 @@ class Mission:
             assert self.arrets[indice].obtenir_lieu() != self.arrets[indice+1].obtenir_lieu(), "Chaque arrêt doit avoir un lieu différent du suivant."
         if len(self.arrets) > 1:
             assert self.arrets[0].obtenir_lieu() != self.arrets[-1].obtenir_lieu(), "Chaque arrêt doit avoir un lieu différent du suivant."
-        assert len(self.arrets) != 0, "Une mission doit avoir au moins un arrêt."
+        assert len(self.arrets) > 1, "Une mission doit avoir au moins deux arrêts."
 
 class Arret:
     def __init__(self,lieu,arret_base=None):

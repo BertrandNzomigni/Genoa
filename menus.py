@@ -68,7 +68,6 @@ class MenuPrincipal(Menu):
                            [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_bateaux_global()]];
         i += 1
         if isinstance(joueur.obtenir_lieu(), Port) and not joueur.est_parti():
-            print(joueur.obtenir_lieu())
             self.options[i] = ["Gérer vos bateaux dans ce port",[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_bateaux_port()]];
             i += 1
             self.options[i] = ["Accéder au marché", [self.jeu.changer_menu_actif,constructeur_menu.construire_menu_marche()]];

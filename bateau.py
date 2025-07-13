@@ -76,6 +76,11 @@ class Bateau:
         if self.mission == None:
             self.mission = mission.Mission()
         self.mission.ajouter_arret(arret,indice)
+    def supprimer_arret(self,arret):
+        if self.a_mission():
+            self.mission.supprimer_arret(arret)
+        if len(self.mission.obtenir_arrets()) == 0:
+            self.abondonner_mission()
     
     def obtenir_arrets(self):
         if self.mission == None:
