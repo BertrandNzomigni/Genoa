@@ -14,5 +14,5 @@
     - Le joueur spécifie les marchandises à acheter au port de départ, les marchandises à vendre à l'arrivée puis finalement
     les marchandises à ramener au port de départ.
 - Ajouter un type au bateaux (Fait)
-- Le joueur et son bateau bouge simultanément
+- Le joueur et son bateau bouge simultanément (Fait)
     
