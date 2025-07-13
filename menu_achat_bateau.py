@@ -19,6 +19,21 @@ class MenuAchatBateau(menus.Menu):
         print(f"Vitesse : {bateau['Vitesse']}")
         print(f"Prix : {self.prix}")
     def acheter(self):
+        reponse = input(f"Confirmez vous l'achat de {self.type_bateau} ? (Y/N)")
+        retour = self.joueur.peut_acheter_bateau(self.type_bateau)
+        if isinstance(retour,str):
+            input(retour+" - Appuyez sur une touche pour continuer")
+            return
+        correct = False
+        while not correct:
+            if reponse == 'Y':
+                self.acheter2()
+                correct = True
+            elif reponse == "N":
+                return
+            else:
+                print("Entrée incorrecte")
+    def acheter2(self):
         nom = input("Donnez un nom au bateau : ")
         correct = False
         while not correct:
@@ -29,4 +44,3 @@ class MenuAchatBateau(menus.Menu):
                 return
             else:
                 print("Entrée incorrecte")
-        self.joueur.acheter_bateau(self.type_bateau,nom)

@@ -77,12 +77,15 @@ class Joueur:
     def acheter_bateau(self,type_bateau,nom):
         assert isinstance(self.position.obtenir_depart(),lieu.Port), "Le joueur peut acheter un bateau seulement dans les ports."
         prix = self.position.obtenir_prix_bateau(type_bateau)
-        if self.obtenir_florins() < prix:
-            return "Pas assez d'argent"
+        
         vitesse = constantes.BATEAUX[type_bateau]["Vitesse"]
         capacite = constantes.BATEAUX[type_bateau]["Capacité"]
         nouveau_bateau = bateau.Bateau(nom,capacite,vitesse,self.position.obtenir_depart(),type_bateau,self.monde)
         self.acquerir_bateau(nouveau_bateau)
         self.position.ajouter_bateau(nouveau_bateau)
         self.payer(prix)
-
+    def peut_acheter_bateau(self,type_bateau):
+        prix = self.position.obtenir_prix_bateau(type_bateau)
+        if self.obtenir_florins() < prix:
+            return "Pas assez d'argent"
+        return
