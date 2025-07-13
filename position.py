@@ -60,3 +60,8 @@ class Position:
             self.lieuA = self.lieuB
             self.lieuB = None
             self.distance = None
+    def obtenir_prix_bateau(self,type_bateau):
+        assert isinstance(self.lieuA,Port),"Les prix des bateaux sont définis seulement dans les ports."
+        return self.lieuA.obtenir_prix_bateau(type_bateau)
+    def ajouter_bateau(self,bateau):
+        self.lieuA.ajouter_bateau(bateau)

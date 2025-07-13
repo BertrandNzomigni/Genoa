@@ -25,7 +25,7 @@ class Monde:
         self.connecter_lieu(genes, mer_med, 100)
         self.connecter_lieu(venise, mer_med, 60)
 
-        self.joueur = Joueur(genes)
+        self.joueur = Joueur(genes,self)
         premier_bateau = Bateau("Bateau de base", BATEAUX["Caraque"]["Capacité"], BATEAUX["Caraque"]["Vitesse"], genes,"Caraque",self)
         genes.ajouter_bateau(premier_bateau)
         self.joueur.acquerir_bateau(premier_bateau)

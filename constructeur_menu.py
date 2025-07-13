@@ -3,6 +3,7 @@
 from menus import *
 from menu_gestion_bateau import *
 from menu_information_bateau import *
+from menu_achat_bateau import *
 
 
 class ConstructeurMenu:
@@ -40,8 +41,11 @@ class ConstructeurMenu:
 
     def construire_menu_gestion_bateaux(self,bateau):
         return MenuGestionBateau(self.monde,self.jeu,bateau,self.joueur)
+
     def construire_menu_information_bateau(self,bateau):
         return MenuInformationBateau(self.monde,self.jeu,bateau)
 
+    def construire_menu_achat_bateau(self,type_bateau,prix):
+        return MenuAchatBateau(self.monde,self.jeu,type_bateau,prix,self.joueur)
 
 

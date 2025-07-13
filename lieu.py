@@ -38,6 +38,8 @@ class Port(Lieu):
         self.prix_locaux_bateaux = dict()
         for bateau in constantes.BATEAUX.keys():
             self.prix_locaux_bateaux[bateau] = constantes.BATEAUX[bateau]["Prix de base"]
+    def obtenir_prix_bateau(self,type_bateau):
+        return self.prix_locaux_bateaux[type_bateau]
 
 class Mer(Lieu):
     """Untype de lieu qui peut etre traversé qu'en bateau."""

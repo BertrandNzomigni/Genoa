@@ -261,36 +261,15 @@ class MenuAchatBateaux(Menu):
         self.joueur = joueur
         self.port = port
     def charger_options(self):
-        cm = self.jeu.obtenir_constructeur_menu()
+        self.cm = self.jeu.obtenir_constructeur_menu()
         i = 1
         for bateau in BATEAUX.keys():
             self.options[i] = [f"{bateau} : {self.port.prix_locaux_bateaux[bateau]} florins",[self.achat,bateau]]
             i += 1
-        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, cm.construire_menu_marche()]]
+        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.cm.construire_menu_marche()]]
     def afficher_corps(self):
         print(f"--- Acheter un navire à {self.port.obtenir_nom()} ---")
     def achat(self,type_bateau):
         prix = self.port.prix_locaux_bateaux[type_bateau]
-        entree_correct = False
-        entree_correct2 = False
-        while not entree_correct:
-            print(f"{type_bateau} Prix : {prix} Confirmez vous l'achat ? (Y/N) ")
-            entree = input()
-            if entree == "Y":
-                entree_correct = True
-                while not entree_correct2:
-                    nom = input("Saissisez un nom pour votre bateau :")
-                    print(f"Nom : {nom} Confirmez vous ? (Y/N)")
-                    entree = input()
-                    if entree == "Y":
-                        entree_correct2 = True
-                        achat = AchatBateau(self.joueur,self.port,type_bateau,prix,nom,self.monde)
-                        if not achat.verifier_appliquer():
-                            print(achat.obtenir_erreur())
-                    elif entree == "N":
-                        return
-                    print("Saissisez Y ou N")
-            elif entree == "N":
-                return
-            print("Saissisez Y ou N")
+        self.jeu.changer_menu_actif(self.cm.construire_menu_achat_bateau(type_bateau,self.port.prix_locaux_bateaux[type_bateau]))
 
