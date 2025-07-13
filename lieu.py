@@ -36,9 +36,17 @@ class Port(Lieu):
         super().__init__(nom)
         self.prix_locaux_marchandises =dict()
         self.prix_locaux_bateaux = dict()
-        self.taux_interet = 0.001  # 0.1% par jour
         for bateau in constantes.BATEAUX.keys():
             self.prix_locaux_bateaux[bateau] = constantes.BATEAUX[bateau]["Prix de base"]
+
+        nom_banque = f"Banca di {nom}"
+        taux_base = 0.001  # 0.1%
+        if nom == "Venise":
+            nom_banque = "Credito Veneziano"
+            taux_base = 0.0012  # La banque de Venise est un peu plus généreuse
+
+        self.banque = Banque(nom=nom_banque, taux_interet=taux_base)
+
     def obtenir_prix_bateau(self,type_bateau):
         return self.prix_locaux_bateaux[type_bateau]
     def obtenir_prix_marchandises(self,nom_marchandise):

@@ -11,7 +11,6 @@ class Joueur:
 
     def __init__(self, lieu_de_depart,monde):
         self.florins_liquides = 2000 #renommé
-        self.solde_bancaire=0 #NOUVEAU
         self.position = position.Position(lieu_de_depart)
 
         self.bateaux = list()

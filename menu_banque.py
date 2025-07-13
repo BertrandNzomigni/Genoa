@@ -4,11 +4,14 @@ class MenuBanque(menus.Menu):
     def __init__(self, monde, jeu, joueur):
         super().__init__(monde, jeu)
         self.joueur = joueur
+        self.banque = self.joueur.obtenir_lieu().banque
 
     def afficher_corps(self):
-        print("--- Banque de la Cité ---")
+        print(f"--- {self.banque.nom} ---")
         print(f"Florins liquides : {self.joueur.florins_liquides}")
-        print(f"Solde en banque : {self.joueur.solde_bancaire}")
+
+        solde = self.banque.obtenir_solde(self.joueur)
+        print(f"Solde en compte : {solde:.2f}")
 
     def charger_options(self):
         cm = self.jeu.obtenir_constructeur_menu()
@@ -21,11 +24,12 @@ class MenuBanque(menus.Menu):
         try:
             montant = int(input("Combien voulez-vous déposer ? "))
             if montant <= 0: return
-            if montant > self.joueur.florins_liquides:
-                print("Vous n'avez pas assez de florins liquides.")
+
+            # On demande à la banque d'effectuer le dépôt
+            erreur = self.banque.deposer(self.joueur, montant)
+            if erreur:
+                print(erreur)  # Affiche le message d'erreur de la banque
             else:
-                self.joueur.florins_liquides -= montant
-                self.joueur.solde_bancaire += montant
                 print(f"{montant} florins déposés avec succès.")
         except ValueError:
             print("Montant invalide.")
@@ -35,11 +39,12 @@ class MenuBanque(menus.Menu):
         try:
             montant = int(input("Combien voulez-vous retirer ? "))
             if montant <= 0: return
-            if montant > self.joueur.solde_bancaire:
-                print("Vous n'avez pas assez de fonds en banque.")
+
+            # On demande à la banque d'effectuer le retrait
+            erreur = self.banque.retirer(self.joueur, montant)
+            if erreur:
+                print(erreur) # Affiche le message d'erreur de la banque
             else:
-                self.joueur.solde_bancaire -= montant
-                self.joueur.florins_liquides += montant
                 print(f"{montant} florins retirés avec succès.")
         except ValueError:
             print("Montant invalide.")
