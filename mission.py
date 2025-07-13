@@ -60,3 +60,10 @@ class Arret:
         for marchandise in self.marchandises_depart.keys():
             quantite += self.marchandises_depart[marchandise]
         assert quantite <= self.bateau.obtenir_capacite(), "Le volume total de marchandises en partant d'un arrét ne doit pas être supérieure à la capacité du bateau."
+    def obtenir_bateau(self):
+        return self.bateau
+    def volume_total(self):
+        quantite = 0
+        for marchandise in constantes.MARCHANDISES.keys():
+            quantite += self.obtenir_quantite_marchandise(marchandise) * constantes.MARCHANDISES[marchandise]["volume"]
+        return quantite

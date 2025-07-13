@@ -22,8 +22,8 @@ class Monde:
         #genes.prix_locaux_bateaux = {"Nef": 1000, "Galère": 2000, "Caraque": 3000, "Cocha": 2500}
         #venise.prix_locaux_bateaux = {"Nef": 1000, "Galère": 2000, "Caraque": 3000, "Cocha": 2500}
         
-        self.connecter_lieu(genes, mer_med, 100)
-        self.connecter_lieu(venise, mer_med, 60)
+        genes.ajouter_voisin(mer_med,100)
+        venise.ajouter_voisin(mer_med,60)
 
         self.joueur = Joueur(genes,self)
         premier_bateau = Bateau("Bateau de base", BATEAUX["Caraque"]["Capacité"], BATEAUX["Caraque"]["Vitesse"], genes,"Caraque",self)
@@ -41,10 +41,7 @@ class Monde:
 
     def obtenir_ports(self):
         return self.ports
-
-    def connecter_lieu(self, lieu1, lieu2, distance):
-        lieu1.ajouter_voisin(lieu2, distance)
-        lieu2.ajouter_voisin(lieu1, distance)
+        
     def avancer_temps(self):
         for bateau in self.bateaux:
             if bateau.a_destination():

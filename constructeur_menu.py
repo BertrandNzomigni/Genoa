@@ -55,7 +55,7 @@ class ConstructeurMenu:
     def construire_menu_ajout_arret(self,bateau):
         return MenuAjoutArret(self.monde,self.jeu,bateau)
 
-    def construire_menu_suppresion_arret(self,mission,bateau):
+    def construire_menu_suppression_arret(self,mission,bateau):
         return MenuSuppresionArret(self.monde,self.jeu,mission,bateau)
 
     def construire_menu_banque(self):

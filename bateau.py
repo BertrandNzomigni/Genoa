@@ -45,6 +45,7 @@ class Bateau:
             self.cargaison[nom_marchandise] += quantite
         else:
             self.cargaison[nom_marchandise] = quantite
+        self.verifier_invariants()
 
     def retirer_cargaison(self, nom_marchandise, quantite):
         """Retire une quantité d'une marchandise de la soute."""
@@ -52,15 +53,17 @@ class Bateau:
             self.cargaison[nom_marchandise] -= quantite
             if self.cargaison[nom_marchandise] <= 0:
                 del self.cargaison[nom_marchandise]
-
+        self.verifier_invariants()
     def a_destination(self):
         return self.position.a_destination()
     def obtenir_vitesse(self):
         return self.vitesse
     def avancer(self):
         self.position.avancer(self.vitesse)
+        self.verifier_invariants()
     def changer_destination(self,dest):
         self.position.changer_destination(dest)
+        self.verifier_invariants()
     def obtenir_capacite(self):
         return self.capacite
 
@@ -76,11 +79,13 @@ class Bateau:
         if self.mission == None:
             self.mission = mission.Mission()
         self.mission.ajouter_arret(arret,indice)
+        self.verifier_invariants()
     def supprimer_arret(self,arret):
         if self.a_mission():
             self.mission.supprimer_arret(arret)
         if len(self.mission.obtenir_arrets()) == 0:
             self.abondonner_mission()
+        self.verifier_invariants()
     
     def obtenir_arrets(self):
         if self.mission == None:
@@ -96,3 +101,11 @@ class Bateau:
 
     def abondonner_mission(self):
         self.mission = None
+        self.verifier_invariants()
+
+    def verifier_invariants(self):
+        qte = 0
+        for marchandise, quantite in self.cargaison.items():
+            assert quantite >= 0, f"Quantité négative pour {marchandise}"
+            qte += MARCHANDISES[marchandise]["volume"] * quantite
+        assert qte <= self.capacite, "Capacité de la soute dépassée"

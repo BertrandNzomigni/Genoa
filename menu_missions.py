@@ -12,7 +12,7 @@ class MenuMissions(menus.Menu):
         self.options[i] = ["Ajouter un arrét",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_ajout_arret(self.bateau)]]
         i += 1
         if self.bateau.a_mission():
-            self.options[i] = ["Supprimer un arrêt",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_suppresion_arret(self.bateau.obtenir_mission(),self.bateau)]]
+            self.options[i] = ["Supprimer un arrêt",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_suppression_arret(self.bateau.obtenir_mission(),self.bateau)]]
             i += 1
             self.options[i] = ["Modifier un arrêt",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_modification_arrets(self.bateau.obtenir_mission(),self.bateau)]]
             i += 1
@@ -84,17 +84,30 @@ class MenuModificationArret(menus.Menu):
     def charger_options(self):
         i = 1
         for marchandise in constantes.MARCHANDISES.keys():
-            self.options[i] = [f"Le bateau partira avec {self.arret.obtenir_quantite_marchandise(marchandise)} unités de {marchandise} : Modifier quantité",[self.modifier_quantite,marchandise]]
+            self.options[i] = [f"Le bateau partira avec {self.arret.obtenir_quantite_marchandise(marchandise)} unités de {marchandise} (Volume unitaire : {constantes.MARCHANDISES[marchandise]['volume']}): Modifier quantité",[self.modifier_quantite,marchandise]]
             i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.menu_anterieur]]
     def afficher_corps(self):
         print(f"--- Arrêt à {self.arret.obtenir_nom_lieu()} ---")
+        print(f"Volume : {self.arret.volume_total()}/{self.arret.obtenir_bateau().obtenir_capacite()}")
     def modifier_quantite(self,nom_marchandise):
         correct = False
         while not correct:
             try:
                 quantite = int(input("Donnez une quantité : "))
-                self.arret.modifier_quantite_marchandise(nom_marchandise,quantite)
-                correct = True
+                if self.verifier_volume(nom_marchandise,quantite):
+                    self.arret.modifier_quantite_marchandise(nom_marchandise,quantite)
+                    correct = True
+                else:
+                    input("Le volume total en marchandise est supérieur à la capacité du bateau.")
             except Exception as error:
                 print(f"Erreur : {error}")
+        return quantite
+    def verifier_volume(self,nom_marchandise,quantite):
+        quantite2 = 0
+        for marchandise in constantes.MARCHANDISES.keys():
+            if marchandise != nom_marchandise:
+                quantite2 += self.arret.obtenir_quantite_marchandise(marchandise) * constantes.MARCHANDISES[marchandise]["volume"]
+            else:
+                quantite2 += quantite * constantes.MARCHANDISES[nom_marchandise]["volume"]
+        return quantite2 <= self.arret.obtenir_bateau().obtenir_capacite()

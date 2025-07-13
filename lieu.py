@@ -9,26 +9,40 @@ class Lieu:
         self.voisins = list()
         self.dict_distance=dict()
         self.bateaux = list()
+        self.verifier_invariants()
 
     def ajouter_voisin(self, voisin, distance):
         self.voisins.append(voisin)
         self.dict_distance[voisin]=distance
+        voisin.recevoir_voisin(self,distance)
+        self.verifier_invariants()
+    def recevoir_voisin(self,voisin,distance):
+        self.voisins.append(voisin)
+        self.dict_distance[voisin]=distance
+        self.verifier_invariants()
 
     def obtenir_voisins(self):
         return self.voisins
 
     def obtenir_distance(self,voisin):
+        print(self.dict_distance)
         return self.dict_distance[voisin]
 
     def ajouter_bateau(self, bateau):
         self.bateaux.append(bateau)
+        self.verifier_invariants()
 
     def obtenir_bateaux(self):
         return self.bateaux
 
     def obtenir_nom(self):return self.nom
     def __str__(self):return self.nom
-
+    def verifier_invariants(self):
+        for voisin in self.voisins:
+            assert voisin in self.dict_distance, f"Le voisin {voisin} n'a pas de distance associée."
+            assert self.dict_distance[voisin] == voisin.obtenir_distance(self), f"La distance de {self} à {voisin} n'est pas identique à la distance de {voisin} à {self}."
+        for bateau in self.bateaux:
+            assert bateau is not None, "Un bateau dans la liste est None."
 
 class Port(Lieu):
     """Untype d elieu ou le commerce est possible."""
