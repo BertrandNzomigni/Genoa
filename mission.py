@@ -35,7 +35,7 @@ class Mission:
         assert len(self.arrets) > 1, "Une mission doit avoir au moins deux arrêts."
 
 class Arret:
-    def __init__(self,lieu,arret_base=None):
+    def __init__(self,lieu,bateau,arret_base=None):
         self.lieu = lieu
         self.marchandises_depart = dict()
         if arret_base:
@@ -43,13 +43,20 @@ class Arret:
         else:
             for marchandise in constantes.MARCHANDISES.keys():
                 self.marchandises_depart[marchandise] = 0
+        self.bateau = bateau
+        self.verifier_invariants()
     def obtenir_lieu(self):
         return self.lieu
     def obtenir_nom_lieu(self):
         return self.lieu.obtenir_nom()
     def modifier_quantite_marchandise(self,nom_marchandise,quantite):
-        assert quantite > 0, "La quantité de marchandise doit être nulle ou positive."
+        assert quantite >= 0, "La quantité de marchandise doit être nulle ou positive."
         self.marchandises_depart[nom_marchandise] = quantite
+        self.verifier_invariants()
+    def obtenir_quantite_marchandise(self,nom_marchandise):
+        return self.marchandises_depart[nom_marchandise]
     def verifier_invariants(self):
-        pass
-        # Invariant 1 : Le volume total en marchandises ne doit pas dépasser la capacité du bateau.
+        quantite = 0
+        for marchandise in self.marchandises_depart.keys():
+            quantite += self.marchandises_depart[marchandise]
+        assert quantite <= self.bateau.obtenir_capacite(), "Le volume total de marchandises en partant d'un arrét ne doit pas être supérieure à la capacité du bateau."
