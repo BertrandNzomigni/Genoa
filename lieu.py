@@ -1,7 +1,7 @@
 # mon_super_jeu/lieu.py
 # Classes Lieu, Port, et Mer
 import constantes
-
+import banque
 class Lieu:
     """Classe générique pour un endrooit sur la carte."""
     def __init__(self,nom):
@@ -45,7 +45,7 @@ class Port(Lieu):
             nom_banque = "Credito Veneziano"
             taux_base = 0.0012  # La banque de Venise est un peu plus généreuse
 
-        self.banque = Banque(nom=nom_banque, taux_interet=taux_base)
+        self.banque = banque.Banque(nom=nom_banque, taux_interet=taux_base)
 
     def obtenir_prix_bateau(self,type_bateau):
         return self.prix_locaux_bateaux[type_bateau]

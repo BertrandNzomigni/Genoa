@@ -5,8 +5,7 @@ class MenuInformationBateau(menus.Menu):
         super().__init__(monde, jeu)
         self.bateau = bateau
     def charger_options(self):
-        constructeur_menu = self.jeu.obtenir_constructeur_menu()
-        self.options[1] = ["Retour",[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_bateaux_global()]]
+        self.options[1] = ["Retour",[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_bateaux_global()]]
     def afficher_corps(self):
         print(f"Nom : {self.bateau.obtenir_nom()}")
         print(f"Type : {self.bateau.obtenir_type()}")

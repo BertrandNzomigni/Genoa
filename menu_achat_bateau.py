@@ -8,9 +8,8 @@ class MenuAchatBateau(menus.Menu):
         self.prix = prix
         self.joueur = joueur
     def charger_options(self):
-        constructeur_menu = self.jeu.obtenir_constructeur_menu()
         self.options[1] = ["Acheter",[self.acheter]]
-        self.options[2] = ["Retour",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_achat_bateaux()]]
+        self.options[2] = ["Retour",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_achat_bateaux()]]
     def afficher_corps(self):
         bateau = constantes.BATEAUX[self.type_bateau]
         print("--- Achat d'un bateau ---")

@@ -14,11 +14,10 @@ class MenuBanque(menus.Menu):
         print(f"Solde en compte : {solde:.2f}")
 
     def charger_options(self):
-        cm = self.jeu.obtenir_constructeur_menu()
         self.options[1] = ["Consulter son solde", [self.executer]] # Recharge le menu pour juste afficher
         self.options[2] = ["Déposer des florins", [self.deposer]]
         self.options[3] = ["Retirer des florins", [self.retirer]]
-        self.options[4] = ["Retour", [self.jeu.changer_menu_actif, cm.construire_menu_marche()]]
+        self.options[4] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_marche()]]
 
     def deposer(self):
         try:

@@ -8,7 +8,6 @@ class MenuMissions(menus.Menu):
 
 
     def charger_options(self):
-        self.constructeur_menu = self.jeu.obtenir_constructeur_menu()
         i = 1
         self.options[i] = ["Définir un arrét",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_ajout_arret(self.bateau)]]
         i += 1
@@ -43,12 +42,11 @@ class MenuAjoutArret(menus.Menu):
         super().__init__(monde, jeu)
         self.bateau = bateau
     def charger_options(self):
-        constructeur_menu = self.jeu.obtenir_constructeur_menu()
         i = 1
         for port in self.monde.obtenir_ports():
-            self.options[i] = [f"Ajouter un arrêt à {port.obtenir_nom()}",[self.bateau.ajouter_arret,mission.Arret(port)],[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_missions(self.bateau)]]
+            self.options[i] = [f"Ajouter un arrêt à {port.obtenir_nom()}",[self.bateau.ajouter_arret,mission.Arret(port)],[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
             i += 1
-        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_missions(self.bateau)]]
+        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
         
 class MenuSuppresionArret(menus.Menu):
     def __init__(self,monde,jeu,_mission,bateau):
@@ -57,12 +55,11 @@ class MenuSuppresionArret(menus.Menu):
         self.mission = _mission
         self.bateau = bateau
     def charger_options(self):
-        constructeur_menu = self.jeu.obtenir_constructeur_menu()
         i = 1
         for arret in self.mission.obtenir_arrets():
-            self.options[i] = [f"Supprimer l'arrêt à {arret.obtenir_nom_lieu()}",[self.bateau.supprimer_arret,arret],[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_missions(self.bateau)]]
+            self.options[i] = [f"Supprimer l'arrêt à {arret.obtenir_nom_lieu()}",[self.bateau.supprimer_arret,arret],[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
             i += 1
-        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_missions(self.bateau)]]
+        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
 
 class MenuModificationArrets(menus.Menu):
     def __init__(self,monde,jeu,mission,bateau):
@@ -70,11 +67,10 @@ class MenuModificationArrets(menus.Menu):
         self.mission = mission
         self.bateau = bateau
     def charger_options(self):
-        constructeur_menu = self.jeu.obtenir_constructeur_menu()
         i = 1
         for arret in self.mission.obtenir_arrets():
             self.options[i] = [f"Modifier l'arrêt à {arret.obtenir_nom_lieu()}",[constantes.nothing]]
             i += 1
-        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_missions(self.bateau)]]
+        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
     def afficher_corps(self):
         print("--- Modifier un arrêt ---")
