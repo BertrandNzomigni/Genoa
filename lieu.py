@@ -36,6 +36,7 @@ class Port(Lieu):
         super().__init__(nom)
         self.prix_locaux_marchandises =dict()
         self.prix_locaux_bateaux = dict()
+        self.taux_interet = 0.001  # 0.1% par jour
         for bateau in constantes.BATEAUX.keys():
             self.prix_locaux_bateaux[bateau] = constantes.BATEAUX[bateau]["Prix de base"]
     def obtenir_prix_bateau(self,type_bateau):

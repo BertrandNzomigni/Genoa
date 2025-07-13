@@ -19,4 +19,4 @@
 - Le joueur et son bateau bouge simultanément (Fait)
 - Le joueur peut voir les stats des bateaux. (Fait)
 - Le joueur peut voir les stats d'un bateau avant de l'acheter. (Fait)
-    
+- Le joueur peut Déposer l'argent, Rétirer l'argent, Gagner les interets passivement, verfier son solde (Fait)
