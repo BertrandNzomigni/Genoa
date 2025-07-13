@@ -30,6 +30,7 @@ class Mission:
             assert self.arrets[indice].obtenir_lieu() != self.arrets[indice+1].obtenir_lieu(), "Chaque arrêt doit avoir un lieu différent du suivant."
         if len(self.arrets) > 1:
             assert self.arrets[0].obtenir_lieu() != self.arrets[-1].obtenir_lieu(), "Chaque arrêt doit avoir un lieu différent du suivant."
+        assert len(self.arrets) != 0, "Une mission doit avoir au moins un arrêt."
 
 class Arret:
     def __init__(self,lieu,arret_base=None):
@@ -47,3 +48,6 @@ class Arret:
     def modifier_quantite_marchandise(self,nom_marchandise,quantite):
         assert quantite > 0, "La quantité de marchandise doit être nulle ou positive."
         self.marchandises_depart[nom_marchandise] = quantite
+    def verifier_invariants(self):
+        pass
+        # Invariant 1 : Le volume total en marchandises ne doit pas dépasser la capacité du bateau.
