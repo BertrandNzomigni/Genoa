@@ -5,6 +5,7 @@ from menu_gestion_bateau import *
 from menu_information_bateau import *
 from menu_achat_bateau import *
 from menu_missions import *
+from menu_banque import MenuBanque
 
 class ConstructeurMenu:
     """Classe 'Factory' pour créer les différents menus du jeu."""
@@ -57,4 +58,6 @@ class ConstructeurMenu:
     def construire_menu_suppresion_arret(self,mission,bateau):
         return MenuSuppresionArret(self.monde,self.jeu,mission,bateau)
 
+    def construire_menu_banque(self):
+        return MenuBanque(self.monde, self.jeu, self.joueur)
 

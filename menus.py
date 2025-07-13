@@ -159,6 +159,7 @@ class MenuMarche(Menu):
         super().__init__(monde, jeu)
         self.bateau = bateau
         self.joueur = joueur
+
     def charger_options(self):
         cm = self.jeu.obtenir_constructeur_menu()
         i = 1
@@ -169,7 +170,10 @@ class MenuMarche(Menu):
             self.options[i] = ["Vendre des marchandises",
                                [self.jeu.changer_menu_actif, cm.construire_menu_vente()]]
             i += 1
+
         self.options[i] = ["Acheter un bateau",[self.jeu.changer_menu_actif, cm.construire_menu_achat_bateaux()]]
+        i += 1
+        self.options[i] = ["Accéder à la banque", [self.jeu.changer_menu_actif, cm.construire_menu_banque()]]
         i += 1
         self.options[i] = ["Retour au menu principal", [self.jeu.changer_menu_actif, cm.construire_menu_principal()]]
 

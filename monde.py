@@ -49,6 +49,19 @@ class Monde:
         for bateau in self.bateaux:
             if bateau.a_destination():
                 bateau.avancer()
+                # Amélioration : informer le joueur si un de ses bateaux arrive à destination
+                if bateau.position.a_atteint_destination():
+                    print(f"INFO : Le bateau '{bateau.obtenir_nom()}' est arrivé à {bateau.obtenir_nom_lieu()}.")
+            joueur = self.obtenir_joueur()
+            if joueur.solde_bancaire > 0:
+                # On ne peut gagner des intérêts que si on est dans un port
+                lieu_joueur = joueur.obtenir_lieu()
+                if isinstance(lieu_joueur, Port):
+                    interets = joueur.solde_bancaire * lieu_joueur.taux_interet
+                    joueur.solde_bancaire += interets
+                    print(f"BANQUE : Vous avez gagné {interets:.2f} florins d'intérêts sur votre dépôt.")
+
         self.temps.avancer()
+
         print("Un jour passe...")
         input("Appuyez sur Entrée pour continuer...")
