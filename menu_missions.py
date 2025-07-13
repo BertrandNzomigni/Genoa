@@ -6,12 +6,12 @@ class MenuMissions(menus.Menu):
         super().__init__(monde, jeu)
         self.bateau = bateau
     def charger_options(self):
-        constructeur_menu = self.jeu.obtenir_constructeur_menu()
+        self.constructeur_menu = self.jeu.obtenir_constructeur_menu()
         i = 1
-        self.options[i] = ["Définir un arrét",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_ajout_arret(self.bateau)]]
+        self.options[i] = ["Définir un arrét",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_ajout_arret(self.bateau)]]
         i += 1
         if self.bateau.a_mission():
-            self.options[i] = ["Supprimer un arrêt",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_suppresion_arret(self.bateau.obtenir_mission(),self.bateau)]]
+            self.options[i] = ["Supprimer un arrêt",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_suppresion_arret(self.bateau.obtenir_mission(),self.bateau)]]
             i += 1
         self.options[i] = ["Retour", [self.verification_et_sortie]]
     def afficher_corps(self):
@@ -25,7 +25,7 @@ class MenuMissions(menus.Menu):
         if correct:
             if self.bateau.a_mission():
                 self.bateau.obtenir_mission().verifier_invariants()
-            self.jeu.changer_menu_actif(constructeur_menu.construire_menu_gestion_bateaux(self.bateau))
+            self.jeu.changer_menu_actif(self.constructeur_menu.construire_menu_gestion_bateaux(self.bateau))
         else:
             input("Attention, la mission est incorrecte")
             
@@ -54,6 +54,8 @@ class MenuSuppresionArret(menus.Menu):
         for arret in self.mission.obtenir_arrets():
             self.options[i] = [f"Supprimer l'arrêt à {arret.obtenir_nom_lieu()}",[self.mission.supprimer_arret,arret]]
             i += 1
+            if len(self.mission.obtenir_arrets()) == 0:
+                self.bateau.abondonner_mission()
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_missions(self.bateau)]]
 
 

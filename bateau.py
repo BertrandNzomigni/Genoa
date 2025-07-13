@@ -88,3 +88,6 @@ class Bateau:
 
     def a_mission(self):
         return self.mission != None
+
+    def abondonner_mission(self):
+        self.mission = None
