@@ -1,6 +1,6 @@
 # mon_super_jeu/joueur.py
 
-from mouvement import Itineraire, Deplaceur, CoordinationMouvement
+import position
 
 
 class Joueur:
@@ -8,12 +8,13 @@ class Joueur:
 
     def __init__(self, lieu_de_depart):
         self.florins = 2000
-        self.lieu = lieu_de_depart
-        self.itineraire = Itineraire(self)
-        self.deplaceur = Deplaceur(self.itineraire, self)
-        self.coord = CoordinationMouvement(self, self.deplaceur, self.itineraire)
+        self.position = position.Position(lieu_de_depart)
+
         self.bateaux = list()
         self.bateau_dirige = None
+    
+    def est_parti(self):
+        return self.position.est_en_voyage()
 
     def obtenir_florins(self):
         return self.florins
@@ -24,17 +25,8 @@ class Joueur:
     def gagner(self, montant):
         self.florins += montant
 
-    def obtenir_itineraire(self):
-        return self.itineraire
-
     def obtenir_lieu(self):
-        return self.lieu
-
-    def changer_lieu(self, lieu):
-        self.lieu = lieu
-
-    def obtenir_coordinateur(self):
-        return self.coord
+        return self.position.obtenir_depart()
 
     def acquerir_bateau(self, bateau):
         self.bateaux.append(bateau)
@@ -48,9 +40,13 @@ class Joueur:
     def obtenir_bateau_dirige(self):
         return self.bateau_dirige
 
+    def dirige_bateau(self):
+        return self.bateau_dirige != None
+
     def rejoindre_bateau(self, bateau):
-        if bateau.obtenir_lieu() == self.lieu:
+        if bateau.obtenir_lieu() == self.obtenir_lieu():
             self.bateau_dirige = bateau
+            self.position = self.bateau_dirige.obtenir_position()
             print(f"Vous prenez le commandement du {bateau.obtenir_nom()}.")
         else:
             print("Le bateau n'est pas ici.")
@@ -59,3 +55,19 @@ class Joueur:
         if self.bateau_dirige:
             print(f"Vous quittez le commandement du {self.bateau_dirige.obtenir_nom()}.")
             self.bateau_dirige = None
+            self.position = position.Position(self.position.obtenir_depart())
+    
+    def a_destination(self):
+        return self.position.a_destination()
+
+    def changer_destination(self,dest):
+        self.position.changer_destination(dest)
+    
+    def obtenir_destination(self):
+        return self.position.obtenir_destination()
+    
+    def obtenir_distance_voyage(self):
+        return self.position.obtenir_distance()
+
+    def faire_demi_tour(self):
+        self.position.faire_demi_tour()

@@ -1,6 +1,6 @@
 # mon_super_jeu/lieu.py
 # Classes Lieu, Port, et Mer
-
+import constantes
 
 class Lieu:
     """Classe générique pour un endrooit sur la carte."""
@@ -36,6 +36,8 @@ class Port(Lieu):
         super().__init__(nom)
         self.prix_locaux_marchandises =dict()
         self.prix_locaux_bateaux = dict()
+        for bateau in constantes.BATEAUX.keys():
+            self.prix_locaux_bateaux[bateau] = constantes.BATEAUX[bateau]["Prix de base"]
 
 class Mer(Lieu):
     """Untype de lieu qui peut etre traversé qu'en bateau."""

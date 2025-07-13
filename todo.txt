@@ -5,4 +5,14 @@
 - Définir Lieu comme superclasse de Port et Merl (Fait)
   - Enlever tous les Obtenir_Lieu chainés (Fait)
 - Etudier la fonction joueur.obtenir_bateaux_a_lieu (Fait)
+- Le joueur peut envoyer un bateau en mission
+  - Il exsite une classe MenuGestionBateau (Fait)
+  - Elle offre la possibilité de monter ou de descendre d'un navire. (Fait)
+  - Elle offre la possibilité d'envoyer le bateau en mission.
+      Il existe un menu pour les missions
+    - Le joueur décide du port d'arrivée
+    - Le joueur spécifie les marchandises à acheter au port de départ, les marchandises à vendre à l'arrivée puis finalement
+    les marchandises à ramener au port de départ.
+- Ajouter un type au bateaux (Fait)
+- Le joueur et son bateau bouge simultanément
     

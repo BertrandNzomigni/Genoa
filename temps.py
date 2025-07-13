@@ -8,9 +8,6 @@ class Temps:
 
     def avancer(self):
         self.jours += 1
-        print("Un jour passe...")
-        self.monde.obtenir_joueur().obtenir_coordinateur().avancer()
-        input("Appuyez sur Entrée pour continuer...")
 
     def obtenir_valeur(self):
         return self.jours

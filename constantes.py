@@ -13,10 +13,11 @@ MARCHANDISES = {
 }
 
 BATEAUX = {
-    "Nef" : {"Capacité" : 300, "Vitesse" : 10},
-    "Galère" : {"Capacité" : 50, "Vitesse" : 20},
-    "Caraque" : {"Capacité" : 250, "Vitesse" : 20},
-    "Cocha" : {"Capcité" : 200, "Vitesse" : 10}
+    "Nef" : {"Capacité" : 300, "Vitesse" : 10, "Prix de base": 1000},
+    "Galère" : {"Capacité" : 50, "Vitesse" : 20, "Prix de base": 2000},
+    "Caraque" : {"Capacité" : 250, "Vitesse" : 20, "Prix de base": 3000},
+    "Cocha" : {"Capacité" : 200, "Vitesse" : 10, "Prix de base": 2500},
+    "Bateau de test" : {"Capacité" : 10000, "Vitesse" : 1000, "Prix de base": 0}
 }
 
 def clear_screen():

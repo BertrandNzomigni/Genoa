@@ -1,6 +1,7 @@
 # mon_super_jeu/constructeur_menu.py
 
 from menus import *
+from menu_gestion_bateau import *
 
 
 class ConstructeurMenu:
@@ -35,7 +36,8 @@ class ConstructeurMenu:
     def construire_menu_achat_bateaux(self):
         return MenuAchatBateaux(self.monde,self.jeu,self.joueur,self.joueur.obtenir_lieu())
 
-
+    def construire_menu_gestion_bateaux(self,bateau):
+        return MenuGestionBateau(self.monde,self.jeu,bateau,self.joueur)
 
 
 

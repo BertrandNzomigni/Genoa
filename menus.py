@@ -59,7 +59,7 @@ class MenuPrincipal(Menu):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
         joueur = self.monde.obtenir_joueur()
         i = 1
-        self.options[i] = ["Jour suivant", [self.temps.avancer,],[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
+        self.options[i] = ["Jour suivant", [self.monde.avancer_temps,],[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
         i += 1
         self.options[i] = ["Sélectionner une nouvelle destination",
                            [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_deplacement()]];
@@ -67,7 +67,7 @@ class MenuPrincipal(Menu):
         self.options[i] = ["Voir l'ensemble de vos bateaux",
                            [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_bateaux_global()]];
         i += 1
-        if isinstance(joueur.obtenir_lieu(), Port):
+        if isinstance(joueur.obtenir_lieu(), Port) and not joueur.est_parti():
             print(joueur.obtenir_lieu())
             self.options[i] = ["Gérer vos bateaux dans ce port",[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_bateaux_port()]];
             i += 1
@@ -77,15 +77,15 @@ class MenuPrincipal(Menu):
 
     def afficher_corps(self):
         j = self.monde.obtenir_joueur()
-        print(f"Jour : {self.monde.obtenir_temps().obtenir_valeur()}\nFlorins : {j.obtenir_florins()} florins.")
+        print(f"Jour : {self.temps.obtenir_valeur()}\nFlorins : {j.obtenir_florins()} florins.")
         if j.obtenir_bateau_dirige():
             print(f"Vous commandez le bateau : {j.obtenir_bateau_dirige().obtenir_nom()}")
         else:
             print("Vous ne commandez aucun bateau.")
         print("-" * 20)
-        if j.obtenir_itineraire().a_destination():
-            print(f"Vous naviguez vers {j.obtenir_itineraire().obtenir_destination()}.")
-            print(f"La distance restante est de {j.obtenir_itineraire().obtenir_distance() * 10} kilomètres.")
+        if j.a_destination():
+            print(f"Vous naviguez vers {j.obtenir_destination()}.")
+            print(f"La distance restante est de {j.obtenir_distance_voyage()} kilomètres.")
         else:
             print(f"Vous êtes actuellement à {j.obtenir_lieu()}.")
 
@@ -94,17 +94,17 @@ class MenuDeplacement(Menu):
     def charger_options(self):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
         joueur = self.monde.obtenir_joueur()
-        self.pas_en_chemin = not joueur.obtenir_itineraire().a_destination()
+        self.pas_en_chemin = not joueur.a_destination()
         if self.pas_en_chemin:
             i = 1
             for destination in joueur.obtenir_lieu().obtenir_voisins():
                 self.options[i] = [destination.obtenir_nom(),
-                                   [joueur.obtenir_coordinateur().aller_destination, destination],
+                                   [joueur.changer_destination, destination],
                                    [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]];
                 i += 1
             self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
         else:
-            self.options[1] = ["Faire demi-tour", [joueur.obtenir_coordinateur().faire_demi_tour],
+            self.options[1] = ["Faire demi-tour", [joueur.faire_demi_tour],
                                [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
             self.options[2] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
 
@@ -121,12 +121,7 @@ class MenuBateauxPort(Menu):
         joueur = self.monde.obtenir_joueur()
         i = 1
         for bateau in joueur.obtenir_bateaux_a_lieu(joueur.obtenir_lieu()):
-            action_text, action_func = (
-            "Quitter le commandement", joueur.quitter_bateau) if joueur.obtenir_bateau_dirige() == bateau else (
-            "Prendre le commandement", joueur.rejoindre_bateau)
-            self.options[i] = [
-                f"{bateau.obtenir_nom()} (Capacité: {bateau.obtenir_volume_utilise()}/{bateau.capacite}) - {action_text}",
-                [action_func, bateau], [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]];
+            self.options[i] = [f"{bateau} : Gérer",[self.jeu.changer_menu_actif, constructeur_menu.construire_menu_gestion_bateaux(bateau)]]
             i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_principal()]]
 
@@ -284,7 +279,7 @@ class MenuAchatBateaux(Menu):
                     entree = input()
                     if entree == "Y":
                         entree_correct2 = True
-                        achat = AchatBateau(self.joueur,self.port,type_bateau,prix,nom)
+                        achat = AchatBateau(self.joueur,self.port,type_bateau,prix,nom,self.monde)
                         if not achat.verifier_appliquer():
                             print(achat.obtenir_erreur())
                     elif entree == "N":
