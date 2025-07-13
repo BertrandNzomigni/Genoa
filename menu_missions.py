@@ -13,11 +13,22 @@ class MenuMissions(menus.Menu):
         if self.bateau.a_mission():
             self.options[i] = ["Supprimer un arrêt",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_suppresion_arret(self.bateau.obtenir_mission(),self.bateau)]]
             i += 1
-        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, constructeur_menu.construire_menu_gestion_bateaux(self.bateau)]]
+        self.options[i] = ["Retour", [self.verification_et_sortie]]
     def afficher_corps(self):
         print("--- Arrêts ---")
         for arret in self.bateau.obtenir_arrets():
             print(f"Arrét à {arret.obtenir_nom_lieu()}")
+    def verification_et_sortie(self):
+        correct = True
+        if self.bateau.a_mission():
+            correct = self.bateau.obtenir_mission().verifier()
+        if correct:
+            if self.bateau.a_mission():
+                self.bateau.obtenir_mission().verifier_invariants()
+            self.jeu.changer_menu_actif(constructeur_menu.construire_menu_gestion_bateaux(self.bateau))
+        else:
+            input("Attention, la mission est incorrecte")
+            
 
 class MenuAjoutArret(menus.Menu):
     def __init__(self,monde,jeu,bateau):

@@ -10,16 +10,26 @@ class Mission:
             indice = len(self.arrets)
         lieu_arret = arret.obtenir_lieu()
         self.arrets.insert(indice,arret)
-        if indice < len(self.arrets) - 1:
-            assert lieu_arret != self.arrets[indice+1].obtenir_lieu(), "Chaque arrêt doit avoir un lieu différent du suivant."
-        if indice > 1:
-            assert lieu_arret != self.arrets[indice-1].obtenir_lieu(), "Chaque arrêt doit avoir un lieu différent du précédent."
     def obtenir_nombre_arrets(self):
         return len(self.arrets)
     def obtenir_arrets(self):
         return self.arrets
     def supprimer_arret(self,arret):
         self.arrets.remove(arret)
+    def verifier(self):
+        for indice in range(len(self.arrets)-1):
+            if not self.arrets[indice].obtenir_lieu() != self.arrets[indice+1].obtenir_lieu():
+                return False
+        if len(self.arrets) > 1:
+            if not self.arrets[0].obtenir_lieu() != self.arrets[-1].obtenir_lieu():
+                return False
+        return True
+
+    def verifier_invariants(self):
+        for indice in range(len(self.arrets)-1):
+            assert self.arrets[indice].obtenir_lieu() != self.arrets[indice+1].obtenir_lieu(), "Chaque arrêt doit avoir un lieu différent du suivant."
+        if len(self.arrets) > 1:
+            assert self.arrets[0].obtenir_lieu() != self.arrets[-1].obtenir_lieu(), "Chaque arrêt doit avoir un lieu différent du suivant."
 
 class Arret:
     def __init__(self,lieu,arret_base=None):
