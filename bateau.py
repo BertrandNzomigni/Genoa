@@ -85,3 +85,6 @@ class Bateau:
     
     def obtenir_mission(self):
         return self.mission
+
+    def a_mission(self):
+        return self.mission != None

@@ -51,7 +51,10 @@ class ConstructeurMenu:
     def construire_menu_missions(self,bateau):
         return MenuMissions(self.monde,self.jeu,bateau)
     
-    def construre_menu_ajout_arret(self,bateau,mission):
-        return MenuAjoutArret(self.monde,self.jeu,bateau,mission)
+    def construire_menu_ajout_arret(self,bateau):
+        return MenuAjoutArret(self.monde,self.jeu,bateau)
+
+    def construire_menu_suppresion_arret(self,mission,bateau):
+        return MenuSuppresionArret(self.monde,self.jeu,mission,bateau)
 
 

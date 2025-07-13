@@ -10,7 +10,8 @@
   - Elle offre la possibilité de monter ou de descendre d'un navire. (Fait)
   - Elle offre la possibilité d'envoyer le bateau en mission.
       Il existe un menu pour les missions (Fait)
-    - Le joueur décide du port d'arrivée
+    - Le joueur décide du port d'arrivée '(Fait)
+    - Le joueur peut supprimer un arrêt
     - Le joueur spécifie les marchandises à acheter au port de départ, les marchandises à vendre à l'arrivée puis finalement
     les marchandises à ramener au port de départ.
 - Ajouter un type au bateaux (Fait)

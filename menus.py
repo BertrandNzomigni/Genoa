@@ -11,7 +11,6 @@ class Menu:
     def __init__(self, monde, jeu):
         self.monde = monde
         self.jeu = jeu
-        self.options = dict()
 
     def charger_options(self):
         pass
@@ -20,6 +19,7 @@ class Menu:
         pass
 
     def executer(self):
+        self.options = dict()
         self.charger_options()
         self.afficher()
         self.lire()
