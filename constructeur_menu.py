@@ -47,7 +47,11 @@ class ConstructeurMenu:
 
     def construire_menu_achat_bateau(self,type_bateau,prix):
         return MenuAchatBateau(self.monde,self.jeu,type_bateau,prix,self.joueur)
+    
     def construire_menu_missions(self,bateau):
         return MenuMissions(self.monde,self.jeu,bateau)
+    
+    def construre_menu_ajout_arret(self,bateau,mission):
+        return MenuAjoutArret(self.monde,self.jeu,bateau,mission)
 
 

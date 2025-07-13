@@ -39,6 +39,9 @@ class Monde:
     def nouveau_bateau(self,bateau):
         self.bateaux.append(bateau)
 
+    def obtenir_ports(self):
+        return self.ports
+
     def connecter_lieu(self, lieu1, lieu2, distance):
         lieu1.ajouter_voisin(lieu2, distance)
         lieu2.ajouter_voisin(lieu1, distance)

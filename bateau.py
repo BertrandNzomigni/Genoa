@@ -2,7 +2,7 @@
 
 from constantes import MARCHANDISES
 import position
-
+import mission
 
 class Bateau:
     """Représente un bateau avec sa soute et ses caractéristiques."""
@@ -14,6 +14,7 @@ class Bateau:
         self.position = position.Position(lieu)
         self.cargaison = dict()
         self.type_bateau = type_bateau
+        self.mission = None
         monde.nouveau_bateau(self)
 
     def obtenir_nom(self):
@@ -71,3 +72,16 @@ class Bateau:
             return self.cargaison[nom_cargaison]
         else:
             return 0
+    def ajouter_arret(self,arret,indice = -1):
+        if self.mission == None:
+            self.mission = mission.Mission()
+        self.mission.ajouter_arret(arret,indice)
+    
+    def obtenir_arrets(self):
+        if self.mission == None:
+            return list()
+        else:
+            return self.mission.obtenir_arrets()
+    
+    def obtenir_mission(self):
+        return self.mission

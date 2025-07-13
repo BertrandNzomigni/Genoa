@@ -53,7 +53,7 @@ class VenteMarchandises(Transaction):
         self.nom_marchandise = nom_marchandise
     def verifier(self):
         quantite_max = self.bateau.cargaison[self.nom_marchandise]
-        if quantite_max > self.quantite:
+        if quantite_max < self.quantite:
             self.erreur = "Pas assez de marchandises."
             return False
         else:
