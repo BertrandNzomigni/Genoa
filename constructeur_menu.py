@@ -2,6 +2,7 @@
 
 from menus import *
 from menu_gestion_bateau import *
+from menu_information_bateau import *
 
 
 class ConstructeurMenu:
@@ -11,6 +12,7 @@ class ConstructeurMenu:
         self.monde = monde
         self.jeu = jeu
         self.joueur = monde.obtenir_joueur()
+        self.bateaux = self.joueur.obtenir_bateaux()
 
     def construire_menu_principal(self):
         return MenuPrincipal(self.monde, self.jeu, self.monde.obtenir_temps())
@@ -19,7 +21,7 @@ class ConstructeurMenu:
         return MenuBateauxPort(self.monde, self.jeu)
 
     def construire_menu_bateaux_global(self):
-        return MenuBateauxGlobal(self.monde.obtenir_joueur(), self.monde, self.jeu)
+        return MenuBateauxGlobal(self.bateaux, self.monde, self.jeu)
 
     def construire_menu_deplacement(self):
         return MenuDeplacement(self.monde, self.jeu)
@@ -38,6 +40,8 @@ class ConstructeurMenu:
 
     def construire_menu_gestion_bateaux(self,bateau):
         return MenuGestionBateau(self.monde,self.jeu,bateau,self.joueur)
+    def construire_menu_information_bateau(self,bateau):
+        return MenuInformationBateau(self.monde,self.jeu,bateau)
 
 
 

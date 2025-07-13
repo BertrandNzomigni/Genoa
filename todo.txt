@@ -15,4 +15,6 @@
     les marchandises à ramener au port de départ.
 - Ajouter un type au bateaux (Fait)
 - Le joueur et son bateau bouge simultanément (Fait)
+- Le joueur peut voir les stats des bateaux. (Fait)
+- Le joueur peut voir les stats d'un bateau avant de l'acheter.
     

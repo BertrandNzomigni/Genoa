@@ -129,18 +129,23 @@ class MenuBateauxPort(Menu):
 
 
 class MenuBateauxGlobal(Menu):
-    def __init__(self, joueur, monde, jeu):
+    def __init__(self, bateaux, monde, jeu):
         super().__init__(monde, jeu)
-        self.joueur = joueur
+        self.bateaux = bateaux
 
     def charger_options(self):
-        self.options[1] = ["Retour", [self.jeu.changer_menu_actif,
-                                      self.jeu.obtenir_constructeur_menu().construire_menu_principal()]]
+        constructeur = self.jeu.obtenir_constructeur_menu()
+        i = 1
+        for bateau in self.bateaux:
+            self.options[i] = [f"Voir plus d'informations à propos de {bateau.obtenir_nom()}.",[self.jeu.changer_menu_actif,constructeur.construire_menu_information_bateau(bateau)]]
+            i += 1
+        self.options[i] = ["Retour", [self.jeu.changer_menu_actif,
+                                      constructeur.construire_menu_principal()]]
 
     def afficher_corps(self):
         print("--- Flotte complète ---")
-        if not self.joueur.obtenir_bateaux(): print("Vous ne possédez aucun bateau.")
-        for bateau in self.joueur.obtenir_bateaux():
+        if not self.bateaux: print("Vous ne possédez aucun bateau.")
+        for bateau in self.bateaux:
             print(
                 f"- {bateau.obtenir_nom()} à {bateau.obtenir_lieu().obtenir_nom()} (Capacité: {bateau.obtenir_volume_utilise()}/{bateau.capacite})")
 

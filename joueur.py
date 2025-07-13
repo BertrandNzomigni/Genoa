@@ -44,18 +44,16 @@ class Joueur:
         return self.bateau_dirige != None
 
     def rejoindre_bateau(self, bateau):
-        if bateau.obtenir_lieu() == self.obtenir_lieu():
-            self.bateau_dirige = bateau
-            self.position = self.bateau_dirige.obtenir_position()
-            print(f"Vous prenez le commandement du {bateau.obtenir_nom()}.")
-        else:
-            print("Le bateau n'est pas ici.")
+        assert bateau.obtenir_lieu() == self.obtenir_lieu(), "Le joueur peut rejoindre un bateau seulement si ils sont au même endroit."
+        self.bateau_dirige = bateau
+        self.position = self.bateau_dirige.obtenir_position()
+        print(f"Vous prenez le commandement du {bateau.obtenir_nom()}.")
 
     def quitter_bateau(self, bateau=None):
-        if self.bateau_dirige:
-            print(f"Vous quittez le commandement du {self.bateau_dirige.obtenir_nom()}.")
-            self.bateau_dirige = None
-            self.position = position.Position(self.position.obtenir_depart())
+        assert(self.bateau_dirige), "Le joueur ne peut pas quitter un bateau si il n'est pas sur un bateau."
+        print(f"Vous quittez le commandement du {self.bateau_dirige.obtenir_nom()}.")
+        self.bateau_dirige = None
+        self.position = position.Position(self.position.obtenir_depart())
     
     def a_destination(self):
         return self.position.a_destination()

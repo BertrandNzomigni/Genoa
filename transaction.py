@@ -1,5 +1,6 @@
 from constantes import *
 from bateau import Bateau
+import lieu
 
 class Transaction:
     def __init__(self,joueur,lieu):
@@ -8,6 +9,7 @@ class Transaction:
         self.erreur = ""
         self.montant = 0
     def verifier_appliquer(self):
+        assert isinstance(self.lieu,lieu.Port), "Les transactions sont impossibles hors d'un port."
         if self.verifier():
             self.appliquer()
             return True

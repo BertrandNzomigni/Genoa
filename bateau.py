@@ -57,3 +57,5 @@ class Bateau:
         self.position.avancer(self.vitesse)
     def changer_destination(self,dest):
         self.position.changer_destination(dest)
+    def obtenir_capacite(self):
+        return self.capacite
