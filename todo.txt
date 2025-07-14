@@ -16,10 +16,13 @@
     - Le joueur spécifie les marchandises à acheter au port de départ, les marchandises à vendre à l'arrivée puis finalement
     les marchandises à ramener au port de départ. (Fait)
     - La quantité de marchandise à un arrêt ne peut pas dépasser la capacité du bateau concerné. (Fait)
-    - Le joueur peut déterminer le nombre de cycles.
+    - Le joueur peut déterminer le nombre de cycles. (Fait)
     - Un bateau peut compléter ses missions de manière autonome.
 - Ajouter un type au bateaux (Fait)
 - Le joueur et son bateau bouge simultanément (Fait)
 - Le joueur peut voir les stats des bateaux. (Fait)
 - Le joueur peut voir les stats d'un bateau avant de l'acheter. (Fait)
 - Le joueur peut Déposer l'argent, Rétirer l'argent, Gagner les interets passivement, verfier son solde (Fait)
+- Le joueur a une maison à Gênes. Elle peut stocker des florins.
+- Un bateau peut parcourir plusieurs noeuds en un jour.
+  - Les bateaux ont accès à une classe Chemin, déterminant la route à suivre.
