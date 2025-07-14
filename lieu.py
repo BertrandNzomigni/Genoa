@@ -9,7 +9,6 @@ class Lieu:
         self.voisins = list()
         self.dict_distance=dict()
         self.bateaux = list()
-        self.verifier_invariants()
 
     def ajouter_voisin(self, voisin, distance):
         self.voisins.append(voisin)
@@ -46,9 +45,9 @@ class Lieu:
 
 class Port(Lieu):
     """Untype d elieu ou le commerce est possible."""
-    def __init__(self,nom):
+    def __init__(self,nom,prix_locaux_marchandises):
         super().__init__(nom)
-        self.prix_locaux_marchandises =dict()
+        self.prix_locaux_marchandises = prix_locaux_marchandises
         self.prix_locaux_bateaux = dict()
         for bateau in constantes.BATEAUX.keys():
             self.prix_locaux_bateaux[bateau] = constantes.BATEAUX[bateau]["Prix de base"]
@@ -60,13 +59,19 @@ class Port(Lieu):
             taux_base = 0.0012  # La banque de Venise est un peu plus généreuse
 
         self.banque = banque.Banque(nom=nom_banque, taux_interet=taux_base)
+        self.verifier_invariants()
 
     def obtenir_prix_bateau(self,type_bateau):
         return self.prix_locaux_bateaux[type_bateau]
     def obtenir_prix_marchandises(self,nom_marchandise):
         return self.prix_locaux_marchandises[nom_marchandise]
+    def verifier_invariants(self):
+        super().verifier_invariants()
+        for marchandise in constantes.MARCHANDISES.keys():
+            assert marchandise in self.prix_locaux_marchandises.keys(), f"Le prix de {marchandise} n'est pas défini à {self.nom}"
 
 class Mer(Lieu):
     """Untype de lieu qui peut etre traversé qu'en bateau."""
     def __init__(self,nom):
         super().__init__(nom)
+        super().verifier_invariants()

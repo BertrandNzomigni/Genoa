@@ -10,14 +10,14 @@ class Monde:
     """Contient toutes les entités du jeu (lieux, joueur, etc.)."""
 
     def __init__(self):
-        genes = Port("Gênes")
-        venise = Port("Venise")
+        prix_genes = {"Soie": 50, "Épices": 20, "Vin": 10, "Bois": 5}
+        prix_venise = {"Soie": 60, "Épices": 25, "Vin": 8, "Bois": 7}
+        genes = Port("Gênes",prix_genes)
+        venise = Port("Venise",prix_venise)
         mer_med = Mer("Mer Méditerranée")
         self.ports = [genes, venise]
         self.mers = [mer_med]
         self.bateaux = list()
-        genes.prix_locaux_marchandises = {"Soie": 50, "Épices": 20, "Vin": 10, "Bois": 5}
-        venise.prix_locaux_marchandises = {"Soie": 60, "Épices": 25, "Vin": 8, "Bois": 7}
 
         #genes.prix_locaux_bateaux = {"Nef": 1000, "Galère": 2000, "Caraque": 3000, "Cocha": 2500}
         #venise.prix_locaux_bateaux = {"Nef": 1000, "Galère": 2000, "Caraque": 3000, "Cocha": 2500}

@@ -270,6 +270,7 @@ class MenuAchatBateaux(Menu):
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_marche()]]
     def afficher_corps(self):
         print(f"--- Acheter un navire à {self.port.obtenir_nom()} ---")
+        print(f"Vos florins: {self.joueur.obtenir_florins()}")
     def achat(self,type_bateau):
         prix = self.port.prix_locaux_bateaux[type_bateau]
         self.jeu.changer_menu_actif(self.constructeur_menu.construire_menu_achat_bateau(type_bateau,self.port.obtenir_prix_bateau(type_bateau)))
