@@ -1,31 +1,34 @@
 import constantes
+import copy
 
 class Mission:
-    def __init__(self):
-        self.arrets = list()
+    def __init__(self,schema):
+        self.arrets = copy.deepcopy(schema.obtenir_arrets())
+        self.nombre_max_cycles = schema.obtenir_nombre_max_cycles()
         self.indice_prochain_arret = 1
+        self.nombre_cycles = 0
+        self.verifier_invariants()
     def ajouter_arret(self,arret,indice):
         assert isinstance(arret,Arret), "Seulement des arrêts peuvent être ajouté à une mission."
         if indice == -1:
             indice = len(self.arrets)
         lieu_arret = arret.obtenir_lieu()
         self.arrets.insert(indice,arret)
+        self.verifier_invariants()
     def obtenir_nombre_arrets(self):
         return len(self.arrets)
     def obtenir_arrets(self):
         return self.arrets
     def supprimer_arret(self,arret):
         self.arrets.remove(arret)
-    def verifier(self):
-        for indice in range(len(self.arrets)-1):
-            if not self.arrets[indice].obtenir_lieu() != self.arrets[indice+1].obtenir_lieu():
-                return False
-        if len(self.arrets) > 1:
-            if not self.arrets[0].obtenir_lieu() != self.arrets[-1].obtenir_lieu():
-                return False
-        else:
-            return False
-        return True
+        self.verifier_invariants()
+
+    def definir_nombre_max_cycles(self,nombre):
+        self.nombre_max_cycles =  nombre
+        self.verifier_invariants()
+    
+    def obtenir_nombre_max_cycles(self):
+        return self.nombre_max_cycles
 
     def verifier_invariants(self):
         for indice in range(len(self.arrets)-1):
@@ -33,6 +36,8 @@ class Mission:
         if len(self.arrets) > 1:
             assert self.arrets[0].obtenir_lieu() != self.arrets[-1].obtenir_lieu(), "Chaque arrêt doit avoir un lieu différent du suivant."
         assert len(self.arrets) > 1, "Une mission doit avoir au moins deux arrêts."
+        assert self.nombre_max_cycles >= self.nombre_cycles, "Le nombre de cycle ne doit pas dépasser le nombre maximum de cycle."
+        assert self.nombre_max_cycles > 0, "Le nombre maximum de cycle doit être positif."
 
 class Arret:
     def __init__(self,lieu,bateau,arret_base=None):

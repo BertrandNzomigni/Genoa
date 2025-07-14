@@ -1,6 +1,6 @@
 from menus import *
 from constantes import *
-
+from mission_schema import MissionSchema
 class MenuGestionBateau(Menu):
     def __init__(self, monde, jeu, bateau,joueur):
         super().__init__(monde, jeu)
@@ -13,8 +13,13 @@ class MenuGestionBateau(Menu):
         else:
             self.options[i]= ["Prendre le commandement",[self.joueur.rejoindre_bateau,self.bateau]]
         i += 1
-        self.options[i] = ["Envoyer en mission",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_missions(self.bateau)]]
-        i += 1
+        if self.bateau.a_mission():
+            mission_schema = MissionSchema(self.bateau.obtenir_mission())
+            self.options[i] = ["Envoyer en mission",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_missions(mission_schema,self.bateau)]]
+            i += 1
+        else:
+            self.options[i] = ["Envoyer en mission",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_missions(None,self.bateau)]]
+            i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_bateaux_port()]]
     def afficher_corps(self):
         print("---Menu de gestion---")

@@ -136,10 +136,10 @@ class MenuBateauxGlobal(Menu):
     def charger_options(self):
         i = 1
         for bateau in self.bateaux:
-            self.options[i] = [f"Voir plus d'informations à propos de {bateau.obtenir_nom()}.",[self.jeu.changer_menu_actif,self.constructeur.construire_menu_information_bateau(bateau)]]
+            self.options[i] = [f"Voir plus d'informations à propos de {bateau.obtenir_nom()}.",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_information_bateau(bateau)]]
             i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif,
-                                      constructeur.construire_menu_principal()]]
+                                      self.constructeur_menu.construire_menu_principal()]]
 
     def afficher_corps(self):
         print("--- Flotte complète ---")

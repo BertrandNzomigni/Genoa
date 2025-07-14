@@ -1,65 +1,91 @@
 import constantes
 import menus
 import mission
+from mission_schema import MissionSchema
+import bateau
 class MenuMissions(menus.Menu):
-    def __init__(self,monde,jeu,bateau):
+    def __init__(self,monde,jeu,bateau,mission):
         super().__init__(monde, jeu)
         self.bateau = bateau
-
-
+        if mission:
+            assert isinstance(mission,MissionSchema), f"{mission} n'est pas un schéma de mission."
+            self.mission_schema = mission
+        else:
+            self.mission_schema = MissionSchema()
     def charger_options(self):
         i = 1
-        self.options[i] = ["Ajouter un arrét",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_ajout_arret(self.bateau)]]
+        self.options[i] = ["Ajouter un arrét",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_ajout_arret(self.mission_schema,self.bateau)]]
         i += 1
-        if self.bateau.a_mission():
-            self.options[i] = ["Supprimer un arrêt",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_suppression_arret(self.bateau.obtenir_mission(),self.bateau)]]
+        if len(self.mission_schema.obtenir_arrets()) > 0:
+            self.options[i] = ["Supprimer un arrêt",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_suppression_arret(self.mission_schema,self.bateau)]]
             i += 1
-            self.options[i] = ["Modifier un arrêt",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_modification_arrets(self.bateau.obtenir_mission(),self.bateau)]]
+            self.options[i] = ["Modifier un arrêt",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_modification_arrets(self.mission_schema,self.bateau)]]
+            i += 1
+            self.options[i] =  ["Changer le nombre de cycles",[self.changer_cycle]]
             i += 1
         self.options[i] = ["Retour", [self.verification_et_sortie]]
 
+    def changer_cycle(self):
+        correct = False
+        while not correct:
+            try:
+                cycle = int(input("Donner le nouveau nombre de cycle :"))
+                correct = True
+            except:
+                print("Veuillez saisir un nombre.")
+        self.mission_schema.definir_nombre_max_cycles(cycle)
 
     def afficher_corps(self):
+        
+        print("--- Mission ---")
+        if len(self.mission_schema.obtenir_arrets()) > 0:
+            print(f"La mission sera finie au bout de {self.mission_schema.obtenir_nombre_max_cycles()} cycles.")
+
         print("--- Arrêts ---")
-        for arret in self.bateau.obtenir_arrets():
-            print(f"Arrét à {arret.obtenir_nom_lieu()}")
-        if len(self.bateau.obtenir_arrets()) == 0:
+        if len(self.mission_schema.obtenir_arrets()) == 0:
             print("Ce bateau n'a pas d'arrêts.")
-    def verification_et_sortie(self):
-        correct = True
-        if self.bateau.a_mission():
-            correct = self.bateau.obtenir_mission().verifier()
-        if correct:
-            if self.bateau.a_mission():
-                self.bateau.obtenir_mission().verifier_invariants()
-            self.jeu.changer_menu_actif(self.constructeur_menu.construire_menu_gestion_bateaux(self.bateau))
         else:
-            input("Attention, la mission est incorrecte")
+            for arret in self.mission_schema.obtenir_arrets():
+                print(f"Arrét à {arret.obtenir_nom_lieu()}")
+    def verification_et_sortie(self):      
+        if len(self.mission_schema.obtenir_arrets()) > 0:
+            correct = self.mission_schema.verifier()
+            if correct:
+                self.bateau.nouvelle_mission(mission.Mission(self.mission_schema))
+                self.jeu.changer_menu_actif(self.constructeur_menu.construire_menu_gestion_bateaux(self.bateau))
+            else:
+                input("Attention, la mission est incorrecte")
+        else:
+            self.jeu.changer_menu_actif(self.constructeur_menu.construire_menu_gestion_bateaux(self.bateau))
+            
             
 
 class MenuAjoutArret(menus.Menu):
-    def __init__(self,monde,jeu,bateau):
+    def __init__(self,monde,jeu,_bateau,_mission):
         super().__init__(monde, jeu)
-        self.bateau = bateau
+        assert isinstance(_bateau,bateau.Bateau)
+        assert isinstance(_mission,MissionSchema)
+        self.bateau = _bateau
+        self.mission = _mission
     def charger_options(self):
         i = 1
         for port in self.monde.obtenir_ports():
-            self.options[i] = [f"Ajouter un arrêt à {port.obtenir_nom()}",[self.bateau.ajouter_arret,mission.Arret(port,self.bateau)],[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
+            self.options[i] = [f"Ajouter un arrêt à {port.obtenir_nom()}",[self.mission.ajouter_arret,mission.Arret(port,self.bateau),-1],[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.mission,self.bateau)]]
             i += 1
-        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
+        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.mission,self.bateau)]]
         
 class MenuSuppresionArret(menus.Menu):
     def __init__(self,monde,jeu,_mission,bateau):
         super().__init__(monde, jeu)
-        assert isinstance(_mission,mission.Mission), f"{_mission} n'est pas une mission."
+        assert isinstance(_mission,MissionSchema), f"{_mission} n'est pas un schéma de mission."
         self.mission = _mission
         self.bateau = bateau
     def charger_options(self):
         i = 1
         for arret in self.mission.obtenir_arrets():
-            self.options[i] = [f"Supprimer l'arrêt à {arret.obtenir_nom_lieu()}",[self.bateau.supprimer_arret,arret],[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
+            self.options[i] = [f"Supprimer l'arrêt à {arret.obtenir_nom_lieu()}",[self.mission.supprimer_arret,arret],[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.mission,self.bateau)]]
             i += 1
-        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
+        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.mission,self.bateau)]]
 
 class MenuModificationArrets(menus.Menu):
     def __init__(self,monde,jeu,mission,bateau):
@@ -71,7 +97,7 @@ class MenuModificationArrets(menus.Menu):
         for arret in self.mission.obtenir_arrets():
             self.options[i] = [f"Modifier l'arrêt à {arret.obtenir_nom_lieu()}",[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_modification_arret(arret,self)]]
             i += 1
-        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.bateau)]]
+        self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_missions(self.mission,self.bateau)]]
     def afficher_corps(self):
         print("--- Modifier un arrêt ---")
 

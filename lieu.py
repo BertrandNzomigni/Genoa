@@ -25,7 +25,6 @@ class Lieu:
         return self.voisins
 
     def obtenir_distance(self,voisin):
-        print(self.dict_distance)
         return self.dict_distance[voisin]
 
     def ajouter_bateau(self, bateau):

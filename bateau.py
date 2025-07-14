@@ -75,24 +75,10 @@ class Bateau:
             return self.cargaison[nom_cargaison]
         else:
             return 0
-    def ajouter_arret(self,arret,indice = -1):
-        if self.mission == None:
-            self.mission = mission.Mission()
-        self.mission.ajouter_arret(arret,indice)
-        self.verifier_invariants()
-    def supprimer_arret(self,arret):
-        if self.a_mission():
-            self.mission.supprimer_arret(arret)
-        if len(self.mission.obtenir_arrets()) == 0:
-            self.abondonner_mission()
-        self.verifier_invariants()
     
-    def obtenir_arrets(self):
-        if self.mission == None:
-            return list()
-        else:
-            return self.mission.obtenir_arrets()
-    
+    def nouvelle_mission(self,mission):
+        self.mission = mission
+
     def obtenir_mission(self):
         return self.mission
 

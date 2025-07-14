@@ -6,6 +6,8 @@ from menu_information_bateau import *
 from menu_achat_bateau import *
 from menu_missions import *
 from menu_banque import MenuBanque
+import bateau
+import mission_schema
 
 class ConstructeurMenu:
     """Classe 'Factory' pour créer les différents menus du jeu."""
@@ -49,11 +51,13 @@ class ConstructeurMenu:
     def construire_menu_achat_bateau(self,type_bateau,prix):
         return MenuAchatBateau(self.monde,self.jeu,type_bateau,prix,self.joueur)
     
-    def construire_menu_missions(self,bateau):
-        return MenuMissions(self.monde,self.jeu,bateau)
+    def construire_menu_missions(self,mission,bateau):
+        return MenuMissions(self.monde,self.jeu,bateau,mission)
     
-    def construire_menu_ajout_arret(self,bateau):
-        return MenuAjoutArret(self.monde,self.jeu,bateau)
+    def construire_menu_ajout_arret(self,_mission,_bateau):
+        assert isinstance(_mission,mission_schema.MissionSchema)
+        assert isinstance(_bateau,bateau.Bateau)
+        return MenuAjoutArret(self.monde,self.jeu,_bateau,_mission)
 
     def construire_menu_suppression_arret(self,mission,bateau):
         return MenuSuppresionArret(self.monde,self.jeu,mission,bateau)
