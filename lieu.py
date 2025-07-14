@@ -36,6 +36,7 @@ class Lieu:
 
     def obtenir_nom(self):return self.nom
     def __str__(self):return self.nom
+    
     def verifier_invariants(self):
         for voisin in self.voisins:
             assert voisin in self.dict_distance, f"Le voisin {voisin} n'a pas de distance associée."

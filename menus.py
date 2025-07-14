@@ -60,9 +60,10 @@ class MenuPrincipal(Menu):
         i = 1
         self.options[i] = ["Jour suivant", [self.monde.avancer_temps,],[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_principal()]]
         i += 1
-        self.options[i] = ["Sélectionner une nouvelle destination",
+        if joueur.dirige_bateau():
+            self.options[i] = ["Sélectionner une nouvelle destination",
                            [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_deplacement()]];
-        i += 1
+            i += 1
         self.options[i] = ["Voir l'ensemble de vos bateaux",
                            [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_bateaux_global()]];
         i += 1
@@ -254,7 +255,7 @@ class MenuVente(Menu):
         except ValueError:
             print("Veuillez entrer un nombre.")
         input("Appuyez sur Entrée pour continuer...")
-        self.jeu.changer_menu_actif(self.cm.construire_menu_vente())
+        self.jeu.changer_menu_actif(self.constructeur_menu.construire_menu_vente())
 
 class MenuAchatBateaux(Menu):
     def __init__(self, monde, jeu, joueur,port):

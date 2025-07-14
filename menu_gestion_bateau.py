@@ -15,10 +15,12 @@ class MenuGestionBateau(Menu):
         i += 1
         if self.bateau.a_mission():
             mission_schema = MissionSchema(self.bateau.obtenir_mission())
-            self.options[i] = ["Envoyer en mission",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_missions(mission_schema,self.bateau)]]
+            self.options[i] = ["Modifier la mission",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_missions(mission_schema,self.bateau)]]
+            i += 1
+            self.options[i] = ["Commencer la mission",[nothing]]
             i += 1
         else:
-            self.options[i] = ["Envoyer en mission",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_missions(None,self.bateau)]]
+            self.options[i] = ["Modifier la mission",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_missions(None,self.bateau)]]
             i += 1
         self.options[i] = ["Retour", [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_bateaux_port()]]
     def afficher_corps(self):
