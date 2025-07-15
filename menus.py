@@ -67,7 +67,7 @@ class MenuPrincipal(Menu):
         self.options[i] = ["Voir l'ensemble de vos bateaux",
                            [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_bateaux_global()]];
         i += 1
-        if isinstance(joueur.obtenir_lieu(), Port) and not joueur.est_parti():
+        if isinstance(joueur.obtenir_lieu(), Port) and not joueur.est_en_transit():
             self.options[i] = ["Gérer vos bateaux dans ce port",[self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_bateaux_port()]];
             i += 1
             self.options[i] = ["Accéder au marché", [self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_marche()]];
@@ -82,9 +82,9 @@ class MenuPrincipal(Menu):
         else:
             print("Vous ne commandez aucun bateau.")
         print("-" * 20)
-        if j.a_destination():
-            print(f"Vous naviguez vers {j.obtenir_destination()}.")
-            print(f"La distance restante est de {j.obtenir_distance_voyage()} kilomètres.")
+        if j.a_une_destination_proche():
+            print(f"Votre prochaine étape {j.obtenir_prochaine_etape()}.")
+            print(f"La distance restante pour la prochaine étape est de {j.obtenir_distance_prochaine_etape()} kilomètres.")
         else:
             print(f"Vous êtes actuellement à {j.obtenir_lieu()}.")
 
@@ -94,10 +94,12 @@ class MenuDeplacement(Menu):
         super().__init__(monde, jeu)
         self.joueur = joueur
     def charger_options(self):
-        self.pas_en_chemin = not self.joueur.a_destination()
+        self.pas_en_chemin = not (self.joueur.a_un_itineraire() and not self.joueur.itineraire_est_termine())
         if self.pas_en_chemin:
             i = 1
-            for destination in self.joueur.obtenir_voisins_lieu():
+            destinations = self.monde.obtenir_ports()+self.monde.obtenir_mers()
+            destinations.remove(self.joueur.obtenir_lieu())
+            for destination in destinations:
                 self.options[i] = [destination.obtenir_nom(),
                                    [self.joueur.changer_destination, destination],
                                    [self.jeu.changer_menu_actif, self.constructeur_menu.construire_menu_principal()]];

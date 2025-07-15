@@ -1,9 +1,11 @@
 # mon_super_jeu/lieu.py
 # Classes Lieu, Port, et Mer
-import constantes
+
 import banque
+
+
 class Lieu:
-    """Classe générique pour un endrooit sur la carte."""
+    """Classe générique pour un endroit sur la carte."""
     def __init__(self,nom):
         self.nom = nom
         self.voisins = list()
@@ -24,6 +26,7 @@ class Lieu:
         return self.voisins
 
     def obtenir_distance(self,voisin):
+        assert self.dict_distance[voisin] > 0, f"La distance vers {voisin} doit être strictement positive."
         return self.dict_distance[voisin]
 
     def ajouter_bateau(self, bateau):
@@ -35,6 +38,12 @@ class Lieu:
 
     def obtenir_nom(self):return self.nom
     def __str__(self):return self.nom
+
+    def __eq__(self, other):
+        return isinstance(other, Lieu) and self.nom == other.nom
+
+    def __hash__(self):
+        return hash(self.nom)
     
     def verifier_invariants(self):
         for voisin in self.voisins:
@@ -46,11 +55,12 @@ class Lieu:
 class Port(Lieu):
     """Untype d elieu ou le commerce est possible."""
     def __init__(self,nom,prix_locaux_marchandises):
+        from constantes import BATEAUX
         super().__init__(nom)
         self.prix_locaux_marchandises = prix_locaux_marchandises
         self.prix_locaux_bateaux = dict()
-        for bateau in constantes.BATEAUX.keys():
-            self.prix_locaux_bateaux[bateau] = constantes.BATEAUX[bateau]["Prix de base"]
+        for bateau in BATEAUX.keys():
+            self.prix_locaux_bateaux[bateau] = BATEAUX[bateau]["Prix de base"]
 
         nom_banque = f"Banca di {nom}"
         taux_base = 0.001  # 0.1%
@@ -66,12 +76,13 @@ class Port(Lieu):
     def obtenir_prix_marchandises(self,nom_marchandise):
         return self.prix_locaux_marchandises[nom_marchandise]
     def verifier_invariants(self):
+        from constantes import MARCHANDISES
         super().verifier_invariants()
-        for marchandise in constantes.MARCHANDISES.keys():
+        for marchandise in MARCHANDISES.keys():
             assert marchandise in self.prix_locaux_marchandises.keys(), f"Le prix de {marchandise} n'est pas défini à {self.nom}"
 
 class Mer(Lieu):
-    """Untype de lieu qui peut etre traversé qu'en bateau."""
+    """Un type de lieu qui peut etre traversé qu'en bateau."""
     def __init__(self,nom):
         super().__init__(nom)
         super().verifier_invariants()

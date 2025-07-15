@@ -26,3 +26,4 @@
 - Le joueur a une maison à Gênes. Elle peut stocker des florins.
 - Un bateau peut parcourir plusieurs noeuds en un jour.
   - Les bateaux ont accès à une classe Chemin, déterminant la route à suivre.
+- Vérifier les types des paramètres.

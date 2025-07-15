@@ -4,33 +4,27 @@ from constantes import MARCHANDISES
 import position
 import mission
 
-class Bateau:
+from entite import Entite
+class Bateau(Entite):
     """Représente un bateau avec sa soute et ses caractéristiques."""
 
     def __init__(self, nom, capacite, vitesse, lieu,type_bateau,monde):
+        super().__init__(lieu)
         self.nom = nom
         self.capacite = capacite
         self.vitesse = vitesse
-        self.position = position.Position(lieu)
         self.cargaison = dict()
         self.type_bateau = type_bateau
         self.mission = None
         monde.nouveau_bateau(self)
+        self.passagers = list()
+        self.verifier_invariants()
 
     def obtenir_nom(self):
         return self.nom
     def obtenir_type(self):
         return self.type_bateau
     def __str__(self):return self.nom
-
-    def obtenir_lieu(self):
-        return self.position.obtenir_depart()
-
-    def obtenir_position(self):
-        return self.position
-    
-    def obtenir_nom_lieu(self):
-        return self.position.obtenir_nom_lieu()
 
     def obtenir_volume_utilise(self):
         """Calcule le volume total utilisé par les marchandises dans la soute."""
@@ -54,16 +48,10 @@ class Bateau:
             if self.cargaison[nom_marchandise] <= 0:
                 del self.cargaison[nom_marchandise]
         self.verifier_invariants()
-    def a_destination(self):
-        return self.position.a_destination()
+
     def obtenir_vitesse(self):
         return self.vitesse
-    def avancer(self):
-        self.position.avancer(self.vitesse)
-        self.verifier_invariants()
-    def changer_destination(self,dest):
-        self.position.changer_destination(dest)
-        self.verifier_invariants()
+
     def obtenir_capacite(self):
         return self.capacite
 
@@ -78,6 +66,7 @@ class Bateau:
     
     def nouvelle_mission(self,mission):
         self.mission = mission
+        self.verifier_invariants()
 
     def obtenir_mission(self):
         return self.mission
@@ -89,9 +78,28 @@ class Bateau:
         self.mission = None
         self.verifier_invariants()
 
+    def avancer(self):
+        super().avancer()
+        for passager in self.passagers:
+            passager.suivre_bateau(self.position)
+
+    def ajouter_passager(self,passager):
+        from entite import Entite
+        assert isinstance(passager,Entite), "Le passager n'est pas une entité."
+        self.passagers.append(passager)
+        self.verifier_invariants()
+    
+    def retirer_passager(self,passager):
+        from entite import Entite
+        assert isinstance(passager,Entite), "Le passager n'est pas une entité."
+        assert passager in self.passagers, "Le passager n'était pas dans le bateau."
+        self.passagers.remove(passager)
+        self.verifier_invariants()
+    
     def verifier_invariants(self):
-        qte = 0
-        for marchandise, quantite in self.cargaison.items():
-            assert quantite >= 0, f"Quantité négative pour {marchandise}"
-            qte += MARCHANDISES[marchandise]["volume"] * quantite
-        assert qte <= self.capacite, "Capacité de la soute dépassée"
+        super().verifier_invariants()
+        assert self.obtenir_volume_utilise() <= self.capacite, "Le volume utilisé dépasse la capacité du bateau."
+        for passager in self.passagers:
+            assert passager.obtenir_lieu() == self.position.obtenir_lieu_actuel(), "Un passager n'est pas dans le même lieu que le bateau."
+        if self.a_mission():
+            assert self.mission.est_valide(), "La mission du bateau n'est pas valide."

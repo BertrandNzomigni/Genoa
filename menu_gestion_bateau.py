@@ -9,7 +9,7 @@ class MenuGestionBateau(Menu):
     def charger_options(self):
         i = 1
         if self.joueur.obtenir_bateau_dirige() == self.bateau:
-            self.options[i]= ["Quitter le commandement",[self.joueur.quitter_bateau,self.bateau]]
+            self.options[i]= ["Quitter le commandement",[self.joueur.quitter_bateau]]
         else:
             self.options[i]= ["Prendre le commandement",[self.joueur.rejoindre_bateau,self.bateau]]
         i += 1

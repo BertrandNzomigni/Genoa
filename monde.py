@@ -3,9 +3,9 @@
 from lieu import Port, Mer
 from joueur import Joueur
 from bateau import Bateau
-from temps import Temps
-from constantes import *
 
+
+from constantes import BATEAUX
 class Monde:
     """Contient toutes les entités du jeu (lieux, joueur, etc.)."""
 
@@ -26,7 +26,8 @@ class Monde:
         venise.ajouter_voisin(mer_med,60)
 
         self.joueur = Joueur(genes,self)
-        premier_bateau = Bateau("Bateau de base", BATEAUX["Caraque"]["Capacité"], BATEAUX["Caraque"]["Vitesse"], genes,"Caraque",self)
+        from temps import Temps
+        premier_bateau = Bateau("Bateau de base", BATEAUX["Bateau de test"]["Capacité"], BATEAUX["Bateau de test"]["Vitesse"], genes,"Bateau de test",self)
         genes.ajouter_bateau(premier_bateau)
         self.joueur.acquerir_bateau(premier_bateau)
 
@@ -42,13 +43,13 @@ class Monde:
     def obtenir_ports(self):
         return self.ports
         
+    def obtenir_mers(self):
+        return self.mers
     def avancer_temps(self):
         for bateau in self.bateaux:
-            if bateau.a_destination():
+            condition = bateau.a_un_itineraire() and not bateau.itineraire_est_termine()
+            if condition:
                 bateau.avancer()
-                # Amélioration : informer le joueur si un de ses bateaux arrive à destination
-                if bateau.position.a_atteint_destination():
-                    print(f"INFO : Le bateau '{bateau.obtenir_nom()}' est arrivé à {bateau.obtenir_nom_lieu()}.")
 
         for port in self.ports:
             port.banque.calculer_interets_journaliers()

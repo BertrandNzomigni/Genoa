@@ -20,7 +20,7 @@ class MenuAchatBateau(menus.Menu):
     def acheter(self):
         correct = False
         while not correct:
-            reponse = input(f"Confirmez vous l'achat de {self.type_bateau} ? (Y/N)")
+            reponse = input(f"Confirmez vous l'achat de {self.type_bateau} ? (Y/N)").upper()
             retour = self.joueur.peut_acheter_bateau(self.type_bateau)
             if isinstance(retour,str):
                 input(retour+" - Appuyez sur une touche pour continuer")
