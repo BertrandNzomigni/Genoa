@@ -5,6 +5,9 @@ import position
 import mission
 
 from entite import Entite
+from lieu import Lieu
+from monde import Monde
+from joueur import Joueur
 class Bateau(Entite):
     """Représente un bateau avec sa soute et ses caractéristiques."""
 
@@ -18,6 +21,7 @@ class Bateau(Entite):
         self.mission = None
         monde.nouveau_bateau(self)
         self.passagers = list()
+        self.mission_active = False
         self.verifier_invariants()
 
     def obtenir_nom(self):

@@ -5,7 +5,7 @@ class Entite:
         self._itineraire = None  # Liste de lieux à suivre
 
     from itineraire import Itineraire
-    def definir_itineraire(self, itineraire: Itineraire) -> None:
+    def definir_itineraire(self, itineraire):
         """Assigne un nouvel itinéraire à l'entité et démarre le premier déplacement."""
         assert not itineraire.est_vide(), "L’itinéraire doit contenir au moins une étape."
         
@@ -80,10 +80,8 @@ class Entite:
 
         depart = self.position.obtenir_lieu_actuel()
         nouvel_itineraire = construire_chemin_dijkstra(depart, destination)
-
         assert nouvel_itineraire is not None, "Impossible de construire un itinéraire."
         self.definir_itineraire(nouvel_itineraire)
-        input(f"Position actuelle (Après changer destination): {self.position.obtenir_lieu_actuel()}")
         self.verifier_invariants()
 
 

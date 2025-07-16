@@ -2,14 +2,14 @@
 # Classes Lieu, Port, et Mer
 
 import banque
-
+from bateau import Bateau
 
 class Lieu:
     """Classe générique pour un endroit sur la carte."""
     def __init__(self,nom):
         self.nom = nom
         self.voisins = list()
-        self.dict_distance=dict()
+        self.dict_distance = dict()
         self.bateaux = list()
 
     def ajouter_voisin(self, voisin, distance):
@@ -17,6 +17,7 @@ class Lieu:
         self.dict_distance[voisin]=distance
         voisin.recevoir_voisin(self,distance)
         self.verifier_invariants()
+
     def recevoir_voisin(self,voisin,distance):
         self.voisins.append(voisin)
         self.dict_distance[voisin]=distance
@@ -38,9 +39,6 @@ class Lieu:
 
     def obtenir_nom(self):return self.nom
     def __str__(self):return self.nom
-
-    def __eq__(self, other):
-        return isinstance(other, Lieu) and self.nom == other.nom
 
     def __hash__(self):
         return hash(self.nom)
@@ -73,8 +71,10 @@ class Port(Lieu):
 
     def obtenir_prix_bateau(self,type_bateau):
         return self.prix_locaux_bateaux[type_bateau]
+    
     def obtenir_prix_marchandises(self,nom_marchandise):
         return self.prix_locaux_marchandises[nom_marchandise]
+    
     def verifier_invariants(self):
         from constantes import MARCHANDISES
         super().verifier_invariants()
@@ -83,6 +83,6 @@ class Port(Lieu):
 
 class Mer(Lieu):
     """Un type de lieu qui peut etre traversé qu'en bateau."""
-    def __init__(self,nom):
+    def __init__(self,nom : str):
         super().__init__(nom)
         super().verifier_invariants()
