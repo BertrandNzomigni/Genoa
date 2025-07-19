@@ -26,4 +26,14 @@
 - Le joueur a une maison à Gênes. Elle peut stocker des florins.
 - Un bateau peut parcourir plusieurs noeuds en un jour. (Fait)
   - Les bateaux ont accès à une classe Chemin, déterminant la route à suivre.
-- 
+
+
+--- Interface graphique ---
+
+- Afficher la fenêtre principale
+  - Décider du contenu de la fenêtre principale
+  - Trouver une librairie Pynthon adaptée
+  - Afficher une fenêtre vide
+  - Afficher le contenu de la fenêtre principale
+    - Afficher les boutons
+    - Afficher les informations
