@@ -1,8 +1,8 @@
-from lieu import Lieu
+import lieu
 class Itineraire:
     def __init__(self, chemin=None):
         # chemin est une liste ordonnée de lieux (objets Lieu)
-        self._chemin : list[Lieu] = chemin if chemin else []
+        self._chemin : list[lieu.Lieu] = chemin if chemin else []
         self.verifier_invariants()
 
     def ajouter_etape(self, lieu):

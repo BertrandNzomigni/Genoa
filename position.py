@@ -21,10 +21,10 @@ class Position:
         return self._lieu_depart.obtenir_voisins()
 
     def est_en_transit(self):
-        return self._prochain_lieu is not None and self._distance_restante is not None and self._distance_restante > 0
+        return self._prochain_lieu is not None and self._distance_restante > 0
 
     def est_a_mis_chemin_ou_plus(self):
-        return self._distance_restante is not None and self._distance_totale is not None and self._distance_restante <= self._distance_totale/2
+        return self._distance_restante <= self._distance_totale/2
 
     def debuter_deplacement(self, prochain_lieu, distance = None):
         if distance is None:
@@ -58,8 +58,8 @@ class Position:
             assert self._prochain_lieu, "Impossible de passer au noeud suivant si le noeud suivant n'est pas défini"
             self._lieu_depart = self._prochain_lieu
             self._prochain_lieu = None
-            self._distance_restante = 0
-            self._distance_totale = 0
+            self._distance_restante = None
+            self._distance_totale = None
         self.verifier_invariants()
         return distance_parcourue
 
@@ -89,7 +89,7 @@ class Position:
         assert isinstance(self._lieu_depart,Port), "Impossible d'acheter un bateau hors du port."
         return self._lieu_depart.obtenir_prix_bateau(type_bateau)
 
-    def ajouter_bateau(self, bateau : Bateau):
+    def ajouter_bateau(self, bateau):
         self._lieu_depart.ajouter_bateau(bateau)
         self.verifier_invariants()
 
@@ -103,4 +103,4 @@ class Position:
         if self._distance_restante and self._distance_totale:
             assert self._distance_restante <= self._distance_totale, "Position : La distance restante est supérieure à la distance totale."
         if self._prochain_lieu is None:
-            assert self._distance_totale == 0, "Position : La distance totale est différent de 0 alors qu'il n'y a pas de prochain lieu."
+            assert self._distance_totale is None, "Position : La distance totale est définie alors qu'il n'y a pas de prochain lieu."

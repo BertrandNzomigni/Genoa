@@ -8,11 +8,10 @@ class Mission:
         self.indice_prochain_arret = 1
         self.nombre_cycles = 0
         self.verifier_invariants()
-    def ajouter_arret(self,arret,indice):
+    def ajouter_arret(self,arret,indice = -1):
         assert isinstance(arret,Arret), "Seulement des arrêts peuvent être ajouté à une mission."
         if indice == -1:
             indice = len(self.arrets)
-        lieu_arret = arret.obtenir_lieu()
         self.arrets.insert(indice,arret)
         self.verifier_invariants()
     def obtenir_nombre_arrets(self):

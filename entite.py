@@ -73,8 +73,7 @@ class Entite:
     def obtenir_nom_lieu(self):
         return self.position.obtenir_nom_lieu()
 
-    from lieu import Lieu
-    def changer_destination(self, destination: Lieu) -> None:
+    def changer_destination(self, destination):
         """Construit un itinéraire vers une destination"""
         from constantes import construire_chemin_dijkstra
 

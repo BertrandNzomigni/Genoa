@@ -5,9 +5,6 @@ import position
 import mission
 
 from entite import Entite
-from lieu import Lieu
-from monde import Monde
-from joueur import Joueur
 class Bateau(Entite):
     """Représente un bateau avec sa soute et ses caractéristiques."""
 
@@ -107,3 +104,6 @@ class Bateau(Entite):
             assert passager.obtenir_lieu() == self.position.obtenir_lieu_actuel(), "Un passager n'est pas dans le même lieu que le bateau."
         if self.a_mission():
             assert self.mission.est_valide(), "La mission du bateau n'est pas valide."
+
+    def demarrer_mission(self):
+        self.en_mission = True

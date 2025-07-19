@@ -8,11 +8,10 @@ class MissionSchema:
         else:
             self.arrets = list()
             self.nombre_max_cycles = 1
-    def ajouter_arret(self,arret,indice):
+    def ajouter_arret(self,arret,indice = -1):
         assert isinstance(arret,mission.Arret), "Seulement des arrêts peuvent être ajouté à une mission."
         if indice == -1:
             indice = len(self.arrets)
-        lieu_arret = arret.obtenir_lieu()
         self.arrets.insert(indice,arret)
     def obtenir_nombre_arrets(self):
         return len(self.arrets)

@@ -33,10 +33,10 @@ def nothing():
 
 import heapq
 import itertools
-from lieu import Lieu
 from itineraire import Itineraire
 
-def construire_chemin_dijkstra(depuis: Lieu, jusqu_a: Lieu) -> Itineraire:
+def construire_chemin_dijkstra(depuis, jusqu_a):
+    from lieu import Lieu
     assert isinstance(depuis, Lieu), f"Le point de départ doit être un objet Lieu, pas {type(depuis)}"
     assert isinstance(jusqu_a, Lieu), f"Le point d'arrivée doit être un objet Lieu, pas {type(jusqu_a)}"
     
