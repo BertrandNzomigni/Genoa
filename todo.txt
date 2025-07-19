@@ -35,7 +35,12 @@
     - Bouton démarrer partie
   - Trouver une librairie Pynthon adaptée (Fait)
   - Afficher une fenêtre vide (Fait)
-  - Afficher le contenu de la fenêtre principale
+  - Afficher le contenu de la fenêtre d'introduction
     - Afficher les boutons
     - Afficher les informations
-      - Afficher le titre ("Marchand de Gênes")
+      - Afficher le titre ("Marchand de Gênes") (Fait)
+      - Afficher un texte ("Marchand de Gênes")
+        - Afficher un texte
+        - Déplacer un texte
+        - Changer la taille d'un texte
+        
