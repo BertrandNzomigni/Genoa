@@ -30,10 +30,12 @@
 
 --- Interface graphique ---
 
-- Afficher la fenêtre principale
-  - Décider du contenu de la fenêtre principale
-  - Trouver une librairie Pynthon adaptée
-  - Afficher une fenêtre vide
+- Afficher la fenêtre d'introduction
+  - Décider du contenu de la fenêtre d'introduction :
+    - Bouton démarrer partie
+  - Trouver une librairie Pynthon adaptée (Fait)
+  - Afficher une fenêtre vide (Fait)
   - Afficher le contenu de la fenêtre principale
     - Afficher les boutons
     - Afficher les informations
+      - Afficher le titre ("Marchand de Gênes")
