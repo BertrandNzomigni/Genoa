@@ -6,6 +6,7 @@ class Menu:
     def charger_options(self):
         pass
     def executer(self):
+        self.options.clear()
         self.charger_options()
         self.afficher()
         self.lire()
