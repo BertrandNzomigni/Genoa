@@ -1,48 +1,13 @@
 import os
+from MenuDeplacement import MenuDeplacement
+from Menu import Menu
+
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def nothing():
     pass
-
-class Menu:
-    def __init__(self,monde,jeu):
-        self.monde = monde
-        self.jeu = jeu
-        self.options = dict()
-    def charger_options(self):
-        pass
-    def executer(self):
-        self.charger_options()
-        self.afficher()
-        self.lire()
-    def afficher(self):
-        self.afficher_corps()
-        self.afficher_options()
-    def afficher_corps(self):
-        pass
-    def afficher_options(self):
-        for i in range(1,len(self.options)+1):
-            print(f"{i}) {self.options[i][0]}")
-    def lire(self):
-        try:
-            entree = int(input())
-            if entree in self.options.keys():  
-                option = self.options[entree] # Forme option : [Texte,[Fonction,Arg1,Arg2,etc ....],[Fonction,Arg1,Arg2,etc ....]]
-                i = 1
-                while i < len(option):
-                    groupe = option[i] # Forme groupe : [Fonction,Arg1,Arg2,etc ....]
-                    x = 1
-                    args = list()
-                    while x < len(groupe):
-                       args.append(groupe[x])
-                       x += 1
-                    groupe[0](*args)
-                    i += 1
-                    
-        except ValueError:
-            print("Entrée non valide. Veuillez entrer un nombre.")
 
 # Afficher le menu principal
 # Traiter les entrées du menu principal
@@ -77,28 +42,6 @@ class MenuPrincipal(Menu):
         else:
             print(f"Vous êtes situé à {j.obtenir_lieu()}.")
             print("Vous n'êtes pas en cours de déplacement.")
-
-# Affiche le menu de déplacement
-# Déclenche les déplacements en fonction des entrées
-class MenuDeplacement(Menu):
-    def __init__(self,monde,jeu):
-        Menu.__init__(self,monde,jeu)
-    def charger_options(self):
-        constructeur_menu = self.jeu.obtenir_constructeur_menu()
-        self.pas_en_chemin = not self.monde.obtenir_joueur().obtenir_itineraire().a_destination()
-        if self.pas_en_chemin :
-            destinations = self.monde.obtenir_joueur().obtenir_lieu().obtenir_lieu().obtenir_voisins()
-            i = 1
-            for destination in destinations:
-                self.options[i] = [destination.obtenir_nom(),[self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination,destination],[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
-                i += 1
-            self.options[i] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
-        else:
-            self.options[1] = ["Faire demi-tour",[self.monde.obtenir_joueur().obtenir_coordinateur().faire_demi_tour],[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
-            self.options[2] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
-    def afficher_corps(self):
-        if self.pas_en_chemin :
-            print(f"Liste des destinations accesibles depuis {self.monde.obtenir_joueur().obtenir_lieu().obtenir_nom()}.")
 
 class MenuBateaux(Menu):
     def __init__(self,monde,jeu):
