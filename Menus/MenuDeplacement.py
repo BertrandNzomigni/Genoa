@@ -1,4 +1,4 @@
-from Menu import Menu
+from Menus.Menu import Menu
 
 class MenuDeplacement(Menu):
     def __init__(self,monde,jeu):
