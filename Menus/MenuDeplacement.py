@@ -8,14 +8,12 @@ class MenuDeplacement(Menu):
         self.pas_en_chemin = not self.monde.obtenir_joueur().obtenir_itineraire().a_destination()
         if self.pas_en_chemin :
             destinations = self.monde.obtenir_joueur().obtenir_lieu().obtenir_lieu().obtenir_voisins()
-            i = 1
             for destination in destinations:
-                self.options[i] = [destination.obtenir_nom(),[self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination,destination],[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
-                i += 1
-            self.options[i] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
+                self.ajouter_options(destination.obtenir_nom(),[self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination,destination],[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()])
+            self.ajouter_options("Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()])
         else:
-            self.options[1] = ["Faire demi-tour",[self.monde.obtenir_joueur().obtenir_coordinateur().faire_demi_tour],[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
-            self.options[2] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
+            self.ajouter_options("Faire demi-tour",[self.monde.obtenir_joueur().obtenir_coordinateur().faire_demi_tour],[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()])
+            self.ajouter_options("Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()])
     def afficher_corps(self):
         if self.pas_en_chemin :
             print(f"Liste des destinations accesibles depuis {self.monde.obtenir_joueur().obtenir_lieu().obtenir_nom()}.")

@@ -17,6 +17,9 @@ class Menu:
     def afficher_options(self):
         for i in range(1,len(self.options)+1):
             print(f"{i}) {self.options[i][0]}")
+
+    def ajouter_options(self,texte,*groupes):
+        self.options[len(self.options) + 1] = [texte,*groupes]
     def lire(self):
         try:
             entree = int(input())
