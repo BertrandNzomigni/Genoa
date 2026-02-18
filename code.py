@@ -16,6 +16,7 @@ class MenuPrincipal(Menu):
         Menu.__init__(self,monde,jeu)
         self.temps = temps
     def charger_options(self):
+        self.options.clear()
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
 
         # Forme option : [Texte,[Fonction,Arg1,Arg2,etc ....],[Texte,[Fonction,Arg1,Arg2,etc ....]]
@@ -47,6 +48,7 @@ class MenuBateaux(Menu):
     def __init__(self,monde,jeu):
         Menu.__init__(self,monde,jeu)
     def charger_options(self):
+        self.options.clear()
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
         lieu_joueur = self.monde.obtenir_joueur().obtenir_lieu().obtenir_lieu()
         i = 1
@@ -62,6 +64,7 @@ class MenuBateauxGlobal(Menu):
         Menu.__init__(self,monde,jeu)
         self.joueur = joueur
     def charger_options(self):
+        self.options.clear()
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
         self.options[1] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
     def afficher_corps(self):
