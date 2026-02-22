@@ -7,7 +7,7 @@ class MenuBateauxGlobal(Menu):
     def charger_options(self):
         self.options.clear()
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
-        self.options[1] = ["Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]]
+        self.ajouter_options("Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()])
     def afficher_corps(self):
         print("Liste des bateaux")
         for bateau in self.joueur.obtenir_bateaux():
