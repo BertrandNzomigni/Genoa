@@ -8,22 +8,16 @@ class MenuPrincipal(Menu):
         Menu.__init__(self,monde,jeu)
         self.temps = temps
     def charger_options(self):
-        self.options.clear()
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
 
-        # Forme option : [Texte,[Fonction,Arg1,Arg2,etc ....],[Texte,[Fonction,Arg1,Arg2,etc ....]]
-
-        i = 1
-        self.options[i] = ["Jour suivant",[self.temps.avancer]]
-        i += 1
-        self.options[i] = ["Sélectionner une nouvelle destination",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_deplacement()]]
-        i += 1
-        self.options[i] = ["Voir l'ensemble de vos bateaux",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_bateaux_global()]]
-        i += 1
+        self.ajouter_options("Jour suivant",[self.temps.avancer])
+        self.ajouter_options("Sélectionner une nouvelle destination",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_deplacement()])
+        self.ajouter_options("Voir l'ensemble de vos bateaux",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_bateaux_global()])
         if type(self.monde.obtenir_joueur().obtenir_lieu()) is Port:
-            self.options[i] = ["Voir vos bateaux dans le port",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_bateaux()]]
-            i += 1
-        self.options[i] = ["Quitter le jeu",[self.jeu.quitter]]
+            self.ajouter_options("Voir vos bateaux dans le port",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_bateaux()])
+        self.ajouter_options("Quitter le jeu",[self.jeu.quitter])
+
+        
     def afficher_corps(self):
         j = self.monde.obtenir_joueur()
         print(f"Jour : {self.monde.obtenir_temps().obtenir_valeur()}")
