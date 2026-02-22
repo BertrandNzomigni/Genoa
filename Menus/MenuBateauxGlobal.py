@@ -5,7 +5,6 @@ class MenuBateauxGlobal(Menu):
         Menu.__init__(self,monde,jeu)
         self.joueur = joueur
     def charger_options(self):
-        self.options.clear()
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
         self.ajouter_options("Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()])
     def afficher_corps(self):
