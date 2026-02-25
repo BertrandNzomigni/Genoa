@@ -17,6 +17,8 @@ class Joueur:
         return self.florins
     def obtenir_itineraire(self):
         return self.itineraire
+    def a_destination(self):
+        return self.itineraire.a_destination()
     def obtenir_lieu(self):
         return self.lieu
     def changer_lieu(self,lieu):

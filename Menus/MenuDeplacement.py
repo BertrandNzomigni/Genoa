@@ -6,7 +6,7 @@ class MenuDeplacement(Menu):
         self.joueur = joueur
     def charger_options(self):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
-        self.pas_en_chemin = not self.monde.obtenir_joueur().obtenir_itineraire().a_destination()
+        self.pas_en_chemin = not self.joueur.a_destination()
         if self.pas_en_chemin :
             destinations = self.joueur.obtenir_lieu().obtenir_lieu().obtenir_voisins()
             for destination in destinations:
