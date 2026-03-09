@@ -1,6 +1,5 @@
 from Menus.Menu import Menu
 
-from Menus.Option import Option
 from Menus.Patron.PatronMenuDeplacement import PatronOptionsMenuDeplacement
 
 class MenuDeplacement(Menu):

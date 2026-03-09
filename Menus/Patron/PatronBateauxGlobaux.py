@@ -1,11 +1,9 @@
 from Menus.Option import Option
+from .Patron import Patron
 
-class PatronOptionsBateauxGlobaux:
+class PatronOptionsBateauxGlobaux(Patron):
     def __init__(self,jeu):
-        self._options = list()
+        super().__init__()
+        
         constructeur_menu = jeu.obtenir_constructeur_menu()
         self.options.append(Option("Quitter",[jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]))
-
-    @property
-    def options(self):
-        return self._options

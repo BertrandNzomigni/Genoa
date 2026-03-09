@@ -1,6 +1,4 @@
 from Menus.Menu import Menu
-from Game.Lieu.Port import Port
-from Menus.Option import Option
 from Menus.Patron.PatronMenuPrincipal import PatronOptionsMenuPrincipal
 
 # Afficher le menu principal

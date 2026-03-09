@@ -1,10 +1,9 @@
 from Menus.Option import Option
+from .Patron import Patron
 
-
-class PatronOptionsMenuDeplacement:
+class PatronOptionsMenuDeplacement(Patron):
     def __init__(self,jeu,joueur):
-        self._options = list()
-
+        super().__init__()
         constructeur_menu = jeu.obtenir_constructeur_menu()
 
         if not joueur.a_destination():
@@ -14,7 +13,3 @@ class PatronOptionsMenuDeplacement:
         else:
             self._options.append(Option("Faire demi-tour",[joueur.obtenir_coordinateur().faire_demi_tour],[jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]))
         self._options.append(Option("Quitter",[jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]))
-
-    @property
-    def options(self):
-        return self._options
