@@ -1,5 +1,5 @@
 from Menus.Menu import Menu
-from Game.Port import Port
+from Game.Lieu.Port import Port
 from Menus.Option import Option
 
 # Afficher le menu principal

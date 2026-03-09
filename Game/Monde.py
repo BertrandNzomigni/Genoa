@@ -1,5 +1,5 @@
-from Game.Port import Port
-from Game.Mer import Mer
+from Game.Lieu.Port import Port
+from Game.Lieu.Mer import Mer
 from Game.Joueur import Joueur
 from Game.Bateau import Bateau
 from Game.Temps import Temps

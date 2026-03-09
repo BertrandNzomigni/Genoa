@@ -1,4 +1,4 @@
-from Game.Lieu import Lieu
+from Game.Lieu.Lieu import Lieu
 
 class Port(Lieu):
     def __init__(self,nom):
