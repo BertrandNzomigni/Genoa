@@ -15,6 +15,8 @@ class Joueur:
         self._bateau_dirige = None
     def obtenir_florins(self):
         return self.florins
+    def obtenir_itineraire(self):
+        return self.itineraire
     def a_destination(self):
         return self.itineraire.a_destination()
     def obtenir_lieu(self):

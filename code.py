@@ -2,7 +2,7 @@ import os
 
 from Menus.ConstructeurMenu import ConstructeurMenu
 
-from Game.Monde import Monde
+from Jeu.Monde import Monde
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
