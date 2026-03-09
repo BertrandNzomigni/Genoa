@@ -1,6 +1,6 @@
 from Menus.Menu import Menu
 from Menus.Option import Option
-from Menus.Patron.PatronBateauxGlobaux import PatronOptionsBateauxGlobaux
+from Menus.Patron.Options.PatronBateauxGlobaux import PatronOptionsBateauxGlobaux
 
 class MenuBateauxGlobal(Menu):
     def __init__(self,joueur,monde,jeu):

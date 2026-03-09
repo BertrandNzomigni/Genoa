@@ -1,6 +1,6 @@
 from Menus.Menu import Menu
 
-from Menus.Patron.PatronMenuDeplacement import PatronOptionsMenuDeplacement
+from Menus.Patron.Options.PatronMenuDeplacement import PatronOptionsMenuDeplacement
 
 class MenuDeplacement(Menu):
     def __init__(self,monde,jeu,joueur):

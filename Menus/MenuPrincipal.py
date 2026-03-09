@@ -1,5 +1,5 @@
 from Menus.Menu import Menu
-from Menus.Patron.PatronMenuPrincipal import PatronOptionsMenuPrincipal
+from Menus.Patron.Options.PatronMenuPrincipal import PatronOptionsMenuPrincipal
 
 # Afficher le menu principal
 # Traiter les entrées du menu principal
