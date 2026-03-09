@@ -43,4 +43,4 @@ class Joueur:
         if self._bateau_dirige:
             return self._bateau_dirige.vitesse
         else:
-            return 2
+            return 20

@@ -1,6 +1,7 @@
 from Menus.Menu import Menu
 from Game.Lieu.Port import Port
 from Menus.Option import Option
+from Menus.PatronMenuPrincipal import PatronOptionsMenuPrincipal
 
 # Afficher le menu principal
 # Traiter les entrées du menu principal
@@ -9,18 +10,7 @@ class MenuPrincipal(Menu):
         Menu.__init__(self,monde,jeu)
         self.temps = temps
     def charger_options(self):
-        constructeur_menu = self.jeu.obtenir_constructeur_menu()
-
-        self.ajouter_options(Option("Jour suivant",[self.temps.avancer]))
-        
-        self.ajouter_options(Option("Sélectionner une nouvelle destination",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_deplacement()]))
-
-        self.ajouter_options(Option("Voir l'ensemble de vos bateaux",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_bateaux_global()]))
-
-        if type(self.monde.obtenir_joueur().obtenir_lieu()) is Port:
-            self.ajouter_options(Option("Voir vos bateaux dans le port",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_bateaux()]))
-
-        self.ajouter_options(Option("Quitter le jeu",[self.jeu.quitter]))
+        self.ajouter_plusieurs_options(PatronOptionsMenuPrincipal(self.temps,self.monde,self.jeu).options)
         
     def afficher_corps(self):
         j = self.monde.obtenir_joueur()

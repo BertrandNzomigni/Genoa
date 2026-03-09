@@ -21,6 +21,7 @@ class Jeu:
         while self.actif:
             clear_screen()
             self.menu_actif.executer()
+        clear_screen()
     def quitter(self):
         self.actif = False
 

@@ -4,7 +4,7 @@ class Deplaceur:
         self.itineraire = itineraire
         self.acteur = acteur
     def avancer(self):
-        if self.itineraire.obtenir_distance() <= self.acteur.vitesse:
+        if self.itineraire.obtenir_distance() <= self.acteur.vitesse and self.itineraire.a_destination():
             self.acteur.changer_lieu(self.itineraire.obtenir_destination())
             self.itineraire.finir_voyage()
         self.itineraire.changer_distance(self.itineraire.obtenir_distance() - self.acteur.vitesse)

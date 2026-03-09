@@ -21,6 +21,10 @@ class Menu:
 
     def ajouter_options(self,option):
         self.options[len(self.options) + 1] = option
+
+    def ajouter_plusieurs_options(self,options):
+        for option in options:
+            self.ajouter_options(option)
     def lire(self):
         try:
             entree = int(input())
