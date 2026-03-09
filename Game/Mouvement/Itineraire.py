@@ -8,12 +8,12 @@ class Itineraire:
         self.acteur = acteur
     def obtenir_destination(self):
         return self.destination
-    def changer_destination(self,destination):
-        self.destination = destination
+    def finir_voyage(self):
+        self.destination = None
+        self.depart = None
+        self.distance_destination = 0
     def obtenir_depart(self):
         return self.depart
-    def changer_depart(self,depart):
-        self.depart = depart
     def obtenir_distance(self):
         return self.distance_destination
     def changer_distance(self,distance):

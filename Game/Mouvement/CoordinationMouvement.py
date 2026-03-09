@@ -8,8 +8,6 @@ class CoordinationMouvement:
     def aller_destination(self,dest):
         self.itineraire.aller_destination(dest)
     def faire_demi_tour(self):
-        if self.itineraire.obtenir_distance() == 0:
-            self.entite.changer_lieu(self.itineraire.obtenir_destination())
         self.itineraire.faire_demi_tour()
     def avancer(self):
         self.deplaceur.avancer()

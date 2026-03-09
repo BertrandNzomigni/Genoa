@@ -12,7 +12,7 @@ class Joueur:
         self.deplaceur = Deplaceur(self.itineraire,self)
         self.coord = CoordinationMouvement(self,self.deplaceur,self.itineraire)
         self.bateaux = list()
-        self.bateau_dirige = None
+        self._bateau_dirige = None
     def obtenir_florins(self):
         return self.florins
     def obtenir_itineraire(self):
@@ -30,6 +30,17 @@ class Joueur:
     def obtenir_bateaux(self):
         return self.bateaux
     def rejoint_bateau(self,bateau):
-        self.bateau_dirige = bateau
+        self._bateau_dirige = bateau
     def quitte_bateau(self):
-        self.bateau_dirige = None
+        self._bateau_dirige = None
+
+    @property
+    def bateau_dirige(self):
+        return self._bateau_dirige
+    
+    @property
+    def vitesse(self):
+        if self._bateau_dirige:
+            return self._bateau_dirige.vitesse
+        else:
+            return 2
