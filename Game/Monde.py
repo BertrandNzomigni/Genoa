@@ -11,7 +11,7 @@ class Monde:
         self.mers = [Mer("Mer Adriatique")]
 
         # Connexions
-        self.connecter_lieu(self.ports[0],self.mers[0],5)
+        self.connecter_lieu(self.ports[0],self.mers[0],50)
         # Création bateau
         self.joueur = Joueur(self.ports[0])
         premier_bateau = Bateau("Navire de base",0,10,self.ports[0])

@@ -7,9 +7,6 @@ from Game.Monde import Monde
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def nothing():
-    pass
-
 class Jeu:
     def __init__(self):
         self.monde = Monde()

@@ -29,7 +29,7 @@ class MenuPrincipal(Menu):
         if j.obtenir_itineraire().a_destination():
             print(f"Vous naviguez vers {j.obtenir_itineraire().obtenir_destination()}")
             print(f"{j.obtenir_itineraire().obtenir_depart()} est derrière vous.")
-            print(f"La distance restante est de {j.obtenir_itineraire().obtenir_distance()*10} kilomètres.")
+            print(f"La distance restante est de {j.obtenir_itineraire().obtenir_distance()} kilomètres.")
         else:
             print(f"Vous êtes situé à {j.obtenir_lieu()}.")
             print("Vous n'êtes pas en cours de déplacement.")
