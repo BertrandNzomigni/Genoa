@@ -1,20 +1,15 @@
 class Menu:
-    def __init__(self,monde,jeu):
-        self.monde = monde
-        self.jeu = jeu
+    def __init__(self,patron,afficheur):
         self.options = dict()
-    def charger_options(self):
-        pass
+        self.patron = patron
+        self.afficheur = afficheur
     def executer(self):
         self.options.clear()
-        self.charger_options()
-        self.afficher()
-        self.lire()
-    def afficher(self):
-        self.afficher_corps()
+        self.ajouter_plusieurs_options(self.patron.creer_options())
+        self.afficheur.afficher()
         self.afficher_options()
-    def afficher_corps(self):
-        pass
+        self.lire()
+
     def afficher_options(self):
         for i in range(1,len(self.options)+1):
             print(f"{i}) {self.options[i].texte}")

@@ -4,6 +4,10 @@ from .Patron import Patron
 class PatronOptionsBateauxGlobaux(Patron):
     def __init__(self,jeu):
         super().__init__()
+        self.jeu = jeu
         
-        constructeur_menu = jeu.obtenir_constructeur_menu()
-        self.options.append(Option("Quitter",[jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()]))
+    def creer_options(self):
+        super().creer_options()
+
+        self.options.append(Option("Quitter",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
+        return self.options

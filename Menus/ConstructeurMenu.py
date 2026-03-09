@@ -1,7 +1,13 @@
-from Menus.MenuPrincipal import MenuPrincipal
-from Menus.MenuBateaux import MenuBateaux
-from Menus.MenuBateauxGlobal import MenuBateauxGlobal
-from Menus.MenuDeplacement import MenuDeplacement
+from .Menu import Menu
+from .Patron.Options.PatronMenuPrincipal import PatronOptionsMenuPrincipal
+from .Patron.Options.PatronMenuBateau import PatronOptionsMenuBateau
+from .Patron.Options.PatronMenuDeplacement import PatronOptionsMenuDeplacement
+from .Patron.Options.PatronBateauxGlobaux import PatronOptionsBateauxGlobaux
+
+from .Patron.Affichage.AfficheurMenuPrincipal import AfficheurMenuPrincipal
+from .Patron.Affichage.AfficheurMenuBateaux import AfficheurMenuBateau
+from .Patron.Affichage.AfficheurMenuDeplacement import AfficheurMenuDeplacement
+from .Patron.Affichage.AfficheurMenuBateauxGlobaux import AfficheurMenuBateauGlobaux
 
 
 class ConstructeurMenu:
@@ -11,10 +17,10 @@ class ConstructeurMenu:
         self.joueur = monde.obtenir_joueur()
         self.temps = monde.obtenir_temps()
     def construire_menu_principal(self):
-        return MenuPrincipal(self.monde,self.jeu,self.temps,self.joueur)
+        return Menu(PatronOptionsMenuPrincipal(self.temps,self.monde,self.jeu),AfficheurMenuPrincipal(self.joueur,self.temps))
     def construire_menu_bateaux(self):
-        return MenuBateaux(self.monde,self.jeu)
+        return Menu(PatronOptionsMenuBateau(self.joueur.obtenir_lieu(),self.monde,self.jeu),AfficheurMenuBateau(self.joueur.obtenir_lieu()))
     def construire_menu_bateaux_global(self):
-        return MenuBateauxGlobal(self.monde.obtenir_joueur(),self.monde,self.jeu)
+        return Menu(PatronOptionsBateauxGlobaux(self.jeu),AfficheurMenuBateauGlobaux(self.monde,self.joueur))
     def construire_menu_deplacement(self):
-        return MenuDeplacement(self.monde,self.jeu,self.joueur)
+        return Menu(PatronOptionsMenuDeplacement(self.jeu,self.joueur),AfficheurMenuDeplacement(self.joueur))
