@@ -8,7 +8,7 @@ class MenuDeplacement(Menu):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
         self.pas_en_chemin = not self.joueur.a_destination()
         if self.pas_en_chemin :
-            destinations = self.joueur.obtenir_lieu().obtenir_lieu().obtenir_voisins()
+            destinations = self.joueur.obtenir_lieu().obtenir_voisins()
             for destination in destinations:
                 self.ajouter_options(destination.obtenir_nom(),[self.joueur.obtenir_coordinateur().aller_destination,destination],[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()])
             self.ajouter_options("Quitter",[self.jeu.changer_menu_actif,constructeur_menu.construire_menu_principal()])

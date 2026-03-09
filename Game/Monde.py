@@ -15,7 +15,7 @@ class Monde:
         # Création bateau
         self.joueur = Joueur(self.ports[0])
         premier_bateau = Bateau("Navire de base",0,10,self.ports[0])
-        self.ports[0].obtenir_lieu().ajouter_bateau(premier_bateau)
+        self.ports[0].ajouter_bateau(premier_bateau)
         self.joueur.acquerir_bateau(premier_bateau)
         self.temps = Temps(self)
     def obtenir_joueur(self):
@@ -25,7 +25,7 @@ class Monde:
     def changer_temps(self,temps):
         self.temps = temps
     def connecter_lieu(self,lieu1,lieu2,distance):
-        lieu1.obtenir_lieu().ajouter_voisin(lieu2,distance)
-        lieu2.obtenir_lieu().ajouter_voisin(lieu1,distance)
+        lieu1.ajouter_voisin(lieu2,distance)
+        lieu2.ajouter_voisin(lieu1,distance)
     def avancer_temps(self):
         self.temps.avancer()

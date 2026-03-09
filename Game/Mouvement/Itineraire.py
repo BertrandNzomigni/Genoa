@@ -21,7 +21,7 @@ class Itineraire:
     def aller_destination(self,dest):
         self.destination = dest
         self.depart = self.acteur.obtenir_lieu()
-        self.distance_destination = dest.obtenir_lieu().obtenir_distance(self.acteur.obtenir_lieu())
+        self.distance_destination = dest.obtenir_distance(self.acteur.obtenir_lieu())
     def a_atteint_destination(self):
         return self.distance_destination == 0
     def a_destination(self):

@@ -8,7 +8,7 @@ class MenuBateaux(Menu):
         Menu.__init__(self,monde,jeu)
     def charger_options(self):
         constructeur_menu = self.jeu.obtenir_constructeur_menu()
-        lieu_joueur = self.monde.obtenir_joueur().obtenir_lieu().obtenir_lieu()
+        lieu_joueur = self.monde.obtenir_joueur().obtenir_lieu()
         i = 1
         for bateau in lieu_joueur.obtenir_bateaux():
             self.ajouter_options(bateau.obtenir_nom(),[nothing])

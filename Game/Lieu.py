@@ -1,8 +1,9 @@
 class Lieu:
-    def __init__(self):
+    def __init__(self,nom):
         self.voisins = list()
         self.dict_distance = dict()
         self.bateaux = list()
+        self.nom = nom
     def ajouter_voisin(self,voisin,distance):
         self.voisins.append(voisin)
         self.dict_distance[voisin] = distance
@@ -14,3 +15,7 @@ class Lieu:
         self.bateaux.append(bateau)
     def obtenir_bateaux(self):
         return self.bateaux
+    def __str__(self):
+        return self.nom
+    def obtenir_nom(self):
+        return self.nom
