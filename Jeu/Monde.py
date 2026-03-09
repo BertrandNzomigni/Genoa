@@ -1,8 +1,8 @@
-from Game.Lieu.Port import Port
-from Game.Lieu.Mer import Mer
-from Game.Joueur import Joueur
-from Game.Bateau import Bateau
-from Game.Temps import Temps
+from Jeu.Lieu.Port import Port
+from Jeu.Lieu.Mer import Mer
+from Jeu.Joueur import Joueur
+from Jeu.Bateau import Bateau
+from Jeu.Temps import Temps
 
 # Connait les entités du monde    
 class Monde:

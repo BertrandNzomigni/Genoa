@@ -1,6 +1,6 @@
-from Game.Mouvement.CoordinationMouvement import CoordinationMouvement
-from Game.Mouvement.Itineraire import Itineraire
-from Game.Mouvement.Deplaceur import Deplaceur
+from Jeu.Mouvement.CoordinationMouvement import CoordinationMouvement
+from Jeu.Mouvement.Itineraire import Itineraire
+from Jeu.Mouvement.Deplaceur import Deplaceur
 
 
 # Connait les informations du joueur
@@ -15,8 +15,6 @@ class Joueur:
         self._bateau_dirige = None
     def obtenir_florins(self):
         return self.florins
-    def obtenir_itineraire(self):
-        return self.itineraire
     def a_destination(self):
         return self.itineraire.a_destination()
     def obtenir_lieu(self):
