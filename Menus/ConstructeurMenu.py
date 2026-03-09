@@ -9,8 +9,9 @@ class ConstructeurMenu:
         self.monde = monde
         self.jeu = jeu
         self.joueur = monde.obtenir_joueur()
+        self.temps = monde.obtenir_temps()
     def construire_menu_principal(self):
-        return MenuPrincipal(self.monde,self.jeu,self.monde.obtenir_temps())
+        return MenuPrincipal(self.monde,self.jeu,self.temps,self.joueur)
     def construire_menu_bateaux(self):
         return MenuBateaux(self.monde,self.jeu)
     def construire_menu_bateaux_global(self):
