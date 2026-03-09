@@ -30,7 +30,7 @@ class Itineraire:
         x = self.destination
         self.destination = self.depart
         self.depart = x
-        self.distance_destination = self.destination.obtenir_lieu().obtenir_distance(self.obtenir_depart()) - self.distance_destination
+        self.distance_destination = self.destination.obtenir_distance(self.obtenir_depart()) - self.distance_destination
         if self.distance_destination == 0:
             self.destination = None
             self.depart = None
