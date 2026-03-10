@@ -1,26 +1,18 @@
-from .Patron import Patron
 from Menus.Option import Option
 
+from .Patron import Patron
 
-def nothing():
-    pass
 
-class PatronOptionsMenuBateau(Patron):
-    def __init__(self, bateau, monde, jeu):
-        super().__init__()
+class PatronMenuBateau(Patron):
+    def __init__(self,jeu,joueur,bateau):
+        super().__init__(jeu)
+        self.joueur = joueur
         self.bateau = bateau
-        self.monde = monde
-        self.jeu = jeu
-    
+
     def creer_options(self):
         super().creer_options()
 
-        lieu_joueur = self.monde.obtenir_joueur().obtenir_lieu()
-        for bateau in lieu_joueur.obtenir_bateaux():
-            self.options.append(Option(bateau.obtenir_nom(),[nothing]))
-
-        self.options.append(Option("Quitter",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
-
+        self.options.append(Option("Diriger le bateau",[self.joueur.rejoint_bateau,self.bateau]))
+        self.options.append(Option("Quitter",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_bateaux()]))
         return self.options
-
-        
+    

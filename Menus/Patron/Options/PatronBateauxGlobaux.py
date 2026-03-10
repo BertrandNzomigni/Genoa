@@ -3,8 +3,7 @@ from .Patron import Patron
 
 class PatronOptionsBateauxGlobaux(Patron):
     def __init__(self,jeu):
-        super().__init__()
-        self.jeu = jeu
+        super().__init__(jeu)
         
     def creer_options(self):
         super().creer_options()

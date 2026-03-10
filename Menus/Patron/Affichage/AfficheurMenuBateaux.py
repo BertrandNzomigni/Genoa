@@ -1,6 +1,6 @@
 from .Afficheur import Afficheur
 
-class AfficheurMenuBateau(Afficheur):
+class AfficheurMenuBateaux(Afficheur):
     def __init__(self,lieu_joueur):
         super().__init__()
         self.lieu_joueur = lieu_joueur

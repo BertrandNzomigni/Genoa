@@ -1,58 +1,60 @@
-Je veux simplifier MenuDeplacement en le rendant plus lisible.
+## Premier problème
+
+Je souhaite que les instances de classe externes à mon instance de Joueur ne puissent pas accéder aux composants de Joueur.
+Je souhaite aussi que la classe Joueur soit lisible.
 
 ### Raisonnement
 
-Si je réduis la longueur de certaines instructions tout en conservant la clarté, le code sera plus lisible.
+Si j'espace les méthodes de la classe Joueur et que je les arrange par catégorie, la classe Joueur sera plus lisible.
 
-Cette ligne est particulièrement longue "self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination"
+Si je supprime les méthodes de la classe Joueur qui ne sont pas utilisés, je peux rendre la classe plus lisible.
 
-Si je transforme cette ligne en "self.fonction_de_deplacement" ou "self.aller_destination", le code est toujours tout aussi clair.
+Si je ne stockes pas les instances de Itineraire et Deplaceur dans l'instance de Joueur, la classe Joueur sera plus lisible.
 
-Si je transforme cette ligne en "self.joueur.aller_destination", l'intention du code est d'autant plus clair.
+Si je supprimes les méthodes renvoyant un composant de Joueur, les autres objets ne pourrant pas les accéder.
 
-Afin de faire cela, j'ai deux options principales :
-    - Passer en tant que paramètres du constructeur MenuDeplacement l'objet "joueur"
-    - Obtenir l'objet "joueur" depuis un appel de la méthode "monde"
+Si je supprimes les méthodes renvoyant un composant de Joueur et que je souhaite éviter des bugs, je dois introduire de nouvelles méthodes à Joueur pour chaque méthode du composant appellée.
 
-~~Le principal avantage de la première méthode est qu'elle permet d'accéder à l'objet "joueur" sans dépendre de l'existence d'une méthode de "monde".~~
+Afin d'introduire les nouvelles méthodes à Joueur pour chaque méthode du composant appellée, je dois faire la liste des méthodes des composants de Joueur appelées.
 
-L'avantage principal de la première option est que je peux supprimer toutes les références à "monde" dans le code de cette classe. Cela rend le code de la classe moins verbeux.
+Afin de savoir quelles méthodes de la classe Joueur ne sont pas utilisées, je dois faire la liste des méthodes de Joueur utilisées.
 
-~~Si je ne dépens pas d'une méthode l'objet "monde", l'objet "monde" n'a pas à implémenter une méthode ayant accès à "joueur".~~
-Même si la classe "MenuDeplacement" ne dépend pas d'un objet "monde", l'objet "monde" doit implémenter une méthode donnant "joueur" car elle construit cet objet.
+Si je ne stockes pas les instances de Itineraire et Deplaceur dans la classe Joueur, je dois introduire des méthodes à CoordinateurMouvement afin qu'on puisse intéragir avec ces composants.
 
-### Conclusion
+Si je souhaite introduire des méthodes à CoordinateurMouvement afin qu'on puisse intéragir avec ces composants, je dois faire la liste des méthodes des composants de CoordinateurMouvement appellées.
 
-Je conclus que je peux rendre mon code plus lisible en :
-- tranformant les sections "self.monde.obtenir_joueur() ..." en "self.joueur"
-- en passant en paramètres l'objet "joueur" à la classe "MenuDeplacement"
-- en introduisant une méthode "aller_destination" à la classe Joueur
-
-Afin que le code fonctionne, je dois aussi modifier le constructeur de menu afin qu'il passe en paramètres l'objet "joueur".
-
-### Contre-exemples :
-- Je ne réduis pas la taille de certaines instructions
-- Cette ligne est particulièrement longue "self.monde.obtenir_joueur().obtenir_coordinateur().aller_destination"
-- Je ne transforme pas cette ligne en "self.fonction_de_deplacement" ou "self.aller_destination"
-- je ne transforme pas cette ligne en "self.joueur.aller_destination"
-- Je peux passer en tant que paramètres du constructeur MenuDeplacement l'objet "joueur"
-- Je peux obtenir l'objet "joueur" depuis un appel de la méthode "monde"
-- L'avantage principal de la première option est que je peux supprimer toutes les références à "monde" dans le code de cette classe.
-- Cela rend le code de la classe moins verbeux.
-- Même si la classe "MenuDeplacement" ne dépend pas d'un objet "monde", l'objet "monde" doit implémenter une méthode donnant "joueur" car elle construit cet objet.
-- Je ne peux pas rendre mon code plus lisible en tranformant les sections "self.monde.obtenir_joueur() ..." en "self.joueur".
-- Je ne peux pas rendre mon code plus lisible en passant en paramètres l'objet "joueur" à la classe "MenuDeplacement"
-- Je ne peux pas rendre mon code plus lisible en introduisant une méthode "aller_destination" à la classe Joueur
-
-
-### Raisonnement 2
-
-Supposons que je souhaite remplacer les sections "self.monde.obtenir_joueur() ..." par "self.joueur".
-- Si la variable appelé 'joueur' n'est pas initialisé dans le contexte d'exécution d'une instance de la classe MenuDeplacement, alors je ne peux pas appeler les
-
-
+Il est préférable que je renvoie la liste des bateaux plutôt qu'introduire des méthodes intermédiaires.
 
 ### Conclusion
 
-Si je souhaite remplacer les sections "self.monde.obtenir_joueur() ..." par "self.joueur" dans les méthodes de la classe MenuDeplacement sans déclarer  je dois placer paramètres l'objet "joueur" au constructeur de la classe "MenuDeplacement" ou je dois obtenir l'objet "joueur" depuis un appel de la méthode "monde".
+Je dois :
+1. ~~Faire la liste des méthodes de Joueur utilisées~~
+2. ~~Supprimer les méthodes de Joueur qui ne sont pas utilisées.~~
+3. Faire la liste des méthodes des composants de Joueur appellées à l'extérieur de Joueur (Sauf pour bateau)
+4. Introduire des nouvelles méthodes à Joueur pour chaque méthode d'un composant appellée à l'extérieur de Joueur (Sauf pour bateau)
+5. Substituer les appels de méthode renvoyant un composant de Joueur par une nouvelle méthode. (Sauf pour bateau)
+6. Supprimer les méthodes renvoyant un composant de Joueur (Sauf pour bateau)
+7. Faire la liste des méthodes des composants de CoordinateurMouvement appellés à l'extérieur de CoordinateurMouvement
+8. Introduire des nouvelles méthodes à CoordinateurMouvement pour chaque méthode d'un composant appellée à l'extérieur de CoordinateurMouvement
+9. Subtituer les appels de méthode à un composant de CoordinateurMouvement (à l'extérieur de CoordinateurMouvement) par une nouvelle une nouvelle méthode.
+10. Ne plus stocker les composants de CoordinateurMouvement dans Joueur
+11. Arranger les méthodes de Joueur par catégorie
+
+## Deuxième problème
+
+### Proposition à étudier
+
+Aucun objet externe à Joueur ne doit pouvoir envoyer des messages à un composant de Joueur sans passer par Joueur.
+
+### Raisonnement
+
+Si aucun objet externe à Joueur envoie de messages à un composant de Joueur sans passer par Joueur, chaque accès à une fonctionnalité d'un composant de Joueur devra passer par Joueur.
+
+Si aucun objet externe à Joueur envoie de messages à un composant de Joueur sans passer par Joueur, les objets externes à Joueur ne pourront plus parcourir directement la liste des bateaux du joueur.
+
+Si chaque accès à une fonctionnalité d'un composant de Joueur doit par Joueur, la classe Joueur devra avoir une méthode pour chacune de ces fonctionalités.
+
+Si aucun objet externe à Joueur envoie de messages à un composant de Joueur sans passer par Joueur, je peux changer la structure interne de Joueur sans casser le code autre part.
+
+Si aucun objet externe à Joueur envoie de messages à un composant de Joueur sans passer par Joueur, la modification du c
 

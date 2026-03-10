@@ -3,9 +3,8 @@ from .Patron import Patron
 
 class PatronOptionsMenuDeplacement(Patron):
     def __init__(self,jeu,joueur):
-        super().__init__()
+        super().__init__(jeu)
         self.joueur = joueur
-        self.jeu = jeu
         
     def creer_options(self):
         super().creer_options()

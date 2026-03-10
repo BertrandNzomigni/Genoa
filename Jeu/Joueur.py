@@ -34,6 +34,10 @@ class Joueur:
     def quitte_bateau(self):
         self._bateau_dirige = None
 
+    def dirige_actuellement_un_bateau(self):
+        return self._bateau_dirige is not None
+
+
     @property
     def bateau_dirige(self):
         return self._bateau_dirige

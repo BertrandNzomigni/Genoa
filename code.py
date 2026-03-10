@@ -24,7 +24,8 @@ class Jeu:
         clear_screen()
     def quitter(self):
         self.actif = False
-
-jeu = Jeu()
-jeu.demarrer()
+        
+if __name__ == "__main__":
+    jeu = Jeu()
+    jeu.demarrer()
 
