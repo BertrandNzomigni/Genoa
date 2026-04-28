@@ -37,8 +37,11 @@ class Joueur:
         return self.bateaux
     def rejoint_bateau(self,bateau):
         self._bateau_dirige = bateau
+        self.position.attacher_entite(bateau)
     def quitte_bateau(self):
+        self.position.retirer_entite(self.bateau_dirige)
         self._bateau_dirige = None
+        
 
     def dirige_actuellement_un_bateau(self):
         return self._bateau_dirige is not None

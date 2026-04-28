@@ -13,6 +13,8 @@ class Lieu:
         return self.dict_distance[voisin]
     def ajouter_bateau(self,bateau):
         self.bateaux.append(bateau)
+    def retirer_bateau(self,bateau):
+        self.bateaux.remove(bateau)
     def obtenir_bateaux(self):
         return self.bateaux
     def __str__(self):

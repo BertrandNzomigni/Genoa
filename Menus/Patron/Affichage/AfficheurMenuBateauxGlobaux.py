@@ -8,4 +8,4 @@ class AfficheurMenuBateauGlobaux(Afficheur):
     def afficher(self):
         print("Liste des bateaux")
         for bateau in self.joueur.obtenir_bateaux():
-            print(f"{bateau.obtenir_nom()} : {bateau.obtenir_lieu().obtenir_nom()}")
+            print(f"{bateau.obtenir_nom()} : {bateau.position.lieu.obtenir_nom()}")
