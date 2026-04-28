@@ -13,6 +13,9 @@ class PatronOptionsMenuPrincipal(Patron):
         super().creer_options()
 
         self.options.append(Option("Jour suivant",[self.temps.avancer]))
+
+        self.options.append(Option("Aller au marché",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_marche()]))
+
         if self.joueur.dirige_actuellement_un_bateau():
             self.options.append(Option("Sélectionner une nouvelle destination",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_deplacement()]))
         self.options.append(Option("Voir l'ensemble de vos bateaux",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_bateaux_global()]))

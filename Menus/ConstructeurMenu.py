@@ -14,6 +14,10 @@ from .Patron.Affichage.AfficheurMenuDeplacement import AfficheurMenuDeplacement
 from .Patron.Affichage.AfficheurMenuBateauxGlobaux import AfficheurMenuBateauGlobaux
 from .Patron.Affichage.AfficheurMenuBateau import AfficheurMenuBateau
 
+from .Patron.Affichage.AfficheurMarche import AfficheurMenuMarche
+
+from .Patron.Options.PatronMarche import PatronMarche
+
 class ConstructeurMenu:
     def __init__(self,monde,jeu):
         self.monde = monde
@@ -30,3 +34,6 @@ class ConstructeurMenu:
         return Menu(PatronOptionsMenuDeplacement(self.jeu,self.joueur),AfficheurMenuDeplacement(self.joueur))
     def construire_menu_bateau(self,bateau):
         return Menu(PatronMenuBateau(self.jeu,self.joueur,bateau),AfficheurMenuBateau(bateau))
+    def construire_menu_marche(self):
+        return Menu(PatronMarche(self.jeu),AfficheurMenuMarche(self.joueur))
+

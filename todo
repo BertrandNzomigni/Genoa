@@ -1,7 +1,9 @@
 - ~~Le joueur doit utiliser un bateau pour naviguer en mer.~~
-- Le joueur peut décider de piloter un bateau.
-    - Le bateau suit le joueur (ou l'inverse)
-- Le joueur peut acheter des marchandises et les mettres dans un bateau.
+~~- Le joueur peut décider de piloter un bateau.~~
+    ~~- Le bateau suit le joueur (ou l'inverse)~~
+- Le joueur peut acheter des marchandises et les mettre dans un bateau.
+    - Un menu marché est créé
+    - Gênes a un marché.
 - Le joueur peut vendre des marchandises depuis un bateau.
 - Des villes supplémentaires
 - Des mers supplémentaires
