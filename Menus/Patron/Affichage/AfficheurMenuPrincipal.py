@@ -14,5 +14,5 @@ class AfficheurMenuPrincipal(Afficheur):
             print(f"{self.joueur.obtenir_itineraire().obtenir_depart()} est derrière vous.")
             print(f"La distance restante est de {self.joueur.obtenir_itineraire().obtenir_distance()} kilomètres.")
         else:
-            print(f"Vous êtes situé à {self.joueur.obtenir_lieu()}.")
+            print(f"Vous êtes situé à {self.joueur.position.lieu}.")
             print("Vous n'êtes pas en cours de déplacement.")

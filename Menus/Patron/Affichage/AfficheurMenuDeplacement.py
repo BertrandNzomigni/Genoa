@@ -7,4 +7,4 @@ class AfficheurMenuDeplacement(Afficheur):
         self.joueur = joueur
     def afficher(self):
         if not self.joueur.a_destination():
-            print(f"Liste des destinations accesibles depuis {self.joueur.obtenir_lieu().obtenir_nom()}.")
+            print(f"Liste des destinations accesibles depuis {self.joueur.position.lieu.obtenir_nom()}.")

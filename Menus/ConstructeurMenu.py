@@ -23,7 +23,7 @@ class ConstructeurMenu:
     def construire_menu_principal(self):
         return Menu(PatronOptionsMenuPrincipal(self.temps,self.monde,self.jeu,self.joueur),AfficheurMenuPrincipal(self.joueur,self.temps))
     def construire_menu_bateaux(self):
-        return Menu(PatronOptionsMenuBateaux(self.jeu,self.joueur),AfficheurMenuBateaux(self.joueur.obtenir_lieu()))
+        return Menu(PatronOptionsMenuBateaux(self.jeu,self.joueur),AfficheurMenuBateaux(self.joueur.position.lieu))
     def construire_menu_bateaux_global(self):
         return Menu(PatronOptionsBateauxGlobaux(self.jeu),AfficheurMenuBateauGlobaux(self.monde,self.joueur))
     def construire_menu_deplacement(self):

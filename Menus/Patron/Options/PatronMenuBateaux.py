@@ -13,7 +13,7 @@ class PatronOptionsMenuBateaux(Patron):
     def creer_options(self):
         super().creer_options()
 
-        lieu_joueur = self.joueur.obtenir_lieu()
+        lieu_joueur = self.joueur.position.lieu
         for bateau in lieu_joueur.obtenir_bateaux():
             self.options.append(Option(bateau.obtenir_nom(),[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_bateau(bateau)]))
 
