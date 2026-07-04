@@ -64,3 +64,8 @@ class Joueur:
     
     def lieu_voisins(self):
         return self.position.lieu.obtenir_voisins()
+    
+    # Gestion itinéraire
+
+    def aller_destination(self,destination):
+        self.coord.aller_destination(destination)
