@@ -14,7 +14,7 @@ class PatronOptionsMenuDeplacement(Patron):
             for destination in destinations:
                 self.options.append(Option(destination.obtenir_nom(),[self.joueur.aller_destination,destination],[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
         else:
-            self.options.append(Option("Faire demi-tour",[self.joueur.obtenir_coordinateur().faire_demi_tour],[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
+            self.options.append(Option("Faire demi-tour",[self.joueur.faire_demi_tour],[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
         self.options.append(Option("Quitter",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
 
         return self.options
