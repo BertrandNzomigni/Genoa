@@ -61,3 +61,6 @@ class Joueur:
     @property
     def position(self):
         return self._position
+    
+    def lieu_voisins(self):
+        return self.position.lieu.obtenir_voisins()
