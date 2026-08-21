@@ -1,5 +1,4 @@
 from Jeu.Position import Position
-from Jeu.Mouvement.CoordinationMouvement import CoordinationMouvement
 from Jeu.Mouvement.Itineraire import Itineraire
 from Jeu.Mouvement.Deplaceur import Deplaceur
 
@@ -11,7 +10,6 @@ class Joueur:
         self.itineraire = Itineraire(self)
         self._position = Position(lieu_de_depart)
         self.deplaceur = Deplaceur(self.itineraire,self)
-        self.coord = CoordinationMouvement(self,self.deplaceur,self.itineraire)
         self.bateaux = list()
         self._bateau_dirige = None
     def obtenir_florins(self):
@@ -67,6 +65,6 @@ class Joueur:
     
     # Gestion itinéraire
     def aller_destination(self,destination):
-        self.coord.aller_destination(destination)
+        self.itineraire.aller_destination(destination)
     def faire_demi_tour(self):
-        self.coord.faire_demi_tour()
+        self.itineraire.faire_demi_tour()
