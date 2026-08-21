@@ -9,10 +9,10 @@ class AfficheurMenuPrincipal(Afficheur):
     def afficher(self):
         print(f"Jour : {self.temps.obtenir_valeur()}")
         print(f"Vous avez actuellement {self.joueur.obtenir_florins()} florins.")
-        if self.joueur.obtenir_itineraire().a_destination():
-            print(f"Vous naviguez vers {self.joueur.obtenir_itineraire().obtenir_destination()}")
-            print(f"{self.joueur.obtenir_itineraire().obtenir_depart()} est derrière vous.")
-            print(f"La distance restante est de {self.joueur.obtenir_itineraire().obtenir_distance()} kilomètres.")
+        if self.joueur.si_voyage_actuellement():
+            print(f"Vous naviguez vers {self.joueur.obtenir_destination()}")
+            print(f"{self.joueur.lieu} est derrière vous.")
+            print(f"La distance restante est de {self.joueur.obtenir_distance_voyage()} kilomètres.")
         else:
-            print(f"Vous êtes situé à {self.joueur.position.lieu}.")
+            print(f"Vous êtes situé à {self.joueur.lieu}.")
             print("Vous n'êtes pas en cours de déplacement.")

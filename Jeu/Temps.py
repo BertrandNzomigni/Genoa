@@ -6,6 +6,6 @@ class Temps:
         self.jours = 0
     def avancer(self):
         self.jours += 1
-        self.monde.obtenir_joueur().obtenir_coordinateur().avancer()
+        self.monde.obtenir_joueur().progresser()
     def obtenir_valeur(self):
         return self.jours

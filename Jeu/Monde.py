@@ -21,12 +21,10 @@ class Monde:
         self.ports[0].ajouter_bateau(premier_bateau)
         self.joueur.acquerir_bateau(premier_bateau)
         self.temps = Temps(self)
-    def obtenir_joueur(self):
-        return self.joueur
     def obtenir_temps(self):
         return self.temps
-    def changer_temps(self,temps):
-        self.temps = temps
+    def obtenir_joueur(self):
+        return self.joueur
     def connecter_lieu(self,lieu1,lieu2,distance):
         lieu1.ajouter_voisin(lieu2,distance)
         lieu2.ajouter_voisin(lieu1,distance)
