@@ -18,3 +18,6 @@ class PatronOptionsMenuDeplacement(Patron):
         self.options.append(Option("Quitter",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
 
         return self.options
+    def afficher(self):
+        if not self.joueur.si_voyage_actuellement():
+            print(f"Liste des destinations accesibles depuis {self.joueur.lieu.obtenir_nom()}.")

@@ -5,14 +5,13 @@ from .Patron import Patron
 class PatronOptionsMenuPrincipal(Patron):
     def __init__(self,temps,monde,jeu,joueur):
         super().__init__(jeu)
-        self.temps = temps
         self.monde = monde
         self.joueur = joueur
 
     def creer_options(self):
         super().creer_options()
 
-        self.options.append(Option("Jour suivant",[self.temps.avancer]))
+        self.options.append(Option("Jour suivant",[self.monde.avancer_temps]))
 
         is_located_in_port = type(self.joueur.obtenir_lieu()) is Port
 
@@ -29,3 +28,14 @@ class PatronOptionsMenuPrincipal(Patron):
         self.options.append(Option("Quitter le jeu",[self.jeu.quitter]))
 
         return self.options
+    
+    def afficher(self):
+        print(f"Jour : {self.monde.obtenir_temps()}")
+        print(f"Vous avez actuellement {self.joueur.obtenir_florins()} florins.")
+        if self.joueur.si_voyage_actuellement():
+            print(f"Vous naviguez vers {self.joueur.obtenir_destination()}")
+            print(f"{self.joueur.lieu} est derrière vous.")
+            print(f"La distance restante est de {self.joueur.obtenir_distance_voyage()} kilomètres.")
+        else:
+            print(f"Vous êtes situé à {self.joueur.lieu}.")
+            print("Vous n'êtes pas en cours de déplacement.")

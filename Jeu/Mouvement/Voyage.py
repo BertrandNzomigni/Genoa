@@ -50,7 +50,7 @@ class Voyage:
         else:
             self.distance_destination -= self.bateau.obtenir_vitesse()
     
-    def faire_demi_tour(self,acteur):
+    def faire_demi_tour(self):
         """
         La position derrière l'entité devient sa prochaine destination. \n
         La prochaine destination de l'entité devient la position derrière lui. \n

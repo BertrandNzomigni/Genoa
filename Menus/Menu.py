@@ -1,12 +1,11 @@
 class Menu:
-    def __init__(self,patron,afficheur):
+    def __init__(self,patron):
         self.options = dict()
         self.patron = patron
-        self.afficheur = afficheur
     def executer(self):
         self.options.clear()
         self.ajouter_plusieurs_options(self.patron.creer_options())
-        self.afficheur.afficher()
+        self.patron.afficher()
         self.afficher_options()
         self.lire()
 

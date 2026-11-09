@@ -18,4 +18,7 @@ class PatronMenuBateau(Patron):
             self.options.append(Option("Quitter le bateau",[self.joueur.quitte_bateau]))
         self.options.append(Option("Quitter",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_bateaux()]))
         return self.options
+
+    def afficher(self):
+        print("Menu de :",self.bateau.obtenir_nom())
     

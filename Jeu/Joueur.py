@@ -12,6 +12,15 @@ class Joueur:
 
     def obtenir_florins(self):
         return self.florins
+
+    def depenser_florins(self,quantite):
+        if quantite > self.florins:
+            raise Exception("Le joueur n'a pas suffisament de florins.")
+        else:
+            self.florins -= quantite
+
+    def recevoir_florins(self,quantite):
+        self.florins += quantite
     
     def acquerir_bateau(self,bateau):
         self.bateaux.append(bateau)
@@ -20,7 +29,9 @@ class Joueur:
     def rejoint_bateau(self,bateau):
         self._bateau_dirige = bateau
     def quitte_bateau(self):
-        self.position.retirer_entite(self.bateau_dirige)
+        if self.bateau_dirige == None:
+            raise Exception("Le joueur dirige aucun bateau.")
+        self.lieu.retirer_bateau(self.bateau_dirige)
         self._bateau_dirige = None
         
 

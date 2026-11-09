@@ -1,3 +1,5 @@
+from Jeu.Stockage import Stockage
+
 class Bateau:
     def __init__(self,nom,capacite,vitesse,lieu):
         self.nom = nom
@@ -5,6 +7,7 @@ class Bateau:
         self.vitesse = vitesse
         self.lieu = lieu
         self.voyage_actuel = None
+        self.stockage = Stockage(100)
     def obtenir_nom(self):
         return self.nom
     def obtenir_lieu(self):
@@ -30,3 +33,9 @@ class Bateau:
             raise Exception("Ce bateau ne peut pas participer à ce voyage : Il voyage déjà.")
         else:
             self.voyage_actuel = voyage
+
+    def recevoir_marchandise(self,marchandise):
+        self.stockage.recevoir_marchandise(marchandise)
+
+    def retirer_marchandise(self,nom,quantite):
+        return self.stockage.retirer_marchandise(nom,quantite)

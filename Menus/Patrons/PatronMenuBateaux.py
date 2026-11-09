@@ -6,10 +6,10 @@ def nothing():
     pass
 
 class PatronOptionsMenuBateaux(Patron):
-    def __init__(self, jeu, joueur):
+    def __init__(self, jeu, joueur,lieu_joueur):
         super().__init__(jeu)
         self.joueur = joueur
-    
+        self.lieu_joueur = lieu_joueur
     def creer_options(self):
         super().creer_options()
 
@@ -20,5 +20,7 @@ class PatronOptionsMenuBateaux(Patron):
         self.options.append(Option("Quitter",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
 
         return self.options
+    def afficher(self):
+        print(f"Liste des bateaux à {self.lieu_joueur.obtenir_nom()} :")
 
         
