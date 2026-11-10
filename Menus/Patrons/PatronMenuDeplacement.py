@@ -14,7 +14,7 @@ class PatronOptionsMenuDeplacement(Patron):
             for destination in destinations:
                 self.introduire_nom_option(destination.obtenir_nom())
                 self.ajouter_une_fonction(self.joueur.commencer_voyage,destination)
-                self.ajouter_une_fonction(self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal())
+                self.ajouter_une_fonction(self.jeu.quitter_menu_actif)
                 self.envoyer_option()
         else:
             self.introduire_nom_option("Faire demi-tour")

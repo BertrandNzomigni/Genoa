@@ -5,8 +5,9 @@ from Jeu.Bateau import Bateau
 from Jeu.Economie.Marche import Marche
 
 
-# Connait les entités du monde    
 class Monde:
+    """Connait les entités du monde"""
+
     def __init__(self):
         self.ports = [Port("Gênes",Marche()),Port("Venise",Marche()),Port("Marseille",Marche())]
         self.mers = [Mer("Mer Adriatique"),Mer("Mer Méditerranée")]

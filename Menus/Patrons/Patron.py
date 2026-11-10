@@ -16,7 +16,7 @@ class Patron:
         return self.options
 
     def ajouter_quitter(self):
-        self.ajouter_option("Quitter",self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal())
+        self.ajouter_option("Quitter",self.jeu.quitter_menu_actif)
 
     def introduire_nom_option(self,texte):
         self.nom_temp = texte
@@ -26,6 +26,7 @@ class Patron:
 
     def envoyer_option(self):
         self.options.append(Option(self.nom_temp,*self.temp))
+        self.temp = list()
 
     def afficher(self):
         pass

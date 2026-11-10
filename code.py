@@ -13,10 +13,14 @@ class Jeu:
         self.constructeur_menu = ConstructeurMenu(self.monde,self)
         self.menu_actif = self.constructeur_menu.construire_menu_principal()
         self.actif = True
+        self.historique_menu = list()
     def obtenir_constructeur_menu(self):
         return self.constructeur_menu
     def changer_menu_actif(self,menu):
+        self.historique_menu.append(self.menu_actif)
         self.menu_actif = menu
+    def quitter_menu_actif(self):
+        self.menu_actif = self.historique_menu.pop()
     def demarrer(self):
         while self.actif:
             clear_screen()
