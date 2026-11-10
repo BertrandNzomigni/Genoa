@@ -2,12 +2,12 @@ from __future__ import annotations
 from typing import Any, Callable
 
 from .Menu import Menu
-from .Patrons.PatronMenuPrincipal import PatronOptionsMenuPrincipal
-from .Patrons.PatronMenuBateaux import PatronOptionsMenuBateaux
-from .Patrons.PatronMenuDeplacement import PatronOptionsMenuDeplacement
-from .Patrons.PatronBateauxGlobaux import PatronOptionsBateauxGlobaux
+from .Patrons.PatronMenuPrincipal import PatronPrincipal
+from .Patrons.PatronMenuBateaux import PatronBateaux
+from .Patrons.PatronMenuDeplacement import PatronDeplacement
+from .Patrons.PatronBateauxGlobaux import PatronBateauxGlobaux
 from .Patrons.PatronMarche import PatronMarche
-from .Patrons.PatronMenuBateau import PatronMenuBateau
+from .Patrons.PatronMenuBateau import PatronBateau
 
 
 class ConstructeurMenu:
@@ -27,20 +27,20 @@ class ConstructeurMenu:
 
     def construire_menu_principal(self) -> Menu:
         return self._construire(
-            PatronOptionsMenuPrincipal(self.monde, self.jeu, self.joueur))
+            PatronPrincipal(self.monde, self.jeu, self.joueur))
 
     def construire_menu_bateaux(self) -> Menu:
         return self._construire(
-            PatronOptionsMenuBateaux(self.jeu, self.joueur))
+            PatronBateaux(self.jeu, self.joueur))
 
     def construire_menu_bateaux_global(self) -> Menu:
-        return self._construire(PatronOptionsBateauxGlobaux(self.jeu, self.joueur))
+        return self._construire(PatronBateauxGlobaux(self.jeu, self.joueur))
 
     def construire_menu_deplacement(self) -> Menu:
-        return self._construire(PatronOptionsMenuDeplacement(self.jeu, self.joueur))
+        return self._construire(PatronDeplacement(self.jeu, self.joueur))
 
     def construire_menu_bateau(self, bateau) -> Menu:
-        return self._construire(PatronMenuBateau(self.jeu, self.joueur, bateau))
+        return self._construire(PatronBateau(self.jeu, self.joueur, bateau))
 
     def construire_menu_marche(self) -> Menu:
         return self._construire(PatronMarche(self.jeu, self.joueur))

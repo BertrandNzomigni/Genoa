@@ -1,8 +1,7 @@
 from Jeu.Lieu.Port import Port
-from Menus.Option import Option
 from .Patron import Patron
 
-class PatronOptionsMenuPrincipal(Patron):
+class PatronPrincipal(Patron):
     def __init__(self,monde,jeu,joueur):
         super().__init__(jeu)
         self.monde = monde

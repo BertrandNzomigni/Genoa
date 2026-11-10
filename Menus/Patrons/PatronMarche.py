@@ -1,4 +1,3 @@
-from Menus.Option import Option
 from .Patron import Patron
 
 class PatronMarche(Patron):
@@ -20,11 +19,4 @@ class PatronMarche(Patron):
         for biens in self.lieu.biens_disponibles():
             print(f"{biens} : {self.lieu.obtenir_prix(biens)} florins")
         print("-----------------------------------")
-
-    def ouvrir_menu_achat(self,biens):
-        pass
-
-    def ouvrir_menu_vente(self,biens):
-            pass
-    
 

@@ -1,7 +1,7 @@
 from .Patron import Patron
 
 
-class PatronMenuBateau(Patron):
+class PatronBateau(Patron):
     def __init__(self,jeu,joueur,bateau):
         super().__init__(jeu)
         self.joueur = joueur

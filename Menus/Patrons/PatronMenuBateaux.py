@@ -1,11 +1,10 @@
 from .Patron import Patron
-from Menus.Option import Option
 
 
 def nothing():
     pass
 
-class PatronOptionsMenuBateaux(Patron):
+class PatronBateaux(Patron):
     def __init__(self, jeu, joueur):
         super().__init__(jeu)
         self.joueur = joueur

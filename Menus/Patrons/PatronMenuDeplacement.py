@@ -1,7 +1,6 @@
-from Menus.Option import Option
 from .Patron import Patron
 
-class PatronOptionsMenuDeplacement(Patron):
+class PatronDeplacement(Patron):
     def __init__(self,jeu,joueur):
         super().__init__(jeu)
         self.joueur = joueur
