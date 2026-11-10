@@ -1,10 +1,13 @@
+from Menus.Patrons.Patron import Patron
+
 class Menu:
-    def __init__(self,patron):
+    def __init__(self,patron : Patron):
         self.options = dict()
         self.patron = patron
     def executer(self):
         self.options.clear()
-        self.ajouter_plusieurs_options(self.patron.creer_options())
+        self.patron.creer_options()
+        self.ajouter_plusieurs_options(self.patron.obtenir_options())
         self.patron.afficher()
         self.afficher_options()
         self.lire()

@@ -12,12 +12,17 @@ class PatronOptionsMenuDeplacement(Patron):
         if not self.joueur.si_voyage_actuellement():
             destinations = self.joueur.lieu_voisins()
             for destination in destinations:
-                self.options.append(Option(destination.obtenir_nom(),[self.joueur.commencer_voyage,destination],[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
+                self.introduire_nom_option(destination.obtenir_nom())
+                self.ajouter_une_fonction(self.joueur.commencer_voyage,destination)
+                self.ajouter_une_fonction(self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal())
+                self.envoyer_option()
         else:
-            self.options.append(Option("Faire demi-tour",[self.joueur.faire_demi_tour],[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
-        self.options.append(Option("Quitter",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
-
-        return self.options
+            self.introduire_nom_option("Faire demi-tour")
+            self.ajouter_une_fonction(self.joueur.faire_demi_tour)
+            self.ajouter_une_fonction(self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal())
+            self.envoyer_option()
+        
+        self.ajouter_quitter()
     def afficher(self):
         if not self.joueur.si_voyage_actuellement():
             print(f"Liste des destinations accesibles depuis {self.joueur.lieu.obtenir_nom()}.")

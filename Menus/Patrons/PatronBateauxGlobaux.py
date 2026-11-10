@@ -9,8 +9,7 @@ class PatronOptionsBateauxGlobaux(Patron):
     def creer_options(self):
         super().creer_options()
 
-        self.options.append(Option("Quitter",[self.jeu.changer_menu_actif,self.constructeur_menu.construire_menu_principal()]))
-        return self.options
+        self.ajouter_quitter()
 
     def afficher(self):
         print("Liste des bateaux")

@@ -22,20 +22,16 @@ class ConstructeurMenu:
     def joueur(self):
         return self.monde.obtenir_joueur()
 
-    @property
-    def temps(self):
-        return self.monde.obtenir_temps()
-
     def _construire(self, patron) -> Menu:
         return self._fabrique_menu(patron)
 
     def construire_menu_principal(self) -> Menu:
         return self._construire(
-            PatronOptionsMenuPrincipal(self.temps, self.monde, self.jeu, self.joueur))
+            PatronOptionsMenuPrincipal(self.monde, self.jeu, self.joueur))
 
     def construire_menu_bateaux(self) -> Menu:
         return self._construire(
-            PatronOptionsMenuBateaux(self.jeu, self.joueur, self.joueur.lieu))
+            PatronOptionsMenuBateaux(self.jeu, self.joueur))
 
     def construire_menu_bateaux_global(self) -> Menu:
         return self._construire(PatronOptionsBateauxGlobaux(self.jeu, self.joueur))
@@ -48,3 +44,9 @@ class ConstructeurMenu:
 
     def construire_menu_marche(self) -> Menu:
         return self._construire(PatronMarche(self.jeu, self.joueur))
+
+    def construire_menu_achat(self,biens) -> Menu:
+        pass
+
+    def construire_menu_vente(self,biens) -> Menu:
+        pass

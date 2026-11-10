@@ -24,3 +24,4 @@ class Lieu:
         return self.nom
     def obtenir_nom(self):
         return self.nom
+    

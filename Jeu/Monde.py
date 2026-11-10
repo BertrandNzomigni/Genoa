@@ -2,11 +2,13 @@ from Jeu.Lieu.Port import Port
 from Jeu.Lieu.Mer import Mer
 from Jeu.Joueur import Joueur
 from Jeu.Bateau import Bateau
+from Jeu.Economie.Marche import Marche
+
 
 # Connait les entités du monde    
 class Monde:
     def __init__(self):
-        self.ports = [Port("Gênes"),Port("Venise"),Port("Marseille")]
+        self.ports = [Port("Gênes",Marche()),Port("Venise",Marche()),Port("Marseille",Marche())]
         self.mers = [Mer("Mer Adriatique"),Mer("Mer Méditerranée")]
 
         # Connexions
